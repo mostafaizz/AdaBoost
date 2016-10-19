@@ -10,6 +10,7 @@ public:
 	VectorData(std::vector<double> &);
 	virtual std::vector<double> getVectorData();
 	virtual cv::Mat getMatData();
+	virtual int getDimensions();
 	~VectorData();
 };
 

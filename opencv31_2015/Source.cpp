@@ -7,6 +7,7 @@
 #include <random>
 #include "AdaBoost.h"
 #include "VectorData.h"
+#include "WeakVectorClassifierFactory.h"
 
 const double PI = 3.14159265;
 
@@ -25,7 +26,7 @@ int main()
 	std::vector<DataPoint*> data;
 	int i = 0;
 	cv::Mat img = cv::Mat::zeros(1100, 1100, CV_32FC3);
-	for (double r = 0.1; r <= 0.51; r += 0.05)
+	for (double r = 0.1 * 1000; r <= 0.51 * 1000; r += 0.05 * 1000)
 	{
 		for (double theta = 0; theta <= 1.81 * PI; theta += (PI / 5),i++)
 		{
@@ -62,9 +63,10 @@ int main()
 			2, cv::Scalar(((label[i] - 1) / -2) * 255, 0, ((label[i] + 1)/2) * 255), -1);
 	}
 	//freopen("result.csv", "w", stdout);
-	for (int i = 1; i < 100; i+=2)
+	WeakClassifierFactory * factory = new WeakVectorClassifierFactory();
+	for (int i = 1; i < 30; i+=2)
 	{
-		AdaBoost adaboost(i);
+		AdaBoost adaboost(i, factory);
 		double accuracy = adaboost.train(data, label);
 		std::cout << i << ", " << accuracy << std::endl;
 		//system("PAUSE");

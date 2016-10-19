@@ -152,6 +152,9 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="VectorData.cpp" />
     <ClCompile Include="WeakClassifier.cpp" />
+    <ClCompile Include="WeakClassifierFactory.cpp" />
+    <ClCompile Include="WeakHaarClassifierFactory.cpp" />
+    <ClCompile Include="WeakVectorClassifierFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdaBoost.h" />
@@ -160,6 +163,9 @@
     <ClInclude Include="MatData.h" />
     <ClInclude Include="VectorData.h" />
     <ClInclude Include="WeakClassifier.h" />
+    <ClInclude Include="WeakClassifierFactory.h" />
+    <ClInclude Include="WeakHaarClassifierFactory.h" />
+    <ClInclude Include="WeakVectorClassifierFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,6 +17,11 @@ cv::Mat MatData::getMatData()
 	return data;
 }
 
+int MatData::getDimensions()
+{
+	return data.dims;
+}
+
 
 MatData::~MatData()
 {

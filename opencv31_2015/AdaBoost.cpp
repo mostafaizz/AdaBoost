@@ -1,97 +1,52 @@
 #include "AdaBoost.h"
-#include "VectorData.h"
 #include <map>
 #include <iostream>
 #include <algorithm>
 
-std::vector<WeakClassifier*> AdaBoost::createWeakClassifiersfromVectors(int numClassifiers, std::vector<DataPoint* >& data,bool random)
+std::vector<WeakClassifier*> AdaBoost::createWeakClassifiers(std::vector<DataPoint* >& data)
 {
 	std::vector<WeakClassifier*> res;
-	// sort data in each dimension
-	int dims = data[0]->getVectorData().size();
-	for (int d = 0; d < dims; d++)
+	for (int i = 0; i < data.size(); i++)
 	{
-		std::vector<double> dataD(data.size());
-		for (int i = 0; i < data.size(); i++)
-		{
-			dataD[i] = data[i]->getVectorData()[d];
-		}
-		std::sort(dataD.begin(), dataD.end());
-		for (int i = 1; i < dataD.size(); i++)
-		{
-			double range = dataD[i] - dataD[i - 1];
-			int nn = 2;
-			for (int j = 0; j < nn; j++)
-			{
-				double thr = dataD[i - 1] + (range * j) / nn;
-				res.push_back(new WeakClassifier(thr, d, 1));
-				res.push_back(new WeakClassifier(thr, d, -1));
-			}
-		}
+		std::vector<WeakClassifier*> tmp = weakClassifierFactory->getClassifiers(data[i]);
+		res.insert(res.end(), tmp.begin(), tmp.end());
 	}
-/*
-	// minValues: set the minimum for each data dimension
-	// maxValues: set the maximum for each data dimension
-
-	std::vector<double> minValues(data[0]->getVectorData());
-	std::vector<double> maxValues(data[0]->getVectorData());
-
-	for (int i = 1; i < data.size(); i++)
-	{
-		for (int j = 0; j < data[0]->getVectorData().size(); j++)
-		{
-			minValues[j] = std::min(minValues[j], data[i]->getVectorData()[j]);
-			maxValues[j] = std::max(maxValues[j], data[i]->getVectorData()[j]);
-		}
-	}
-
-	if (random)
-	{
-		std::random_device rd;
-		std::mt19937 mt(rd());
-		std::uniform_int_distribution<int> uniformIndex(0, data[0]->getVectorData().size() - 1);
-		std::uniform_int_distribution<int> uniformSign(0, 1);
-		for (int t = 0; t < numClassifiers; t++)
-		{
-			int index = uniformIndex(mt);
-			int sign = uniformSign(mt) * 2 - 1;
-			std::uniform_real_distribution<double> dist(minValues[index], maxValues[index]);
-			res.push_back(new WeakClassifier(dist(mt), index, sign));
-		}
-	}
-	else
-	{
-		// number of classifiers per dimension
-		int nPerDim = numClassifiers / data[0]->getVectorData().size();
-		for (int i = 0; i < data[0]->getVectorData().size(); i++)
-		{
-			double diff = (maxValues[i] - minValues[i]) * 2.0 / nPerDim; // two directions
-			//std::cout << "diff = " << diff << std::endl;
-			for (double thr = minValues[i]; thr < maxValues[i]; thr += diff)
-			{
-				res.push_back(new WeakClassifier(thr, i, 1));
-				res.push_back(new WeakClassifier(thr, i, -1));
-			}
-		}
-	}
-	*/
 	return res;
 }
 
 // numClassifiers: set how many weak classifiers 
 // data is vector<vectors> where the outer vector is the data and the second dimesion is the feature vector
-AdaBoost::AdaBoost(int numClassifiers)
+AdaBoost::AdaBoost(int numClassifiers, WeakClassifierFactory* weakClassifierFactory)
 {
 	T = numClassifiers;
+	this->weakClassifierFactory = weakClassifierFactory;
 }
 
 double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 {
 	std::vector<double> samplesWts(data.size(), 1.0 / labels.size());
+	/*
+	int counts[2] = { 0,0 };
+	for (int i = 0; i < labels.size(); i++)
+	{
+		counts[(labels[i] + 1) / 2]++;
+	}
+	for (int i = 0; i < samplesWts.size(); i++)
+	{
+		if (labels[i] == -1)
+		{
+			samplesWts[i] = 1.0 / (2.0 * counts[1]);
+		}
+		else
+		{
+			samplesWts[i] = 1.0 / (2.0 * counts[0]);
+		}
+	}*/
 	// create T classifers
+	std::vector<WeakClassifier*> candidates = createWeakClassifiers(data);
+
 	for (int t = 0; t < T; t++)
 	{
-		std::vector<WeakClassifier*> candidates = createWeakClassifiersfromVectors(2000, data, false);
 		std::multimap<double, WeakClassifier*> classifierAccuracyMap;
 		// get the accuracy of each weak classifier
 		for (int i = 0; i < candidates.size(); i++)
@@ -163,11 +118,11 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 			// then break this loop
 			break;
 		}
-		// remove all temp weak classifiers
-		for (int i = 0; i < candidates.size(); i++)
-		{
-			delete candidates[i];
-		}
+	}
+	// remove all temp weak classifiers
+	for (int i = 0; i < candidates.size(); i++)
+	{
+		delete candidates[i];
 	}
 	// calculate and return the accuracy
 	int acc = 0;

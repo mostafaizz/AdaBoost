@@ -18,6 +18,11 @@ cv::Mat VectorData::getMatData()
 	return cv::Mat();
 }
 
+int VectorData::getDimensions()
+{
+	return data.size();
+}
+
 
 VectorData::~VectorData()
 {

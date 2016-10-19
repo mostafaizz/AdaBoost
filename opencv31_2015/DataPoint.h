@@ -9,5 +9,6 @@ public:
 	~DataPoint();
 	virtual std::vector<double> getVectorData() = 0;
 	virtual cv::Mat getMatData() = 0;
+	virtual int getDimensions() = 0;
 };
 

@@ -3,6 +3,14 @@
 #include <vector>
 
 
+
+
+void WeakClassifier::updateEdgewithClassification(DataPoint* d)
+{
+	classify(d);
+	setEdge(getData());
+}
+
 WeakClassifier::WeakClassifier(double edge, int index, int direction)
 {
 	this->edge = edge;
@@ -10,14 +18,20 @@ WeakClassifier::WeakClassifier(double edge, int index, int direction)
 	this->sign = direction;
 }
 
-int WeakClassifier::classify(DataPoint* d)
+
+int WeakClassifier::classify()
 {
-	std::vector<double> data = d->getVectorData();
-	if (sign * (data[featureIndex] - edge) < 0)
+	if (sign * (data - edge) < 0)
 	{
 		return 1;
 	}
 	return -1;
+}
+
+int WeakClassifier::classify(DataPoint* d)
+{
+	data = d->getVectorData()[featureIndex];
+	return classify();
 }
 
 bool WeakClassifier::operator==(const WeakClassifier & obj)
