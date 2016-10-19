@@ -25,7 +25,7 @@ AdaBoost::AdaBoost(int numClassifiers, WeakClassifierFactory* weakClassifierFact
 double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 {
 	std::vector<double> samplesWts(data.size(), 1.0 / labels.size());
-	/*
+	
 	int counts[2] = { 0,0 };
 	for (int i = 0; i < labels.size(); i++)
 	{
@@ -41,7 +41,7 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 		{
 			samplesWts[i] = 1.0 / (2.0 * counts[0]);
 		}
-	}*/
+	}
 	// create T classifers
 	std::vector<WeakClassifier*> candidates = createWeakClassifiers(data);
 
@@ -49,19 +49,21 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 	{
 		std::multimap<double, WeakClassifier*> classifierAccuracyMap;
 		// get the accuracy of each weak classifier
+#pragma omp parallel for shared(classifierAccuracyMap)
 		for (int i = 0; i < candidates.size(); i++)
 		{
 			double errors = 0;
-			std::vector<int> y;
+			//std::vector<int> y;
 			for (int j = 0; j < data.size(); j++)
 			{
 				int res = candidates[i]->classify(data[j]);
-				y.push_back(res);
+				//y.push_back(res);
 				if (res != labels[j])
 				{
 					errors += samplesWts[j];
 				}
 			}
+#pragma omp critical 
 			classifierAccuracyMap.insert(std::make_pair(errors, candidates[i]));
 		}
 
@@ -125,10 +127,12 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 		delete candidates[i];
 	}
 	// calculate and return the accuracy
+	std::vector<int> y;
 	int acc = 0;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		if (classify(data[i]) == labels[i])
+		y.push_back(classify(data[i]));
+		if (*(y.end() - 1) == labels[i])
 		{
 			acc++;
 		}
@@ -139,10 +143,16 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 }
 int AdaBoost::classify(DataPoint* subj)
 {
-	double res = 0;
+	std::vector<double> r(weakClassifiers.size(),0);
+#pragma omp parallel for
 	for (int i = 0; i < weakClassifiers.size(); i++)
 	{
-		res += weakClassifiers[i]->classify(subj) * wts[i];
+		r[i] = weakClassifiers[i]->classify(subj) * wts[i];
+	}
+	double res = 0;
+	for (int i = 0; i < r.size(); i++)
+	{
+		res += r[i];
 	}
 	if (res >= 0)
 	{

@@ -2,8 +2,9 @@
 
 
 
-MatData::MatData()
+MatData::MatData(cv::Mat d)
 {
+	data = d;
 }
 
 std::vector<double> MatData::getVectorData()

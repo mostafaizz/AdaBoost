@@ -5,7 +5,7 @@ class MatData :
 {
 	cv::Mat data;
 public:
-	MatData();
+	MatData(cv::Mat);
 	virtual std::vector<double> getVectorData();
 	virtual cv::Mat getMatData();
 	virtual int getDimensions();

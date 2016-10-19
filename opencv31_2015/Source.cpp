@@ -7,11 +7,13 @@
 #include <random>
 #include "AdaBoost.h"
 #include "VectorData.h"
+#include "MatData.h"
 #include "WeakVectorClassifierFactory.h"
+#include "WeakHaarClassifierFactory.h"
 
 const double PI = 3.14159265;
 
-int main()
+void test2DPoints()
 {
 	//Mat img = imread("sky.jpg");
 	//Mat gray;
@@ -73,5 +75,91 @@ int main()
 	}
 	cv::imshow("img", img);
 	cv::waitKey();
+}
+
+void displayIntegralImage(cv::Mat Iimg)
+{
+	double min, max;
+	cv::minMaxLoc(Iimg, &min, &max);
+	Iimg -= min;
+	Iimg /= (max - min);
+	cv::imshow("image", Iimg);
+	cv::waitKey();
+}
+
+cv::Mat cannyEdgeDetection(cv::Mat m)
+{
+	/// Canny detector
+	cv::Mat detected_edges;
+	cv::Canny(m, detected_edges, 10, 30, 3);
+	cv::imshow("detected_edges", detected_edges);
+	cv::waitKey(50);
+	return detected_edges;
+}
+
+void testMatData()
+{
+	cv::Mat m = cv::Mat::zeros(cv::Size(400, 400), CV_8UC1);
+	m(cv::Rect(0, 0, 200, 200)) = 50;
+	m(cv::Rect(0, 200, 200, 200)) = 100;
+	m(cv::Rect(200, 0, 200, 200)) = 200;
+	m(cv::Rect(200, 200, 200, 200)) = 70;
+	cv::Mat Iimg, I2img;
+	cv::integral(m, Iimg, I2img, CV_32FC1);
+	// display
+	//displayIntegralImage(Iimg);
+	cv::Mat edges = cannyEdgeDetection(m);
+
+	// prepare data vector
+	std::vector<DataPoint*> trainData;
+	std::vector<int> labels;
+	cv::Mat show;
+	m.copyTo(show);
+	// make patches 10x10 with step 5
+	for (int r = 0; r <= 390; r += 10)
+	{
+		for (int c = 0; c <= 390; c += 10)
+		{
+			cv::Rect win = cv::Rect(r, c, 10, 10);
+			trainData.push_back(new MatData(Iimg(win)));
+			if (cv::sum(edges(win)).val[0] > 1)
+			{
+				// edge
+				labels.push_back(1);
+				cv::rectangle(show, win, cv::Scalar(150, 150, 150));
+			}
+			else
+			{
+				// non edge
+				labels.push_back(-1);
+			}
+		}
+	}
+
+	cv::imshow("my edges", show);
+	cv::waitKey();
+
+	// prepare the Haar Classifier Factory
+	std::vector<std::vector<std::vector<int> > > shapes;
+	int arr[] = { -1,1 };
+	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
+	std::vector<cv::Point> locs(1, cv::Point(0, 0));
+	std::vector<cv::Size> sizes(1, cv::Size(10, 10));
+
+	WeakClassifierFactory * factory = new WeakHaarClassifierFactory(shapes, sizes, locs);
+
+	for (int i = 1; i < 30; i += 2)
+	{
+		AdaBoost adaboost(i, factory);
+		double accuracy = adaboost.train(trainData, labels);
+		std::cout << i << ", " << accuracy << std::endl;
+		//system("PAUSE");
+	}
+}
+
+int main()
+{
+	//test2DPoints();
+	testMatData();
 	return 0;
 }
