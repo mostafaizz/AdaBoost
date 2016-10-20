@@ -16,6 +16,7 @@ public:
 	virtual void operator=(const WeakClassifier& obj);
 	virtual bool operator==(WeakClassifier* obj);
 	virtual void print();
+	virtual std::string getName();
 	~HaarWeakClassifier();
 };
 

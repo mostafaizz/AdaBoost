@@ -10,6 +10,7 @@
 #include "MatData.h"
 #include "WeakVectorClassifierFactory.h"
 #include "WeakHaarClassifierFactory.h"
+#include "AdaBoostEdgeDetector.h"
 
 const double PI = 3.14159265;
 
@@ -87,17 +88,7 @@ void displayIntegralImage(cv::Mat Iimg)
 	cv::imshow("image", Iimg);
 	cv::waitKey();
 }
-
-cv::Mat cannyEdgeDetection(cv::Mat m)
-{
-	/// Canny detector
-	cv::Mat detected_edges;
-	cv::Canny(m, detected_edges, 10, 30, 3);
-	cv::imshow("detected_edges", detected_edges);
-	cv::waitKey(50);
-	return detected_edges;
-}
-
+/*
 void testMatData()
 {
 	cv::Mat m = cv::Mat::zeros(cv::Size(400, 400), CV_8UC1);
@@ -109,7 +100,7 @@ void testMatData()
 	cv::integral(m, Iimg, I2img, CV_32FC1);
 	// display
 	//displayIntegralImage(Iimg);
-	cv::Mat edges = cannyEdgeDetection(m);
+	cv::Mat edges = AdaBoostEdgeDetector::cannyEdgeDetection(m);
 
 	// prepare data vector
 	std::vector<DataPoint*> trainData;
@@ -117,11 +108,11 @@ void testMatData()
 	cv::Mat show;
 	cv::cvtColor(m, show, CV_GRAY2BGR);
 	// make patches 10x10 with step 5
-	for (int r = 0; r <= 300; r += 50)
+	for (int r = 0; r <= 390; r += 5)
 	{
-		for (int c = 0; c <= 300; c += 50)
+		for (int c = 0; c <= 390; c += 5)
 		{
-			cv::Rect win = cv::Rect(c, r, 100, 100);
+			cv::Rect win = cv::Rect(c, r, 10, 10);
 			trainData.push_back(new MatData(Iimg, win));
 			//MatData testData(m, win);
 			//cv::imshow("window", testData.getMatData());
@@ -158,12 +149,12 @@ void testMatData()
 	
 	std::vector<cv::Point> locs(1, cv::Point(0, 0));
 	std::vector<cv::Size> sizes;
-	sizes.push_back(cv::Size(50, 100));
-	sizes.push_back(cv::Size(100, 50));
+	sizes.push_back(cv::Size(5, 10));
+	sizes.push_back(cv::Size(10, 5));
 	//sizes.push_back(cv::Size(5, 5));
 
 	
-	for (int i = 1; i < 30; i += 2)
+	for (int i = 1; i < 30; i ++)
 	{
 		WeakClassifierFactory * factory = new WeakHaarClassifierFactory(shapes, sizes, locs);
 
@@ -192,10 +183,47 @@ void testMatData()
 		//system("PAUSE");
 	}
 }
+*/
+void testAdaBoostEdgeDetection()
+{
+	cv::Mat testImg = cv::imread("test.png", 0);
+
+	cv::Mat m = cv::Mat::zeros(cv::Size(400, 400), CV_8UC1);
+	m(cv::Rect(0, 0, 200, 200)) = 50;
+	m(cv::Rect(0, 200, 200, 200)) = 200;
+	m(cv::Rect(200, 0, 200, 200)) = 150;
+	m(cv::Rect(200, 200, 200, 200)) = 100;
+	cv::imwrite("orig.png", m);
+	std::vector<cv::Mat> images;
+	images.push_back(m);
+
+	std::vector<std::vector<std::vector<int> > > shapes;
+	int arr[] = { -1,1 };
+	std::vector<std::vector<int> > shape1(2, std::vector<int>(1, 1));
+	shape1[0][0] = -1;
+	std::vector<std::vector<int> > shape2(2, std::vector<int>(2, 1));
+	shape2[0][0] = shape2[1][1] = -1;
+
+
+	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
+	shapes.push_back(shape1);
+	//shapes.push_back(shape2);
+
+
+
+	for (int t = 1; t < 20; t++)
+	{
+		AdaBoostEdgeDetector adaBoostEdgeDetector(t, shapes, cv::Size(4,4), 2);
+		adaBoostEdgeDetector.train(images, true);
+		adaBoostEdgeDetector.test(testImg, true);
+	}
+	
+}
 
 int main()
 {
 	//test2DPoints();
-	testMatData();
+	//testMatData();
+	testAdaBoostEdgeDetection();
 	return 0;
 }

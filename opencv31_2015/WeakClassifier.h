@@ -22,6 +22,7 @@ public:
 	virtual int classify(DataPoint* d);
 	virtual bool operator==(WeakClassifier *obj);
 	virtual void operator=(const WeakClassifier &obj);
+	virtual std::string getName();
 	virtual void print();
 };
 

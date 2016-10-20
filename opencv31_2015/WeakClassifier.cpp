@@ -60,7 +60,13 @@ void WeakClassifier::operator=(const WeakClassifier & obj)
 	featureIndex = obj.featureIndex;
 }
 
+std::string WeakClassifier::getName()
+{
+	return "WeakClassifier";
+}
+
 void WeakClassifier::print()
 {
+	std::cout << getName() << "\t";
 	std::cout << "Thr: " << edge << " dir: " << this->sign << " ind: " << featureIndex;
 }

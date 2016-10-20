@@ -100,6 +100,11 @@ void HaarWeakClassifier::print()
 	}
 }
 
+std::string HaarWeakClassifier::getName()
+{
+	return "HaarWeakClassifier";
+}
+
 HaarWeakClassifier::~HaarWeakClassifier()
 {
 }

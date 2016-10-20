@@ -129,6 +129,7 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 			for (int k = 0; k < labels.size(); k++)
 			{
 				samplesWts[k] = samplesWts[k] * std::exp(-alpha * labels[k] * itr->second->classify(data[k]));
+				//samplesWts[k] = samplesWts[k] * std::pow(itr->first / (1 - itr->first), 1 - (labels[k] ^ itr->second->classify(data[k])));
 				sumSamplesWts += samplesWts[k];
 			}
 			// and normalize the weights
@@ -154,18 +155,22 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 	int acc = 0;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		
-			yOut.push_back(classify(data[i]));
-			if (yOut[i] == labels[i])
+		//if (i == 21)
+		//{
+		//	std::cout << "break";
+		//}
+
+		yOut.push_back(classify(data[i]));
+		if (yOut[i] == labels[i])
+		{
+			acc++;
+			if (labels[i] == 1)
 			{
-				acc++;
-				if (labels[i] == 1)
-				{
-					classify(data[i]);
-					//std::cout << "edge at index " << i << std::endl;
-				}
+				classify(data[i]);
+				//std::cout << "edge at index " << i << std::endl;
 			}
-		
+		}
+
 	}
 	//std::cout << acc << std::endl;
 	double accuracy = acc;

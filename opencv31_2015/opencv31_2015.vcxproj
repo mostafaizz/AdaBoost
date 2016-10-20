@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdaBoost.cpp" />
+    <ClCompile Include="AdaBoostEdgeDetector.cpp" />
     <ClCompile Include="DataPoint.cpp" />
     <ClCompile Include="HaarWeakClassifier.cpp" />
     <ClCompile Include="HaarWeakClassifierAbs.cpp" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdaBoost.h" />
+    <ClInclude Include="AdaBoostEdgeDetector.h" />
     <ClInclude Include="DataPoint.h" />
     <ClInclude Include="HaarWeakClassifier.h" />
     <ClInclude Include="HaarWeakClassifierAbs.h" />

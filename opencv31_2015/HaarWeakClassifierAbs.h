@@ -2,6 +2,7 @@
 #include "HaarWeakClassifier.h"
 #include <cmath>
 #include <cstdlib>
+#include <string>
 class HaarWeakClassifierAbs :
 	public HaarWeakClassifier
 {
@@ -11,5 +12,6 @@ public:
 	virtual int classify(DataPoint * d);
 	virtual bool operator==(WeakClassifier *obj);
 	virtual void operator=(const WeakClassifier& obj);
+	virtual std::string getName();
 };
 

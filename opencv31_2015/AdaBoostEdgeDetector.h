@@ -1,0 +1,22 @@
+#pragma once
+#include "AdaBoost.h"
+#include "MatData.h"
+#include "WeakHaarClassifierFactory.h"
+
+class AdaBoostEdgeDetector
+{
+	int numClassifiers;
+	cv::Size patchSize;
+	int step;
+	WeakHaarClassifierFactory * factory;
+	AdaBoost* adaBoost;
+
+public:
+	static cv::Mat cannyEdgeDetection(cv::Mat m);
+	
+	AdaBoostEdgeDetector(int numClassifiers, std::vector<std::vector<std::vector<int>>>& shapes, cv::Size patchSize, int step);
+	void train(std::vector<cv::Mat> images, bool display = false);
+	void test(cv::Mat img, bool display = false);
+	~AdaBoostEdgeDetector();
+};
+

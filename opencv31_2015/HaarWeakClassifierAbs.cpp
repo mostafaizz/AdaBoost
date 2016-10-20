@@ -40,3 +40,9 @@ void HaarWeakClassifierAbs::operator=(const WeakClassifier & obj)
 	this->location = ptr->location;
 	this->dummy = ptr->dummy;
 }
+
+std::string HaarWeakClassifierAbs::getName()
+{
+	return "HaarWeakClassifierAbs";
+}
+
