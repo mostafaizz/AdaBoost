@@ -184,16 +184,11 @@ void testMatData()
 	}
 }
 */
-void testAdaBoostEdgeDetection()
+void testAdaBoostEdgeDetection(int horizontal = 1, int vertical = 1, int t = 6, std::string trainImg = "orig.png",std::string testImage = "test.png")
 {
-	cv::Mat testImg = cv::imread("test.png", 0);
+	cv::Mat testImg = cv::imread(testImage, 0);
 
-	cv::Mat m = cv::Mat::zeros(cv::Size(400, 400), CV_8UC1);
-	m(cv::Rect(0, 0, 200, 200)) = 50;
-	m(cv::Rect(0, 200, 200, 200)) = 200;
-	m(cv::Rect(200, 0, 200, 200)) = 150;
-	m(cv::Rect(200, 200, 200, 200)) = 100;
-	cv::imwrite("orig.png", m);
+	cv::Mat m = cv::imread(trainImg, 0);
 	std::vector<cv::Mat> images;
 	images.push_back(m);
 
@@ -204,14 +199,19 @@ void testAdaBoostEdgeDetection()
 	std::vector<std::vector<int> > shape2(2, std::vector<int>(2, 1));
 	shape2[0][0] = shape2[1][1] = -1;
 
-
-	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
-	shapes.push_back(shape1);
+	if (horizontal)
+	{
+		shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
+	}
+	if (vertical)
+	{
+		shapes.push_back(shape1);
+	}
 	//shapes.push_back(shape2);
 
 
 
-	for (int t = 1; t < 20; t++)
+	//for (int t = 1; t < 20; t++)
 	{
 		AdaBoostEdgeDetector adaBoostEdgeDetector(t, shapes, cv::Size(4,4), 2);
 		adaBoostEdgeDetector.train(images, true);
@@ -220,10 +220,43 @@ void testAdaBoostEdgeDetection()
 	
 }
 
-int main()
+int main(int argc, char*argv[])
 {
+	int horizontal = 1;
+	int vertical = 1;
+	int t = 6;
+	std::string trainImg = "orig.png";
+	std::string testImage = "test.png";
+	for (int i = 0; i < argc; i++)
+	{
+		if (std::string(argv[i]) == "-h")
+		{
+			horizontal = std::stoi(argv[i + 1]);
+		}
+		else if (std::string(argv[i]) == "-v")
+		{
+			vertical = std::stoi(argv[i + 1]);
+		}
+		else if (std::string(argv[i]) == "-t")
+		{
+			t = std::stoi(argv[i + 1]);
+		}
+		else if (std::string(argv[i]) == "-i")
+		{
+			trainImg = argv[i + 1];
+		}
+		else if (std::string(argv[i]) == "-o")
+		{
+			testImage = argv[i + 1];
+		}
+		else
+		{
+			i--;
+		}
+		i++;
+	}
 	//test2DPoints();
 	//testMatData();
-	testAdaBoostEdgeDetection();
+	testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage);
 	return 0;
 }
