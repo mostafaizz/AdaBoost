@@ -45,6 +45,9 @@
     <ClCompile Include="WeakHaarClassifierFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HaarWeakClassifierAbs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WeakClassifier.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WeakHaarClassifierFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HaarWeakClassifierAbs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "WeakHaarClassifierFactory.h"
 #include "HaarWeakClassifier.h"
+#include "HaarWeakClassifierAbs.h"
 
 
 WeakHaarClassifierFactory::WeakHaarClassifierFactory(std::vector<std::vector<std::vector<int>>>& shapes, 
@@ -22,13 +23,20 @@ std::vector<WeakClassifier*> WeakHaarClassifierFactory::getClassifiers(DataPoint
 			{
 				HaarWeakClassifier * w = new HaarWeakClassifier(*sz, *pt, *sh, 1);
 				HaarWeakClassifier * w1 = new HaarWeakClassifier(*sz, *pt, *sh, -1);
+				HaarWeakClassifierAbs *w2 = new HaarWeakClassifierAbs(*sz, *pt, *sh, 1);
+				HaarWeakClassifierAbs *w3 = new HaarWeakClassifierAbs(*sz, *pt, *sh, -1);
 				w->updateEdgewithClassification(data);
 				w1->updateEdgewithClassification(data);
+				w2->updateEdgewithClassification(data);
+				w3->updateEdgewithClassification(data);
 				if (!flags[w->getData()])
 				{
-					res.push_back(w);
-					res.push_back(w1);
+					//res.push_back(w);
+					//res.push_back(w1);
+					res.push_back(w2);
+					//res.push_back(w3);
 					flags[w->getData()] = 1;
+					//flags[w2->getData()] = 1;
 				}
 			}
 		}

@@ -145,7 +145,7 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 			acc++;
 			if (labels[i] == 1)
 			{
-				std::cout << "edge at index " << i << std::endl;
+				//std::cout << "edge at index " << i << std::endl;
 			}
 		}
 	}

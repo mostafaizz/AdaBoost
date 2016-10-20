@@ -142,9 +142,15 @@ void testMatData()
 	// prepare the Haar Classifier Factory
 	std::vector<std::vector<std::vector<int> > > shapes;
 	int arr[] = { -1,1 };
-	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
+	
+	//shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
+	std::vector<std::vector<int> > shape1(2,std::vector<int>(1,1));
+	shape1[0][0] = -1;
+	shapes.push_back(shape1);
 	std::vector<cv::Point> locs(1, cv::Point(0, 0));
-	std::vector<cv::Size> sizes(1, cv::Size(5, 10));
+	std::vector<cv::Size> sizes;
+	//sizes.push_back(cv::Size(5, 10));
+	sizes.push_back(cv::Size(10, 5));
 
 	
 	for (int i = 1; i < 30; i += 2)

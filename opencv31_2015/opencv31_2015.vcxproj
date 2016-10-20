@@ -149,6 +149,7 @@
     <ClCompile Include="AdaBoost.cpp" />
     <ClCompile Include="DataPoint.cpp" />
     <ClCompile Include="HaarWeakClassifier.cpp" />
+    <ClCompile Include="HaarWeakClassifierAbs.cpp" />
     <ClCompile Include="MatData.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="VectorData.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="AdaBoost.h" />
     <ClInclude Include="DataPoint.h" />
     <ClInclude Include="HaarWeakClassifier.h" />
+    <ClInclude Include="HaarWeakClassifierAbs.h" />
     <ClInclude Include="MatData.h" />
     <ClInclude Include="VectorData.h" />
     <ClInclude Include="WeakClassifier.h" />
