@@ -44,6 +44,46 @@ void HaarWeakClassifier::operator=(const WeakClassifier & obj)
 	this->location = ptr->location;
 }
 
+bool HaarWeakClassifier::operator==(WeakClassifier* obj)
+{
+	HaarWeakClassifier* tmp = (HaarWeakClassifier*)obj;
+	if (size != tmp->size)
+	{
+		return false;
+	}
+	if (location != tmp->location)
+	{
+		return false;
+	}
+	if (shape.size() == tmp->shape.size())
+	{
+		for (int i = 0; i < shape.size(); i++)
+		{
+			if (shape[i].size() != tmp->shape[i].size())
+			{
+				return false;
+			}
+			for (int j = 0; j < shape[i].size(); j++)
+			{
+				if (shape[i][j] != tmp->shape[i][j])
+				{
+					return false;
+				}
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+	if ((WeakClassifier(*this)) == obj)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 HaarWeakClassifier::~HaarWeakClassifier()
 {
 }

@@ -4,11 +4,12 @@
 
 
 
-
-void WeakClassifier::updateEdgewithClassification(DataPoint* d)
+// return teh classification result to know if there is a problem (when 0 is returned)
+int WeakClassifier::updateEdgewithClassification(DataPoint* d)
 {
-	classify(d);
+	int res = classify(d);
 	setEdge(getData());
+	return res;
 }
 
 WeakClassifier::WeakClassifier(double edge, int index, int direction)
@@ -34,17 +35,17 @@ int WeakClassifier::classify(DataPoint* d)
 	return classify();
 }
 
-bool WeakClassifier::operator==(const WeakClassifier & obj)
+bool WeakClassifier::operator==(WeakClassifier * obj)
 {
-	if (sign != obj.sign)
+	if (sign != obj->sign)
 	{
 		return false;
 	}
-	if (edge - obj.edge > 0.000001)
+	if (std::abs(edge - obj->edge) > 0.000001)
 	{
 		return false;
 	}
-	if (featureIndex != obj.featureIndex)
+	if (featureIndex != obj->featureIndex)
 	{
 		return false;
 	}

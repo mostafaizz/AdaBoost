@@ -9,7 +9,21 @@ std::vector<WeakClassifier*> AdaBoost::createWeakClassifiers(std::vector<DataPoi
 	for (int i = 0; i < data.size(); i++)
 	{
 		std::vector<WeakClassifier*> tmp = weakClassifierFactory->getClassifiers(data[i]);
-		res.insert(res.end(), tmp.begin(), tmp.end());
+		for (int j = 0; j < tmp.size(); j++)
+		{
+			int k = 0;
+			for (; k < res.size(); k++)
+			{
+				if (tmp[j]->operator==(res[k]))
+				{
+					break;
+				}
+			}
+			if (k >= res.size())
+			{
+				res.push_back(tmp[j]);
+			}
+		}
 	}
 	return res;
 }

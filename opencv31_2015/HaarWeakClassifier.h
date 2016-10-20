@@ -14,6 +14,7 @@ public:
 	HaarWeakClassifier(cv::Size,cv::Point,std::vector<std::vector<int> >,int direction);
 	virtual int classify(DataPoint* data);
 	virtual void operator=(const WeakClassifier& obj);
+	virtual bool operator==(WeakClassifier* obj);
 	~HaarWeakClassifier();
 };
 

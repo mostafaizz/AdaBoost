@@ -17,10 +17,10 @@ public:
 	void setFeatureIndex(int i) { featureIndex = 1; }
 	void setSign(int s) { sign = s; }
 	double getData() { return data; }
-	void updateEdgewithClassification(DataPoint* d);
+	int updateEdgewithClassification(DataPoint* d);
 	WeakClassifier(double edge,int index,int direction);
 	virtual int classify(DataPoint* d);
-	virtual bool operator==(const WeakClassifier &obj);
+	virtual bool operator==(WeakClassifier *obj);
 	virtual void operator=(const WeakClassifier &obj);
 };
 
