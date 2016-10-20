@@ -6,5 +6,6 @@ class WeakClassifierFactory
 {
 public:
 	virtual std::vector<WeakClassifier*> getClassifiers(DataPoint*) = 0;
+	virtual WeakClassifier* copyClassifier(WeakClassifier*) = 0;
 };
 

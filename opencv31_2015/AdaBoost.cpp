@@ -33,7 +33,7 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 	}
 	for (int i = 0; i < samplesWts.size(); i++)
 	{
-		if (labels[i] == -1)
+		if (labels[i] == 1)
 		{
 			samplesWts[i] = 1.0 / (2.0 * counts[1]);
 		}
@@ -41,6 +41,11 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 		{
 			samplesWts[i] = 1.0 / (2.0 * counts[0]);
 		}
+	}
+	double sss[2] = { 0 };
+	for (int i = 0; i < samplesWts.size(); i++)
+	{
+		sss[(labels[i] + 1) / 2] += samplesWts[i];
 	}
 	// create T classifers
 	std::vector<WeakClassifier*> candidates = createWeakClassifiers(data);
@@ -66,6 +71,9 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 #pragma omp critical 
 			classifierAccuracyMap.insert(std::make_pair(errors, candidates[i]));
 		}
+
+		// make sure the classifiers are unique
+		
 
 		for (std::multimap<double, WeakClassifier*>::iterator itr = classifierAccuracyMap.begin();
 			itr != classifierAccuracyMap.end() && weakClassifiers.size() != T; itr++)
@@ -116,7 +124,7 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 			}
 			//std::cout << itr->first << " " << itr->second->edge << " " << itr->second->featureIndex << " " << itr->second->sign << std::endl;
 			// finally add the classifier
-			weakClassifiers.push_back(new WeakClassifier(*itr->second));
+			weakClassifiers.push_back(weakClassifierFactory->copyClassifier(itr->second));
 			// then break this loop
 			break;
 		}
@@ -132,9 +140,13 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 	for (int i = 0; i < labels.size(); i++)
 	{
 		y.push_back(classify(data[i]));
-		if (*(y.end() - 1) == labels[i])
+		if (y[i] == labels[i])
 		{
 			acc++;
+			if (labels[i] == 1)
+			{
+				std::cout << "edge at index " << i << std::endl;
+			}
 		}
 	}
 	//std::cout << acc << std::endl;

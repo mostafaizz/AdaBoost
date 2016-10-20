@@ -16,3 +16,9 @@ std::vector<WeakClassifier*> WeakVectorClassifierFactory::getClassifiers(DataPoi
 	}
 	return res;
 }
+
+WeakClassifier * WeakVectorClassifierFactory::copyClassifier(WeakClassifier * w)
+{
+	WeakClassifier *nw = new WeakClassifier(*w);
+	return nw;
+}

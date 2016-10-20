@@ -14,7 +14,7 @@ std::vector<double> VectorData::getVectorData()
 
 cv::Mat VectorData::getMatData()
 {
-	throw "Not Implemented";
+	throw "getMatData Not Implemented";
 	return cv::Mat();
 }
 

@@ -116,9 +116,9 @@ void testMatData()
 	cv::Mat show;
 	m.copyTo(show);
 	// make patches 10x10 with step 5
-	for (int r = 0; r <= 390; r += 10)
+	for (int r = 0; r <= 390; r += 5)
 	{
-		for (int c = 0; c <= 390; c += 10)
+		for (int c = 0; c <= 390; c += 5)
 		{
 			cv::Rect win = cv::Rect(r, c, 10, 10);
 			trainData.push_back(new MatData(Iimg(win)));
@@ -137,19 +137,20 @@ void testMatData()
 	}
 
 	cv::imshow("my edges", show);
-	cv::waitKey();
+	cv::waitKey(50);
 
 	// prepare the Haar Classifier Factory
 	std::vector<std::vector<std::vector<int> > > shapes;
 	int arr[] = { -1,1 };
 	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
 	std::vector<cv::Point> locs(1, cv::Point(0, 0));
-	std::vector<cv::Size> sizes(1, cv::Size(10, 10));
+	std::vector<cv::Size> sizes(1, cv::Size(5, 10));
 
-	WeakClassifierFactory * factory = new WeakHaarClassifierFactory(shapes, sizes, locs);
-
+	
 	for (int i = 1; i < 30; i += 2)
 	{
+		WeakClassifierFactory * factory = new WeakHaarClassifierFactory(shapes, sizes, locs);
+
 		AdaBoost adaboost(i, factory);
 		double accuracy = adaboost.train(trainData, labels);
 		std::cout << i << ", " << accuracy << std::endl;

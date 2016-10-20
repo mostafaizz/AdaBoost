@@ -51,12 +51,10 @@ bool WeakClassifier::operator==(const WeakClassifier & obj)
 	return true;
 }
 
-WeakClassifier & WeakClassifier::operator=(const WeakClassifier & obj)
+void WeakClassifier::operator=(const WeakClassifier & obj)
 {
 	// TODO: insert return statement here
 	sign = obj.sign;
 	edge = obj.edge;
 	featureIndex = obj.featureIndex;
-	
-	return *this;
 }

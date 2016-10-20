@@ -21,6 +21,6 @@ public:
 	WeakClassifier(double edge,int index,int direction);
 	virtual int classify(DataPoint* d);
 	virtual bool operator==(const WeakClassifier &obj);
-	virtual WeakClassifier& operator=(const WeakClassifier &obj);
+	virtual void operator=(const WeakClassifier &obj);
 };
 

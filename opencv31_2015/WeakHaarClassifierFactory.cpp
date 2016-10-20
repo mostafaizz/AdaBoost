@@ -24,12 +24,50 @@ std::vector<WeakClassifier*> WeakHaarClassifierFactory::getClassifiers(DataPoint
 				HaarWeakClassifier * w1 = new HaarWeakClassifier(*sz, *pt, *sh, -1);
 				w->updateEdgewithClassification(data);
 				w1->updateEdgewithClassification(data);
-				res.push_back(w);
-				res.push_back(w1);
+				if (!flags[w->getData()])
+				{
+					res.push_back(w);
+					res.push_back(w1);
+					flags[w->getData()] = 1;
+				}
 			}
 		}
 	}
+	/*if (flags.size() > 1)
+	{
+		std::vector<double> thrs;
+		for (std::map<double, int>::iterator itr = flags.begin(); itr != flags.end(); itr++)
+		{
+			thrs.push_back(itr->first);
+		}
+		for (int i = 1; i < thrs.size(); i++)
+		{
+			double thr = (thrs[i] + thrs[i - 1]) / 2.0;
+			for (std::vector<std::vector<std::vector<int> > >::iterator sh = shapes.begin(); sh != shapes.end(); sh++)
+			{
+				for (std::vector<cv::Size>::iterator sz = sizes.begin(); sz != sizes.end(); sz++)
+				{
+					for (std::vector<cv::Point>::iterator pt = positions.begin(); pt != positions.end(); pt++)
+					{
+
+						HaarWeakClassifier * w = new HaarWeakClassifier(*sz, *pt, *sh, 1);
+						w->setEdge(thr);
+						HaarWeakClassifier * w1 = new HaarWeakClassifier(*sz, *pt, *sh, -1);
+						w1->setEdge(thr);
+						res.push_back(w);
+						res.push_back(w1);
+					}
+				}
+			}
+		}
+	}*/
 	return res;
+}
+
+WeakClassifier * WeakHaarClassifierFactory::copyClassifier(WeakClassifier * w)
+{
+	HaarWeakClassifier * w1 = new HaarWeakClassifier(*((HaarWeakClassifier*)w));
+	return w1;
 }
 
 WeakHaarClassifierFactory::~WeakHaarClassifierFactory()
