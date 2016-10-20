@@ -15,6 +15,7 @@ public:
 	virtual int classify(DataPoint* data);
 	virtual void operator=(const WeakClassifier& obj);
 	virtual bool operator==(WeakClassifier* obj);
+	virtual void print();
 	~HaarWeakClassifier();
 };
 

@@ -22,7 +22,8 @@ std::vector<WeakClassifier*> WeakHaarClassifierFactory::getClassifiers(DataPoint
 			for (std::vector<cv::Point>::iterator pt = positions.begin(); pt != positions.end(); pt++)
 			{
 				int num = 0;
-				/*for (int dir = -1; dir <= 1; dir += 2)
+				/*
+				for (int dir = -1; dir <= 1; dir += 2)
 				{
 					HaarWeakClassifier * w = new HaarWeakClassifier(*sz, *pt, *sh, dir);
 					if (w->updateEdgewithClassification(data))
@@ -30,7 +31,8 @@ std::vector<WeakClassifier*> WeakHaarClassifierFactory::getClassifiers(DataPoint
 						res.push_back(w);
 						num++;
 					}
-				}*/
+				}
+				*/
 				for (int dir = -1; dir <= 1; dir += 2)
 				{
 					HaarWeakClassifierAbs * w = new HaarWeakClassifierAbs(*sz, *pt, *sh, dir);

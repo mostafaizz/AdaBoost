@@ -22,5 +22,6 @@ public:
 	virtual int classify(DataPoint* d);
 	virtual bool operator==(WeakClassifier *obj);
 	virtual void operator=(const WeakClassifier &obj);
+	virtual void print();
 };
 

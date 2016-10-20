@@ -84,6 +84,20 @@ bool HaarWeakClassifier::operator==(WeakClassifier* obj)
 	return false;
 }
 
+void HaarWeakClassifier::print()
+{
+	WeakClassifier::print();
+	std::cout << " size: " << size << " loc: " << location << " shape: ";
+	for (int i = 0; i < shape.size(); i++)
+	{
+		std::cout <<  std::endl << "\t";
+		for (int j = 0; j < shape[i].size(); j++)
+		{
+			std::cout << shape[i][j] << "\t";
+		}
+	}
+}
+
 HaarWeakClassifier::~HaarWeakClassifier()
 {
 }

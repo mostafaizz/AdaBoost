@@ -104,7 +104,7 @@ void testMatData()
 	m(cv::Rect(0, 0, 200, 200)) = 50;
 	m(cv::Rect(0, 200, 200, 200)) = 100;
 	m(cv::Rect(200, 0, 200, 200)) = 200;
-	m(cv::Rect(200, 200, 200, 200)) = 70;
+	m(cv::Rect(200, 200, 200, 200)) = 150;
 	cv::Mat Iimg, I2img;
 	cv::integral(m, Iimg, I2img, CV_32FC1);
 	// display
@@ -115,7 +115,7 @@ void testMatData()
 	std::vector<DataPoint*> trainData;
 	std::vector<int> labels;
 	cv::Mat show;
-	m.copyTo(show);
+	cv::cvtColor(m, show, CV_GRAY2BGR);
 	// make patches 10x10 with step 5
 	for (int r = 0; r <= 390; r += 5)
 	{
@@ -127,7 +127,7 @@ void testMatData()
 			{
 				// edge
 				labels.push_back(1);
-				cv::rectangle(show, win, cv::Scalar(150, 150, 150));
+				cv::rectangle(show, win, cv::Scalar(255, 0, 0));
 			}
 			else
 			{
@@ -148,10 +148,14 @@ void testMatData()
 	std::vector<std::vector<int> > shape1(2,std::vector<int>(1,1));
 	shape1[0][0] = -1;
 	shapes.push_back(shape1);
+	std::vector<std::vector<int> > shape2(2, std::vector<int>(2, 1));
+	shape2[0][0] = shape2[1][1] = -1;
+	shapes.push_back(shape2);
 	std::vector<cv::Point> locs(1, cv::Point(0, 0));
 	std::vector<cv::Size> sizes;
 	sizes.push_back(cv::Size(5, 10));
 	sizes.push_back(cv::Size(10, 5));
+	sizes.push_back(cv::Size(5, 5));
 
 	
 	for (int i = 1; i < 30; i += 2)
@@ -162,6 +166,17 @@ void testMatData()
 		std::vector<int> y;
 		double accuracy = adaboost.train(trainData, labels, y);
 		std::cout << i << ", " << accuracy << std::endl;
+		cv::Mat show1;
+		show.copyTo(show1);
+		for (int j = 0; j < y.size(); j++)
+		{
+			if (y[j] == 1 && labels[j] == 1)
+			{
+				cv::rectangle(show1, ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 255, 0));
+			}
+		}
+		cv::imshow("my edges", show1);
+		cv::waitKey(0);
 		//system("PAUSE");
 	}
 }

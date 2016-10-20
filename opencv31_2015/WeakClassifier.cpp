@@ -59,3 +59,8 @@ void WeakClassifier::operator=(const WeakClassifier & obj)
 	edge = obj.edge;
 	featureIndex = obj.featureIndex;
 }
+
+void WeakClassifier::print()
+{
+	std::cout << "Thr: " << edge << " dir: " << this->sign << " ind: " << featureIndex;
+}

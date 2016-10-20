@@ -136,7 +136,9 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 			{
 				samplesWts[k] /= sumSamplesWts;
 			}
-			//std::cout << itr->first << " " << itr->second->edge << " " << itr->second->featureIndex << " " << itr->second->sign << std::endl;
+			std::cout << t << ":\t";
+			itr->second->print();
+			std::cout << std::endl;
 			// finally add the classifier
 			weakClassifiers.push_back(weakClassifierFactory->copyClassifier(itr->second));
 			// then break this loop

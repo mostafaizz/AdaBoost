@@ -7,6 +7,11 @@ MatData::MatData(cv::Mat d, cv::Rect r)
 	roi = r;
 }
 
+cv::Rect MatData::getROI()
+{
+	return roi;
+}
+
 std::vector<double> MatData::getVectorData()
 {
 	throw "getVectorData Not implemented for this class";
