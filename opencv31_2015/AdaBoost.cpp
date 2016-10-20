@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 
-std::vector<WeakClassifier*> AdaBoost::createWeakClassifiers(std::vector<DataPoint* >& data)
+std::vector<WeakClassifier*> AdaBoost::createWeakClassifiers(const std::vector<DataPoint* >& data)
 {
 	std::vector<WeakClassifier*> res;
 	for (int i = 0; i < data.size(); i++)
@@ -36,7 +36,7 @@ AdaBoost::AdaBoost(int numClassifiers, WeakClassifierFactory* weakClassifierFact
 	this->weakClassifierFactory = weakClassifierFactory;
 }
 
-double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
+double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<int>& labels, std::vector<int>& yOut)
 {
 	std::vector<double> samplesWts(data.size(), 1.0 / labels.size());
 	
@@ -149,12 +149,11 @@ double AdaBoost::train(std::vector<DataPoint* >& data, std::vector<int>& labels)
 		delete candidates[i];
 	}
 	// calculate and return the accuracy
-	std::vector<int> y;
 	int acc = 0;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		y.push_back(classify(data[i]));
-		if (y[i] == labels[i])
+		yOut.push_back(classify(data[i]));
+		if (yOut[i] == labels[i])
 		{
 			acc++;
 			if (labels[i] == 1)

@@ -14,13 +14,13 @@ private:
 	WeakClassifierFactory * weakClassifierFactory;
 	std::vector<WeakClassifier*> weakClassifiers;
 	std::vector<double> wts;
-	std::vector<WeakClassifier*> createWeakClassifiers(std::vector<DataPoint* >&);
+	std::vector<WeakClassifier*> createWeakClassifiers(const std::vector<DataPoint* >&);
 public:
 	// numClassifiers: set how many weak classifiers 
 	// data is vector<vectors> where the outer vector is the data and the second dimesion is the feature vector
 	AdaBoost(int numClassifiers, WeakClassifierFactory*);
 	// return the acccuray
-	double train(std::vector<DataPoint* >& data, std::vector<int>& labels);
+	double train(const std::vector<DataPoint* >& data,const std::vector<int>& labels, std::vector<int>& y);
 	// return class 1 or -1
 	int classify(DataPoint* subj);
 	~AdaBoost();

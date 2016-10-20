@@ -1,10 +1,10 @@
 #include "MatData.h"
 
 
-
-MatData::MatData(cv::Mat d)
+MatData::MatData(cv::Mat d, cv::Rect r)
 {
 	data = d;
+	roi = r;
 }
 
 std::vector<double> MatData::getVectorData()
@@ -15,7 +15,7 @@ std::vector<double> MatData::getVectorData()
 
 cv::Mat MatData::getMatData()
 {
-	return data;
+	return data(roi);
 }
 
 int MatData::getDimensions()

@@ -4,8 +4,9 @@ class MatData :
 	public DataPoint
 {
 	cv::Mat data;
+	cv::Rect roi;
 public:
-	MatData(cv::Mat);
+	MatData(cv::Mat, cv::Rect);
 	virtual std::vector<double> getVectorData();
 	virtual cv::Mat getMatData();
 	virtual int getDimensions();

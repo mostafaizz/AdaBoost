@@ -69,7 +69,8 @@ void test2DPoints()
 	for (int i = 1; i < 30; i+=2)
 	{
 		AdaBoost adaboost(i, factory);
-		double accuracy = adaboost.train(data, label);
+		std::vector<int> outLabels;
+		double accuracy = adaboost.train(data, label, outLabels);
 		std::cout << i << ", " << accuracy << std::endl;
 		//system("PAUSE");
 	}
@@ -121,7 +122,7 @@ void testMatData()
 		for (int c = 0; c <= 390; c += 5)
 		{
 			cv::Rect win = cv::Rect(r, c, 10, 10);
-			trainData.push_back(new MatData(Iimg(win)));
+			trainData.push_back(new MatData(Iimg, win));
 			if (cv::sum(edges(win)).val[0] > 1)
 			{
 				// edge
@@ -158,7 +159,8 @@ void testMatData()
 		WeakClassifierFactory * factory = new WeakHaarClassifierFactory(shapes, sizes, locs);
 
 		AdaBoost adaboost(i, factory);
-		double accuracy = adaboost.train(trainData, labels);
+		std::vector<int> y;
+		double accuracy = adaboost.train(trainData, labels, y);
 		std::cout << i << ", " << accuracy << std::endl;
 		//system("PAUSE");
 	}
