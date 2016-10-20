@@ -30,3 +30,13 @@ bool HaarWeakClassifierAbs::operator==(WeakClassifier * obj)
 	}
 	return false;
 }
+
+void HaarWeakClassifierAbs::operator=(const WeakClassifier & obj)
+{
+	HaarWeakClassifierAbs* ptr = (HaarWeakClassifierAbs*)&obj;
+	this->data = ptr->data;
+	this->edge = ptr->edge;
+	this->featureIndex = ptr->featureIndex;
+	this->location = ptr->location;
+	this->dummy = ptr->dummy;
+}

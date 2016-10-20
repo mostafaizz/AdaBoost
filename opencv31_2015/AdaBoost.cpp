@@ -136,7 +136,7 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 			{
 				samplesWts[k] /= sumSamplesWts;
 			}
-			std::cout << t << ":\t";
+			std::cout << t << ":" << wts[t] << "\t";
 			itr->second->print();
 			std::cout << std::endl;
 			// finally add the classifier
@@ -154,15 +154,18 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 	int acc = 0;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		yOut.push_back(classify(data[i]));
-		if (yOut[i] == labels[i])
-		{
-			acc++;
-			if (labels[i] == 1)
+		
+			yOut.push_back(classify(data[i]));
+			if (yOut[i] == labels[i])
 			{
-				//std::cout << "edge at index " << i << std::endl;
+				acc++;
+				if (labels[i] == 1)
+				{
+					classify(data[i]);
+					//std::cout << "edge at index " << i << std::endl;
+				}
 			}
-		}
+		
 	}
 	//std::cout << acc << std::endl;
 	double accuracy = acc;

@@ -102,9 +102,9 @@ void testMatData()
 {
 	cv::Mat m = cv::Mat::zeros(cv::Size(400, 400), CV_8UC1);
 	m(cv::Rect(0, 0, 200, 200)) = 50;
-	m(cv::Rect(0, 200, 200, 200)) = 100;
-	m(cv::Rect(200, 0, 200, 200)) = 200;
-	m(cv::Rect(200, 200, 200, 200)) = 150;
+	m(cv::Rect(0, 200, 200, 200)) = 200;
+	m(cv::Rect(200, 0, 200, 200)) = 150;
+	m(cv::Rect(200, 200, 200, 200)) = 100;
 	cv::Mat Iimg, I2img;
 	cv::integral(m, Iimg, I2img, CV_32FC1);
 	// display
@@ -117,12 +117,15 @@ void testMatData()
 	cv::Mat show;
 	cv::cvtColor(m, show, CV_GRAY2BGR);
 	// make patches 10x10 with step 5
-	for (int r = 0; r <= 390; r += 5)
+	for (int r = 0; r <= 300; r += 50)
 	{
-		for (int c = 0; c <= 390; c += 5)
+		for (int c = 0; c <= 300; c += 50)
 		{
-			cv::Rect win = cv::Rect(r, c, 10, 10);
+			cv::Rect win = cv::Rect(c, r, 100, 100);
 			trainData.push_back(new MatData(Iimg, win));
+			//MatData testData(m, win);
+			//cv::imshow("window", testData.getMatData());
+			//cv::waitKey();
 			if (cv::sum(edges(win)).val[0] > 1)
 			{
 				// edge
@@ -143,19 +146,21 @@ void testMatData()
 	// prepare the Haar Classifier Factory
 	std::vector<std::vector<std::vector<int> > > shapes;
 	int arr[] = { -1,1 };
-	
-	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
 	std::vector<std::vector<int> > shape1(2,std::vector<int>(1,1));
 	shape1[0][0] = -1;
-	shapes.push_back(shape1);
 	std::vector<std::vector<int> > shape2(2, std::vector<int>(2, 1));
 	shape2[0][0] = shape2[1][1] = -1;
-	shapes.push_back(shape2);
+
+
+	shapes.push_back(std::vector<std::vector<int> >(1, std::vector<int>(arr, arr + 2)));
+	shapes.push_back(shape1);
+	//shapes.push_back(shape2);
+	
 	std::vector<cv::Point> locs(1, cv::Point(0, 0));
 	std::vector<cv::Size> sizes;
-	sizes.push_back(cv::Size(5, 10));
-	sizes.push_back(cv::Size(10, 5));
-	sizes.push_back(cv::Size(5, 5));
+	sizes.push_back(cv::Size(50, 100));
+	sizes.push_back(cv::Size(100, 50));
+	//sizes.push_back(cv::Size(5, 5));
 
 	
 	for (int i = 1; i < 30; i += 2)
@@ -170,9 +175,16 @@ void testMatData()
 		show.copyTo(show1);
 		for (int j = 0; j < y.size(); j++)
 		{
-			if (y[j] == 1 && labels[j] == 1)
+			if (y[j] == 1)
 			{
-				cv::rectangle(show1, ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 255, 0));
+				if (labels[j] == 1)
+				{
+					cv::rectangle(show1, ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 255, 0));
+				}
+				else
+				{
+					cv::rectangle(show1, ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 0, 255));
+				}
 			}
 		}
 		cv::imshow("my edges", show1);

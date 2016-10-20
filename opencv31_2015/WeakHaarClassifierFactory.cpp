@@ -50,7 +50,15 @@ std::vector<WeakClassifier*> WeakHaarClassifierFactory::getClassifiers(DataPoint
 
 WeakClassifier * WeakHaarClassifierFactory::copyClassifier(WeakClassifier * w)
 {
-	HaarWeakClassifier * w1 = new HaarWeakClassifier(*((HaarWeakClassifier*)w));
+	WeakClassifier * w1;
+	if (dynamic_cast<HaarWeakClassifierAbs*>(w))
+	{
+		w1 = new HaarWeakClassifierAbs(*((HaarWeakClassifierAbs*)w));
+	}
+	else if (dynamic_cast<HaarWeakClassifier*>(w))
+	{
+		w1 = new HaarWeakClassifier(*((HaarWeakClassifier*)w));
+	}
 	return w1;
 }
 

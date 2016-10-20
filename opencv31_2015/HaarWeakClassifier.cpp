@@ -29,7 +29,9 @@ int HaarWeakClassifier::classify(DataPoint * d)
 			double C = m.at<float>(location.y + r * size.height, location.x + (c + 1) * size.width - 1);
 			double D = m.at<float>(location.y + r * size.height, location.x + c * size.width);
 
-			data += ((A - B - C + D) * shape[r][c]);
+			double tmp = A - B - C + D;
+			tmp *= shape[r][c];
+			data += tmp;
 		}
 	}
 	return WeakClassifier::classify();
