@@ -14,7 +14,7 @@ protected:
 	int classify();
 public:
 	void setEdge(double e) { edge = e; }
-	void setFeatureIndex(int i) { featureIndex = 1; }
+    void setFeatureIndex(int i) { featureIndex = i; }
 	void setSign(int s) { sign = s; }
 	double getData() { return data; }
 	int updateEdgewithClassification(DataPoint* d);

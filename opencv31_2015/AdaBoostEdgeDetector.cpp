@@ -105,6 +105,7 @@ void AdaBoostEdgeDetector::train(std::vector<cv::Mat> images, bool display)
 	}
 }
 
+
 void AdaBoostEdgeDetector::test(cv::Mat img, bool display)
 {
 	// integral images
@@ -139,7 +140,7 @@ void AdaBoostEdgeDetector::test(cv::Mat img, bool display)
 		}
 		std::string name = "testing_" + std::to_string(numClassifiers) + ".png";
 		cv::imshow(name, colorImage);
-		//cv::imwrite(name, colorImage);
+        //cv::imwrite(name, colorImage);
 		cv::waitKey(0);
 	}
 }

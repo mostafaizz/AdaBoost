@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <random>
+#include <fstream>
 #include "AdaBoost.h"
 #include "VectorData.h"
 #include "MatData.h"
@@ -184,7 +185,12 @@ void testMatData()
 	}
 }
 */
-void testAdaBoostEdgeDetection(int horizontal = 1, int vertical = 1, int t = 6, std::string trainImg = "orig.png",std::string testImage = "test.png")
+
+extern "C"             //No name mangling
+__declspec(dllexport)  //Tells the compiler to export the function
+void 
+__cdecl                //Specifies calling convention, cdelc is default, 
+testAdaBoostEdgeDetection(int horizontal, int vertical, int t, char* trainImg,char* testImage)
 {
 	cv::Mat testImg = cv::imread(testImage, 0);
 
@@ -216,8 +222,28 @@ void testAdaBoostEdgeDetection(int horizontal = 1, int vertical = 1, int t = 6, 
 		AdaBoostEdgeDetector adaBoostEdgeDetector(t, shapes, cv::Size(4,4), 2);
 		adaBoostEdgeDetector.train(images, true);
 		adaBoostEdgeDetector.test(testImg, true);
+		
 	}
 	
+}
+
+extern "C"             //No name mangling
+__declspec(dllexport)  //Tells the compiler to export the function
+ unsigned char*
+__cdecl                //Specifies calling convention, cdelc is default, 
+ test(char* name, int &size)
+{
+	cv::Mat img = cv::imread(name,0);
+	//cv::imshow("img", img);
+	//cv::waitKey();
+	std::cout << "thsi is a test" << std::endl;
+	// assume uint8 gray
+	size = img.cols * img.rows;
+	std::vector<unsigned char> buf;
+	cv::imencode(".png", img, buf);
+	unsigned char *data = new unsigned char[buf.size()];
+	memcpy(data,reinterpret_cast<unsigned char*>(buf.data()), buf.size());
+	return data;
 }
 
 int main(int argc, char*argv[])
@@ -255,8 +281,15 @@ int main(int argc, char*argv[])
 		}
 		i++;
 	}
+	
+	int sz = 0;
+	unsigned char * data = test("orig.png",sz);
+	std::ofstream outfile("test.bmp", std::ofstream::binary);
+	outfile.write((char *)data, sz);
+	outfile.close();
 	//test2DPoints();
 	//testMatData();
-	testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage);
+	//testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage);
+	delete []data;
 	return 0;
 }

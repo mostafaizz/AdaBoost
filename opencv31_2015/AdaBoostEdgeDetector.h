@@ -2,6 +2,7 @@
 #include "AdaBoost.h"
 #include "MatData.h"
 #include "WeakHaarClassifierFactory.h"
+#include <opencv2/core.hpp>
 
 class AdaBoostEdgeDetector
 {
