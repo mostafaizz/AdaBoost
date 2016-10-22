@@ -186,11 +186,22 @@ void testMatData()
 }
 */
 
+unsigned char *getImageData(const cv::Mat img,int& size)
+{
+	std::vector<unsigned char> buf;
+	cv::imencode(".png", img, buf);
+	unsigned char *data = new unsigned char[buf.size()];
+	memcpy(data, reinterpret_cast<unsigned char*>(buf.data()), buf.size());
+	size = buf.size();
+	return data;
+}
+
 extern "C"             //No name mangling
 __declspec(dllexport)  //Tells the compiler to export the function
 void 
 __cdecl                //Specifies calling convention, cdelc is default, 
-testAdaBoostEdgeDetection(int horizontal, int vertical, int t, char* trainImg,char* testImage)
+testAdaBoostEdgeDetection(int horizontal, int vertical, int t, char* trainImg, char* testImage,
+	unsigned char* &trainImageData, int& trainImageSize, unsigned char* &testImageData, int& testImageSize)
 {
 	cv::Mat testImg = cv::imread(testImage, 0);
 
@@ -218,13 +229,16 @@ testAdaBoostEdgeDetection(int horizontal, int vertical, int t, char* trainImg,ch
 
 
 	//for (int t = 1; t < 20; t++)
-	{
-		AdaBoostEdgeDetector adaBoostEdgeDetector(t, shapes, cv::Size(4,4), 2);
-		adaBoostEdgeDetector.train(images, true);
-		adaBoostEdgeDetector.test(testImg, true);
-		
-	}
-	
+	//{
+	AdaBoostEdgeDetector adaBoostEdgeDetector(t, shapes, cv::Size(4, 4), 2);
+
+	std::vector<cv::Mat> tImgs = adaBoostEdgeDetector.train(images, false);
+	cv::Mat testImg1 = adaBoostEdgeDetector.test(testImg, false);
+
+	trainImageData = getImageData(tImgs[0], trainImageSize);
+	testImageData = getImageData(testImg1, testImageSize);
+	//}
+
 }
 
 extern "C"             //No name mangling
@@ -251,8 +265,8 @@ int main(int argc, char*argv[])
 	int horizontal = 1;
 	int vertical = 1;
 	int t = 6;
-	std::string trainImg = "orig.png";
-	std::string testImage = "test.png";
+	char* trainImg = "orig.png";
+	char* testImage = "test.png";
 	for (int i = 0; i < argc; i++)
 	{
 		if (std::string(argv[i]) == "-h")
@@ -282,14 +296,16 @@ int main(int argc, char*argv[])
 		i++;
 	}
 	
-	int sz = 0;
-	unsigned char * data = test("orig.png",sz);
-	std::ofstream outfile("test.bmp", std::ofstream::binary);
-	outfile.write((char *)data, sz);
-	outfile.close();
+	//int sz = 0;
+	//unsigned char * data = test("orig.png",sz);
+	//std::ofstream outfile("test.bmp", std::ofstream::binary);
+	//outfile.write((char *)data, sz);
+	//outfile.close();
 	//test2DPoints();
 	//testMatData();
-	//testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage);
-	delete []data;
+	unsigned char * data1, *data2;
+	int sz1, sz2;
+	testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage, data1, sz1, data2, sz2);
+	//delete []data;
 	return 0;
 }

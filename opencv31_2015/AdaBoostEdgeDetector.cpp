@@ -26,7 +26,7 @@ AdaBoostEdgeDetector::AdaBoostEdgeDetector(int numClassifiers, std::vector<std::
 }
 
 // assuming images are already grayscale
-void AdaBoostEdgeDetector::train(std::vector<cv::Mat> images, bool display)
+std::vector<cv::Mat> AdaBoostEdgeDetector::train(std::vector<cv::Mat> images, bool display)
 {
 	// prepare data vector
 	std::vector<DataPoint*> trainData;
@@ -68,29 +68,30 @@ void AdaBoostEdgeDetector::train(std::vector<cv::Mat> images, bool display)
 	std::vector<int> y;
 	double accuracy = adaBoost->train(trainData, labels, y);
 
-	if (display)
+
+	std::vector<cv::Mat> colorImages;
+	for (int i = 0; i < images.size(); i++)
 	{
-		std::vector<cv::Mat> colorImages;
-		for (int i = 0; i < images.size(); i++)
+		cv::Mat colorImage;
+		cv::cvtColor(images[i], colorImage, CV_GRAY2BGR);
+		colorImages.push_back(colorImage);
+	}
+	for (int j = 0; j < y.size(); j++)
+	{
+		if (y[j] == 1)
 		{
-			cv::Mat colorImage;
-			cv::cvtColor(images[i], colorImage, CV_GRAY2BGR);
-			colorImages.push_back(colorImage);
-		}
-		for (int j = 0; j < y.size(); j++)
-		{
-			if (y[j] == 1)
+			if (labels[j] == 1)
 			{
-				if (labels[j] == 1)
-				{
-					cv::rectangle(colorImages[imageIndex[j]], ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 255, 0));
-				}
-				else
-				{
-					cv::rectangle(colorImages[imageIndex[j]], ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 0, 255));
-				}
+				cv::rectangle(colorImages[imageIndex[j]], ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 255, 0));
+			}
+			else
+			{
+				cv::rectangle(colorImages[imageIndex[j]], ((MatData*)trainData[j])->getROI(), cv::Scalar(0, 0, 255));
 			}
 		}
+	}
+	if (display)
+	{
 		for (int i = 0; i < images.size(); i++)
 		{
 			std::string name = "training_" + std::to_string(numClassifiers) + "_" + std::to_string(i) + ".png";
@@ -103,10 +104,11 @@ void AdaBoostEdgeDetector::train(std::vector<cv::Mat> images, bool display)
 	{
 		delete trainData[i];
 	}
+	return colorImages;
 }
 
 
-void AdaBoostEdgeDetector::test(cv::Mat img, bool display)
+cv::Mat AdaBoostEdgeDetector::test(cv::Mat img, bool display)
 {
 	// integral images
 	cv::Mat Iimg, I2img;
@@ -126,23 +128,25 @@ void AdaBoostEdgeDetector::test(cv::Mat img, bool display)
 			wins.push_back(win);
 		}
 	}
+
+	cv::Mat colorImage;
+	cv::cvtColor(img, colorImage, CV_GRAY2BGR);
+	for (int j = 0; j < out.size(); j++)
+	{
+		if (out[j] == 1)
+		{
+			cv::circle(colorImage, cv::Point((wins[j].x + wins[j].width / 2), (wins[j].y + wins[j].height / 2)), 2,
+				cv::Scalar(0, 255, 0), -1);
+		}
+	}
 	if (display)
 	{
-		cv::Mat colorImage;
-		cv::cvtColor(img, colorImage, CV_GRAY2BGR);
-		for (int j = 0; j < out.size(); j++)
-		{
-			if (out[j] == 1)
-			{
-				cv::circle(colorImage, cv::Point((wins[j].x + wins[j].width / 2), (wins[j].y + wins[j].height / 2)),2,
-					cv::Scalar(0, 255, 0), -1);
-			}
-		}
 		std::string name = "testing_" + std::to_string(numClassifiers) + ".png";
 		cv::imshow(name, colorImage);
-        //cv::imwrite(name, colorImage);
+		//cv::imwrite(name, colorImage);
 		cv::waitKey(0);
 	}
+	return colorImage;
 }
 
 

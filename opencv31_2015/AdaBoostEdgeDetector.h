@@ -16,8 +16,8 @@ public:
 	static cv::Mat cannyEdgeDetection(cv::Mat m);
 	
 	AdaBoostEdgeDetector(int numClassifiers, std::vector<std::vector<std::vector<int>>>& shapes, cv::Size patchSize, int step);
-	void train(std::vector<cv::Mat> images, bool display = false);
-	void test(cv::Mat img, bool display = false);
+	std::vector<cv::Mat> train(std::vector<cv::Mat> images, bool display = false);
+	cv::Mat test(cv::Mat img, bool display = false);
 	~AdaBoostEdgeDetector();
 };
 

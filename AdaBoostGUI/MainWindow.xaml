@@ -5,19 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdaBoostGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="522.697" Width="757.566">
     <Grid>
-        <Button x:Name="button" Content="Run" HorizontalAlignment="Left" Margin="322,261,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <TextBox x:Name="textBoxHorizontal" HorizontalAlignment="Left" Height="23" Margin="133,24,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="textBoxVertical" HorizontalAlignment="Left" Height="23" Margin="133,52,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="textBoxT" HorizontalAlignment="Left" Height="23" Margin="133,80,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="textBoxIn" HorizontalAlignment="Left" Height="23" Margin="133,108,0,0" TextWrapping="Wrap" Text="test.png" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="textBoxOut" HorizontalAlignment="Left" Height="23" Margin="133,136,0,0" TextWrapping="Wrap" Text="orig.png" VerticalAlignment="Top" Width="74"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="202" Margin="247,24,0,0" VerticalAlignment="Top" Width="232">
+        <Button x:Name="button" Content="Run" HorizontalAlignment="Left" Margin="627,450,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <TextBox x:Name="textBoxT" HorizontalAlignment="Left" Height="23" Margin="498,370,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="textBoxIn" HorizontalAlignment="Left" Height="23" Margin="539,305,0,0" TextWrapping="Wrap" Text="test.png" VerticalAlignment="Top" Width="126"/>
+        <TextBox x:Name="textBoxOut" HorizontalAlignment="Left" Height="23" Margin="155,305,0,0" TextWrapping="Wrap" Text="orig.png" VerticalAlignment="Top" Width="127"/>
+        <Image x:Name="imageTest" HorizontalAlignment="Left" Height="202" Margin="458,80,0,0" VerticalAlignment="Top" Width="232">
             <Image.Source>
                 <BitmapImage UriSource="test.png"/>
             </Image.Source>
         </Image>
+        <Image x:Name="imageTrain" HorizontalAlignment="Left" Height="202" Margin="76,80,0,0" VerticalAlignment="Top" Width="232">
+            <Image.Source>
+                <BitmapImage UriSource="test.png"/>
+            </Image.Source>
+        </Image>
+        <Label x:Name="label" Content="Training Image" HorizontalAlignment="Left" Margin="76,39,0,0" VerticalAlignment="Top" Width="155"/>
+        <Label x:Name="label_Copy" Content="Testing Image" HorizontalAlignment="Left" Margin="458,39,0,0" VerticalAlignment="Top" Width="155"/>
+        <Button x:Name="buttonBrowseTraining" Content="Browse" HorizontalAlignment="Left" Margin="75,304,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="buttonBrowseTesting" Content="Browse" HorizontalAlignment="Left" Margin="458,304,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox x:Name="checkBoxHorizontal" Content="Horizontal Wavelet" HorizontalAlignment="Left" Margin="44,369,0,0" VerticalAlignment="Top" Checked="checkBox_Checked"/>
+        <CheckBox x:Name="checkBoxVertical" Content="Vertical Wavelet" HorizontalAlignment="Left" Margin="191,369,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Number of Weak Classifers&#xD;&#xA;" HorizontalAlignment="Left" Margin="327,366,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

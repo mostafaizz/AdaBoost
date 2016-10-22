@@ -28,18 +28,45 @@ namespace AdaBoostGUI
         }
 
         [DllImport("opencv31_2015.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testAdaBoostEdgeDetection(int h,int v,int t,string inp, string oup);
+        public static extern void testAdaBoostEdgeDetection(int h,int v,int t,string inp, string oup, 
+            out IntPtr trainImg, out int trainImgSize, out IntPtr testImg, out int testImgSize);
 
         [DllImport("opencv31_2015.dll")]
         public static extern IntPtr test(string name, out int size);
 
+        private BitmapImage getImageFromIntPtr(IntPtr ptr,int size)
+        {
+            byte[] buf = new byte[size];
+            Marshal.Copy(ptr, buf, 0, size);
+            try
+            {
+                //byte [] buf1 = File.ReadAllBytes("orig.png");
+                MemoryStream memoryStream = new MemoryStream(buf);
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.DecodePixelWidth = 400;
+                bitmap.DecodePixelHeight = 400;
+                bitmap.StreamSource = memoryStream;
+                bitmap.EndInit();
+                bitmap.Freeze();
+
+                return bitmap;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+            return null;
+        }
+
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            int h = int.Parse(textBoxHorizontal.Text);
-            int v = int.Parse(textBoxVertical.Text);
+            int h = ((bool)checkBoxHorizontal.IsChecked) ? 1 : 0;
+            int v = ((bool)checkBoxVertical.IsChecked) ? 1 : 0;
             int T = int.Parse(textBoxT.Text);
 
-            int r = 0;
+            /*int r = 0;
             IntPtr ptr = test("orig.png", out r);
             byte []buf = new byte[r];
             Marshal.Copy(ptr, buf,0 , r);
@@ -56,18 +83,26 @@ namespace AdaBoostGUI
                 bitmap.EndInit();
                 bitmap.Freeze();
 
-                image.Source = bitmap;
+                imageTrain.Source = bitmap;
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
             }
+            */
             //var img = Image.(stream);
             //BitmapImage img = new BitmapImage(new Uri("test.png"));
             //image.Source = img;
-
-            //testAdaBoostEdgeDetection(h, v, T, textBoxIn.Text, textBoxOut.Text);
+            IntPtr trainImg, testImg;
+            int trainImgSize, testImgSize;
+            testAdaBoostEdgeDetection(h, v, T, textBoxIn.Text, textBoxOut.Text, out trainImg, out trainImgSize, out testImg, out testImgSize);
+            imageTrain.Source = getImageFromIntPtr(trainImg, trainImgSize);
+            imageTest.Source = getImageFromIntPtr(testImg, testImgSize);
         }
 
+        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
