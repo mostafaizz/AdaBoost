@@ -2,10 +2,13 @@
 #include <opencv2\imgproc.hpp>
 #include <opencv2\highgui.hpp>
 #include <opencv2\ml.hpp>
+#include <opencv2\objdetect.hpp>
 #include <vector>
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <chrono>
+#include <thread>
 #include "AdaBoost.h"
 #include "VectorData.h"
 #include "MatData.h"
@@ -243,22 +246,65 @@ testAdaBoostEdgeDetection(int horizontal, int vertical, int t, char* trainImg, c
 
 extern "C"             //No name mangling
 __declspec(dllexport)  //Tells the compiler to export the function
- unsigned char*
+ void
 __cdecl                //Specifies calling convention, cdelc is default, 
- test(char* name, int &size)
+ test(int &size)
 {
-	cv::Mat img = cv::imread(name,0);
-	//cv::imshow("img", img);
-	//cv::waitKey();
-	std::cout << "thsi is a test" << std::endl;
-	// assume uint8 gray
-	size = img.cols * img.rows;
-	std::vector<unsigned char> buf;
-	cv::imencode(".png", img, buf);
-	unsigned char *data = new unsigned char[buf.size()];
-	memcpy(data,reinterpret_cast<unsigned char*>(buf.data()), buf.size());
-	return data;
+	for (size = 0; size < 10; size++)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
 }
+
+extern "C"             //No name mangling
+__declspec(dllexport)  //Tells the compiler to export the function
+void
+__cdecl
+captureCamera(unsigned char* &image, int& size, int camID)
+{
+	size = 0;
+	cv::VideoCapture cap;
+	if (cap.open(camID))
+	{
+		cv::Mat img;
+		if (cap.read(img))
+		{
+			image = getImageData(img, size);
+		}
+		cap.release();
+	}
+}
+
+extern "C" __declspec(dllexport) unsigned char* __cdecl faceDetect(char* fileName, char *modelName, int &imgSize)
+{
+	imgSize = 0;
+	cv::Mat img = cv::imread(fileName, 1);
+	if (img.rows > 600)
+	{
+		cv::resize(img, img, cv::Size(img.cols * 600.0 / img.rows, 600));
+	}
+	
+
+	cv::CascadeClassifier faceCascade;
+	if (!faceCascade.load(modelName))
+	{
+		return 0;
+	}
+	cv::Mat gray;
+	cv::cvtColor(img, gray, CV_BGR2GRAY);
+	cv::equalizeHist(gray, gray);
+	std::vector<cv::Rect> faces;
+	faceCascade.detectMultiScale(gray, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
+	for (int i = 0; i < faces.size(); i++)
+	{
+		cv::rectangle(img, faces[i], cv::Scalar(255, 0, 0),3);
+	}
+	//cv::imshow("faces", img);
+	//cv::waitKey(50);
+	return getImageData(img, imgSize);
+}
+
+
 
 int main(int argc, char*argv[])
 {
