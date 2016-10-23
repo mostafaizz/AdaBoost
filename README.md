@@ -71,3 +71,7 @@ The other option to do annotation is to use opencv tool "opencv_annotation" (in 
 
 For the last step, to prepare the binary ".vec" file that contains the samples, you can follow the tutorial at:
 https://codeyarns.com/2014/09/01/how-to-train-opencv-cascade-classifier/
+
+
+For Question and Comments please contact Mostafa Izz:
+izz.mostafa@gmail.com
