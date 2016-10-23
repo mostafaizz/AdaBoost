@@ -15,7 +15,13 @@ To run the project:
 
 2- Run the "AdaBoostGUI" tool. And you will find 3 tabs:
 
-![Alt text](/imgs/0.jpg?raw=true "AdaBoostGUI")
+a- The first tab is a demo for my edge detection usign AdaBoost and Haar Wavlets. You will need to select training and testing images (in .png format) and choose horizontal or vertical wavelets. Then hit run. (This code can be updated to detect faces, but I didn't have enough time to test this for now).
+
+![Alt text](/imgs/0.jpg?raw=true "AdaBoost Edge Detection")
+
+b- The second tab is interface for the opencv face detection algorithm. You need to select the image (jpg or png). And select the model, either an OpenCV pretrained model from opencv "etc" directory. OR you can use your trained model. Then hit "Detect Face".
+
+![Alt text](/imgs/1.jpg?raw=true "Detect Fcaes")
 
 Face databases:
 http://www.face-rec.org/databases/
