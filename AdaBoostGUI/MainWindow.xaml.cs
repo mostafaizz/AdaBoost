@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AdaBoostGUI
 {
@@ -172,16 +173,23 @@ namespace AdaBoostGUI
         }
         private void buttonBrowseTraining_Click(object sender, RoutedEventArgs e)
         {
-            textBoxIn.Text = openPngFile();
-            imageTrain.Source = getImageFromFile(textBoxIn.Text);
+            string str = openPngFile();
+            if (str != null)
+            {
+                textBoxIn.Text = str;
+                imageTrain.Source = getImageFromFile(str);
+            }
         }
 
         private void buttonBrowseTesting_Click(object sender, RoutedEventArgs e)
         {
-            textBoxOut.Text = openPngFile();
-            imageTest.Source = getImageFromFile(textBoxIn.Text);
+            string str = openPngFile();
+            if (str != null)
+            {
+                textBoxOut.Text = str;
+                imageTest.Source = getImageFromFile(str);
+            }
         }
-
         private void captureImage()
         {
             IntPtr img;
@@ -193,15 +201,18 @@ namespace AdaBoostGUI
 
 
 
-        
+
 
         private void buttonSelectImage_Click(object sender, RoutedEventArgs e)
         {
             //captureImage();
             string imageFileName = openFile("PNG Files (*.png)|*.png|JPEG Files (*.jpg)|*.jpg");
-            imageCamera.Source = getImageFromFile(imageFileName);
-            labelFaceImage.Content = imageFileName;
-            labelFaceImage.ToolTip = imageFileName;
+            if (imageFileName != null)
+            {
+                imageCamera.Source = getImageFromFile(imageFileName);
+                labelFaceImage.Content = imageFileName;
+                labelFaceImage.ToolTip = imageFileName;
+            }
         }
 
         private void buttonSelectModel_Click(object sender, RoutedEventArgs e)
@@ -242,6 +253,7 @@ namespace AdaBoostGUI
                 bkgWorker = new BackgroundWorker();
                 buttonTrain.Content = "Cancel Training";
                 textBlock.Text = "";
+                labelTrainingStage.Content = "Training Started";
                 pBar.Value = 0;
                 stage = 0;
             }
@@ -258,6 +270,7 @@ namespace AdaBoostGUI
                     //
                     buttonTrain.Content = "Start Training";
                     textBlock.Text = "";
+                    labelTrainingStage.Content = "";
                     pBar.Value = 0;
                 }
                 return;
@@ -267,7 +280,7 @@ namespace AdaBoostGUI
             bkgWorker.WorkerSupportsCancellation = true;
             bkgWorker.DoWork += Worker_DoWork;
             bkgWorker.ProgressChanged += Worker_ProgressChanged;
-            
+            bkgWorker.RunWorkerCompleted += BkgWorker_RunWorkerCompleted;
             bkgWorker.WorkerReportsProgress = true;
             string args = "";
             args += string.Format("-data {0} -vec {1} -bg {2} ", labelOutput.Text, labelPos.Text, labelNeg.Text);
@@ -279,6 +292,14 @@ namespace AdaBoostGUI
             bkgWorker.RunWorkerAsync(args);
         }
 
+        private void BkgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            pBar.Value = pBar.Maximum;
+            buttonTrain.Content = "Start Training";
+            labelTrainingStage.Content = "Training Finished";
+            textBlock.ScrollToEnd();
+        }
+
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             string txt = (e.UserState as string);
@@ -288,29 +309,20 @@ namespace AdaBoostGUI
             }
             else
             {
-                if(txt == "MY_END")
+                if (txt.Contains(stage.ToString() + "-stage"))
                 {
-                    pBar.Value = pBar.Maximum;
-                    buttonTrain.Content = "Start Training";
-                    textBlock.ScrollToEnd();
+                    int total = int.Parse(textBoxNumStages.Text);
+                    labelTrainingStage.Content = txt;
+                    pBar.Value = ((stage++) * 1.0 / total) * pBar.Maximum;
+
+                    //textBlock.Focus();
+                    //textBlock.CaretIndex = textBlock.Text.Length;
+
                 }
-                else
+                textBlock.Text += txt + "\r\n";
+                if (e.ProgressPercentage % 20 == 0)
                 {
-                    if (txt.Contains(stage.ToString() + "-stage"))
-                    {
-                        int total = int.Parse(textBoxNumStages.Text);
-
-                        pBar.Value = ((stage++) * 1.0 / total) * pBar.Maximum;
-
-                        //textBlock.Focus();
-                        //textBlock.CaretIndex = textBlock.Text.Length;
-                        
-                    }
-                    textBlock.Text += txt + "\r\n";
-                    if (e.ProgressPercentage % 20 == 0)
-                    {
-                        textBlock.ScrollToEnd();
-                    }
+                    textBlock.ScrollToEnd();
                 }
             }
         }
