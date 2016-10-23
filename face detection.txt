@@ -1,5 +1,0 @@
-Face databases:
-http://www.face-rec.org/databases/
-
-How to train OpenCV Cascade Classifier:
-https://codeyarns.com/2014/09/01/how-to-train-opencv-cascade-classifier/
