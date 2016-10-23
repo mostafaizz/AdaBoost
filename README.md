@@ -11,7 +11,7 @@ There are two projects in the solution:
 
 To run the project:
 
-1- You can download the whole project or download the folder x64/Release.
+1- You can download the whole project or download the folder AdaBoost/x64/Release.
 
 2- Run the "AdaBoostGUI" tool. And you will find 3 tabs:
 
@@ -47,7 +47,10 @@ And you will find the classifier output in the folder specified at the end.
 ![Alt text](/imgs/3.jpg?raw=true "Viola Jones training output")
 
 
-To compile the Project you will need to make sure you downloaded the whole directory. And open the project with visual studio 2015, then change the configuration to x64.
+To compile the Project you will need to make sure you downloaded the whole directory. And open the solution file "opencv31_2015.sln" with visual studio 2015, then change the configuration to x64.
+
+![Alt text](/imgs/4.jpg?raw=true "Visual Studio")
+
 
 To prepare positive samples, you will need face data base,
 either from this link: http://www.face-rec.org/databases/
