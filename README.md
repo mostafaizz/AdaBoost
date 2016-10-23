@@ -47,7 +47,7 @@ And you will find the classifier output in the folder specified at the end.
 ![Alt text](/imgs/3.jpg?raw=true "Viola Jones training output")
 
 
-To compile the Project you will need to make sure you downloaded the whole directory.
+To compile the Project you will need to make sure you downloaded the whole directory. And open the project with visual studio 2015, then change the configuration to x64.
 
 To prepare positive samples, you will need face data base,
 either from this link: http://www.face-rec.org/databases/
