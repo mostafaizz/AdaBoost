@@ -7,14 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="790">
     <Grid>
-
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="500" Width="757.566" Margin="2,2,2,2" VerticalAlignment="Top">
             <TabItem Header="AdaBoost Edge Detection">
                 <Grid>
                     <Button x:Name="button" Content="Run" HorizontalAlignment="Left" Margin="615,423,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-                    <TextBox x:Name="textBoxT" HorizontalAlignment="Left" Height="23" Margin="498,370,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="74"/>
-                    <TextBox x:Name="textBoxIn" HorizontalAlignment="Left" Height="23" Margin="155,304,0,0" TextWrapping="Wrap" Text="test.png" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxOut" HorizontalAlignment="Left" Height="23" Margin="538,305,0,0" TextWrapping="Wrap" Text="orig.png" VerticalAlignment="Top" Width="127"/>
+                    <TextBox x:Name="textBoxT" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"  HorizontalAlignment="Left" Height="23" Margin="498,370,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="74"/>
+                    <TextBox x:Name="textBoxIn" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="155,304,0,0" TextWrapping="Wrap" Text="test.png" VerticalAlignment="Top" Width="126"/>
+                    <TextBox x:Name="textBoxOut" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="538,305,0,0" TextWrapping="Wrap" Text="orig.png" VerticalAlignment="Top" Width="127"/>
                     <Image x:Name="imageTest" HorizontalAlignment="Left" Height="202" Margin="458,80,0,0" VerticalAlignment="Top" Width="232">
                         <Image.Source>
                             <BitmapImage UriSource="test.png"/>
@@ -29,7 +28,7 @@
                     <Label x:Name="label_Copy" Content="Testing Image" HorizontalAlignment="Left" Margin="458,39,0,0" VerticalAlignment="Top" Width="155"/>
                     <Button x:Name="buttonBrowseTraining" Content="Browse" HorizontalAlignment="Left" Margin="75,304,0,0" VerticalAlignment="Top" Width="75" Click="buttonBrowseTraining_Click"/>
                     <Button x:Name="buttonBrowseTesting" Content="Browse" HorizontalAlignment="Left" Margin="458,304,0,0" VerticalAlignment="Top" Width="75" Click="buttonBrowseTesting_Click"/>
-                    <CheckBox x:Name="checkBoxHorizontal" Content="Horizontal Wavelet" HorizontalAlignment="Left" Margin="44,369,0,0" VerticalAlignment="Top" Checked="checkBox_Checked"/>
+                    <CheckBox x:Name="checkBoxHorizontal" Content="Horizontal Wavelet" HorizontalAlignment="Left" Margin="44,369,0,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="checkBoxVertical" Content="Vertical Wavelet" HorizontalAlignment="Left" Margin="191,369,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="label1" Content="Number of Weak Classifers&#xD;&#xA;" HorizontalAlignment="Left" Margin="327,366,0,0" VerticalAlignment="Top"/>
                 </Grid>
@@ -55,20 +54,20 @@
                     <Button x:Name="buttonOutput" Content="Select Output Folder" HorizontalAlignment="Left" Margin="51,107,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonOutput_Click"/>
                     <TextBox x:Name="labelOutput" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,107,0,0" VerticalAlignment="Top" Width="478"/>
                     <Label x:Name="label2" Content="Patch Width" HorizontalAlignment="Left" Margin="51,148,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxPatchWidth" HorizontalAlignment="Left" Height="23" Margin="192,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxPatchWidth" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy" Content="Patch Height" HorizontalAlignment="Left" Margin="349,149,0,0" VerticalAlignment="Top" Width="133"/>
-                    <TextBox x:Name="textBoxPatchHeight" HorizontalAlignment="Left" Height="23" Margin="497,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxPatchHeight" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="497,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy1" Content="Num Positive Samples" HorizontalAlignment="Left" Margin="51,189,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxNumPos" HorizontalAlignment="Left" Height="23" Margin="192,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxNumPos" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy2" Content="Num Negative Samples" HorizontalAlignment="Left" Margin="349,189,0,0" VerticalAlignment="Top" Width="133"/>
-                    <TextBox x:Name="textBoxNumNeg" HorizontalAlignment="Left" Height="23" Margin="497,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxNumNeg" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"  HorizontalAlignment="Left" Height="23" Margin="497,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy3" Content="Min. Hit Rate" HorizontalAlignment="Left" Margin="51,232,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxMinRate" HorizontalAlignment="Left" Height="23" Margin="192,232,0,0" TextWrapping="Wrap" Text="0.999" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxMinRate" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,232,0,0" TextWrapping="Wrap" Text="0.999" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy4" Content="Max False Alarm" HorizontalAlignment="Left" Margin="351,232,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxMaxFalse" HorizontalAlignment="Left" Height="23" Margin="497,232,0,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxMaxFalse" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="497,232,0,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top" Width="64"/>
                     <Button x:Name="buttonTrain" Content="Start Training" HorizontalAlignment="Left" Margin="382,275,0,0" VerticalAlignment="Top" Width="179" Click="buttonTrain_Click"/>
                     <Label x:Name="label2_Copy5" Content="Num of Stages" HorizontalAlignment="Left" Margin="51,272,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxNumStages" HorizontalAlignment="Left" Height="23" Margin="192,272,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxNumStages" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,272,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="64"/>
                     <!--ScrollViewer Width="654" Margin="51,303,47,56"-->
                         <TextBox x:Name="textBlock" 
                                    ScrollViewer.CanContentScroll="True" 
