@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -192,45 +193,121 @@ namespace AdaBoostGUI
         private void buttonPos_Click(object sender, RoutedEventArgs e)
         {
             string pos = openFile("VEC Files (*.vec)|*.vec");
-            labelPos.Content = pos;
+            labelPos.Text = pos;
             labelPos.ToolTip = pos;
         }
 
         private void buttonNeg_Click(object sender, RoutedEventArgs e)
         {
             string neg = openFile("TEXT Files (*.txt)|*.txt");
-            labelNeg.Content = neg;
+            labelNeg.Text = neg;
             labelNeg.ToolTip = neg;
         }
 
+        int stage = 0;
         private void buttonTrain_Click(object sender, RoutedEventArgs e)
         {
+            textBlock.Text = "";
+            BackgroundWorker bkgWorker = new BackgroundWorker();
+            
+            bkgWorker.DoWork += Worker_DoWork;
+            bkgWorker.ProgressChanged += Worker_ProgressChanged;
+            bkgWorker.WorkerReportsProgress = true;
+            string args = "";
+            args += string.Format("-data {0} -vec {1} -bg {2} ", labelOutput.Text, labelPos.Text, labelNeg.Text);
+            args += string.Format("-precalcValBufSize {0} -precalcIdxBufSize {1}  ", 2048, 2048);
+            args += string.Format("-numPos {0} -numNeg {1} -nstages {2} ", textBoxNumPos.Text, textBoxNumNeg.Text, textBoxNumStages.Text);
+            args += string.Format("-minhitrate {0} -maxfalsealarm {1} ", textBoxMinRate.Text, textBoxMaxFalse.Text);
+            args += string.Format("-w {0} -h {1} -nonsym -baseFormatSave ", textBoxPatchWidth.Text, textBoxPatchHeight.Text);
+
+            bkgWorker.RunWorkerAsync(args);
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            string txt = (e.UserState as string);
+            if (txt.Trim().Length == 0)
+            {
+                return;
+            }
+            else
+            {
+                if(txt == "MY_END")
+                {
+                    pBar.Value = pBar.Maximum;
+                }
+                else
+                {
+                    if (txt.Contains(stage.ToString() + "-stage"))
+                    {
+                        int total = int.Parse(textBoxNumStages.Text);
+
+                        pBar.Value = ((++stage) * 1.0 / total) * pBar.Maximum;
+
+                        //textBlock.Focus();
+                        //textBlock.CaretIndex = textBlock.Text.Length;
+                        textBlock.ScrollToEnd();
+                    }
+                    textBlock.Text += txt + "\r\n";
+                }
+            }
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
             // opencv_traincascade -data data -vec faces\pos-samples.vec 
             // -bg no-face\bg.txt -precalcValBufSize 2048 -precalcIdxBufSize 2048 
             // -numPos 20 -numNeg 20 -nstages 5 -minhitrate 0.999 
             // -maxfalsealarm 0.5 -w 24 -h 24 -nonsym -baseFormatSave
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.CreateNoWindow = false;
+            startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = false;
             startInfo.FileName = "opencv_traincascade.exe";
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.Arguments = "";
-            startInfo.Arguments += string.Format("-data {0} -vec {1} -bg {2}", labelOutput.Content, labelPos.Content, labelNeg.Content);
-
+            //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.RedirectStandardOutput = true;
+            string args = e.Argument as string;
+            //MessageBox.Show(args);
+            startInfo.Arguments = args;
             try
             {
+                int i = 0;
                 // Start the process with the info we specified.
                 // Call WaitForExit and then the using statement will close.
                 using (Process exeProcess = Process.Start(startInfo))
                 {
+                    exeProcess.OutputDataReceived += ExeProcess_OutputDataReceived;
+                    while (!exeProcess.StandardOutput.EndOfStream)
+                    {
+                        string line = exeProcess.StandardOutput.ReadLine();
+                        // do something with line
+                        (sender as BackgroundWorker).ReportProgress(i++,line);
+                    }
                     exeProcess.WaitForExit();
+                    (sender as BackgroundWorker).ReportProgress(0, "MY_END");
                 }
             }
-            catch
+            catch(Exception exc)
             {
                 // Log error.
+                MessageBox.Show(exc.Message);
             }
+        }
 
+        private void ExeProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                textBlock.Text += e.Data + "\n";
+            }
+        }
+
+        private void buttonOutput_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.SelectedPath = Directory.GetCurrentDirectory();
+            dialog.ShowDialog();
+            labelOutput.Text = dialog.SelectedPath;
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdaBoostGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="522.697" Width="757.566">
+        Title="MainWindow" Height="550" Width="790">
     <Grid>
 
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="500" Width="757.566" Margin="2,2,2,2" VerticalAlignment="Top">
@@ -36,22 +36,24 @@
             </TabItem>
             <TabItem Header="Viola Jones Testing">
                 <Grid Background="#FFFFFFFF">
-                    <Label x:Name="labelFaceImage" Content="Label" HorizontalAlignment="Left" Margin="191,35,0,0" VerticalAlignment="Top" Width="365"/>
-                    <Button x:Name="buttonTest" Content="Detect Faces" HorizontalAlignment="Left" Margin="520,355,0,0" VerticalAlignment="Top" Width="75" Click="buttonTest_Click"/>
-                    <Image x:Name="imageCamera" HorizontalAlignment="Left" Height="207" Margin="111,66,0,0" VerticalAlignment="Top" Width="445"/>
+                    <Label x:Name="labelFaceImage" Content="" HorizontalAlignment="Left" Margin="191,35,0,0" VerticalAlignment="Top" Width="365"/>
+                    <Button x:Name="buttonTest" Content="Detect Faces" HorizontalAlignment="Left" Margin="520,407,0,0" VerticalAlignment="Top" Width="75" Click="buttonTest_Click"/>
+                    <Border Height="300" Width="445" Margin="111,66,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <Image x:Name="imageCamera" HorizontalAlignment="Left" Height="Auto" Margin="111,66,0,0" VerticalAlignment="Top" Width="Auto"/>
+                    </Border>
                     <Button x:Name="buttonSelectImage" Content="Select Image" HorizontalAlignment="Left" Margin="111,38,0,0" VerticalAlignment="Top" Width="75" Click="buttonSelectImage_Click"/>
-                    <Button x:Name="buttonSelectModel" Content="Select Model" HorizontalAlignment="Left" Margin="111,289,0,0" VerticalAlignment="Top" Width="75" Click="buttonSelectModel_Click"/>
-                    <Label x:Name="labelModel" Content="Label" HorizontalAlignment="Left" Margin="191,289,0,0" VerticalAlignment="Top" Width="404"/>
+                    <Button x:Name="buttonSelectModel" Content="Select Model" HorizontalAlignment="Left" Margin="111,371,0,0" VerticalAlignment="Top" Width="75" Click="buttonSelectModel_Click"/>
+                    <Label x:Name="labelModel" Content="" HorizontalAlignment="Left" Margin="191,371,0,0" VerticalAlignment="Top" Width="404"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Viola Jones Training">
                 <Grid Background="#FFFFFFFF">
                     <Button x:Name="buttonPos" Content="Select Positive" HorizontalAlignment="Left" Margin="51,45,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonPos_Click"/>
-                    <Label x:Name="labelPos" Content="" HorizontalAlignment="Left" Margin="192,45,0,0" VerticalAlignment="Top" Width="478"/>
+                    <TextBox x:Name="labelPos" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,45,0,0" VerticalAlignment="Top" Width="478"/>
                     <Button x:Name="buttonNeg" Content="Select Negative" HorizontalAlignment="Left" Margin="51,76,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonNeg_Click"/>
-                    <Label x:Name="labelNeg" Content="" HorizontalAlignment="Left" Margin="192,76,0,0" VerticalAlignment="Top" Width="478"/>
-                    <Button x:Name="buttonOutput" Content="Select Output Folder" HorizontalAlignment="Left" Margin="51,107,0,0" VerticalAlignment="Top" Width="126" Height="21"/>
-                    <Label x:Name="labelOutput" Content="" HorizontalAlignment="Left" Margin="192,107,0,0" VerticalAlignment="Top" Width="478"/>
+                    <TextBox x:Name="labelNeg" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,76,0,0" VerticalAlignment="Top" Width="478"/>
+                    <Button x:Name="buttonOutput" Content="Select Output Folder" HorizontalAlignment="Left" Margin="51,107,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonOutput_Click"/>
+                    <TextBox x:Name="labelOutput" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,107,0,0" VerticalAlignment="Top" Width="478"/>
                     <Label x:Name="label2" Content="Patch Width" HorizontalAlignment="Left" Margin="51,148,0,0" VerticalAlignment="Top" Width="126"/>
                     <TextBox x:Name="textBoxPatchWidth" HorizontalAlignment="Left" Height="23" Margin="192,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy" Content="Patch Height" HorizontalAlignment="Left" Margin="349,149,0,0" VerticalAlignment="Top" Width="133"/>
@@ -59,14 +61,27 @@
                     <Label x:Name="label2_Copy1" Content="Num Positive Samples" HorizontalAlignment="Left" Margin="51,189,0,0" VerticalAlignment="Top" Width="126"/>
                     <TextBox x:Name="textBoxNumPos" HorizontalAlignment="Left" Height="23" Margin="192,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy2" Content="Num Negative Samples" HorizontalAlignment="Left" Margin="349,189,0,0" VerticalAlignment="Top" Width="133"/>
-                    <TextBox x:Name="textBoxNumPos_Copy" HorizontalAlignment="Left" Height="23" Margin="497,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxNumNeg" HorizontalAlignment="Left" Height="23" Margin="497,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy3" Content="Min. Hit Rate" HorizontalAlignment="Left" Margin="51,232,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxNumPos_Copy1" HorizontalAlignment="Left" Height="23" Margin="192,232,0,0" TextWrapping="Wrap" Text="0.999" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxMinRate" HorizontalAlignment="Left" Height="23" Margin="192,232,0,0" TextWrapping="Wrap" Text="0.999" VerticalAlignment="Top" Width="64"/>
                     <Label x:Name="label2_Copy4" Content="Max False Alarm" HorizontalAlignment="Left" Margin="351,232,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxNumPos_Copy2" HorizontalAlignment="Left" Height="23" Margin="497,232,0,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top" Width="64"/>
-                    <Button x:Name="buttonTrain" Content="Start Training" HorizontalAlignment="Left" Margin="460,339,0,0" VerticalAlignment="Top" Width="179" Click="buttonTrain_Click"/>
+                    <TextBox x:Name="textBoxMaxFalse" HorizontalAlignment="Left" Height="23" Margin="497,232,0,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top" Width="64"/>
+                    <Button x:Name="buttonTrain" Content="Start Training" HorizontalAlignment="Left" Margin="382,275,0,0" VerticalAlignment="Top" Width="179" Click="buttonTrain_Click"/>
                     <Label x:Name="label2_Copy5" Content="Num of Stages" HorizontalAlignment="Left" Margin="51,272,0,0" VerticalAlignment="Top" Width="126"/>
-                    <TextBox x:Name="textBoxNumPos_Copy3" HorizontalAlignment="Left" Height="23" Margin="192,272,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="64"/>
+                    <TextBox x:Name="textBoxNumStages" HorizontalAlignment="Left" Height="23" Margin="192,272,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="64"/>
+                    <!--ScrollViewer Width="654" Margin="51,303,47,56"-->
+                        <TextBox x:Name="textBlock" 
+                                   ScrollViewer.CanContentScroll="True" 
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="51,317,0,0" 
+                                   VerticalAlignment="Top" 
+                                   AcceptsReturn="True"
+                                   IsReadOnly="True"
+                                   Height="100" Width="654"/>
+                    <!--/-->
+                    <ProgressBar x:Name="pBar" Minimum="0" Maximum="100" HorizontalAlignment="Left" Height="25" Margin="51,421,0,0" VerticalAlignment="Top" Width="654"/>
+
                 </Grid>
             </TabItem>
         </TabControl>
