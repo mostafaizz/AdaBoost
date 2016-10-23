@@ -1,0 +1,13 @@
+C:\Users\mostafaizz\Desktop\faces\1.jpg 16 10 506 108 144 10 506 108 144 10 506 108 144 358 459 116 167 731 373 93 100 836 333 70 89 1042 310 86 88 587 276 63 74 307 339 63 90 893 241 77 81 1115 180 75 78 965 258 51 53 429 213 46 54 295 204 53 59 270 159 35 54 970 174 49 54
+C:\Users\mostafaizz\Desktop\faces\3.jpg 5 134 296 44 47 308 180 20 18 19 169 28 25 524 289 32 32 197 217 20 25
+C:\Users\mostafaizz\Desktop\faces\4.jpg 7 824 122 113 125 621 104 112 121 435 112 92 93 520 69 72 78 304 324 107 98 90 208 84 86 204 72 78 78
+C:\Users\mostafaizz\Desktop\faces\IMG_0529.JPG 1 315 121 146 137
+C:\Users\mostafaizz\Desktop\faces\IMG_0530.JPG 1 222 223 143 131
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly1.jpg 1 92 210 397 456
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly2.jpg 1 109 172 371 471
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly3.jpg 1 85 193 419 497
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly5.jpg 1 102 182 385 473
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly6.jpg 1 114 232 375 448
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly7.jpg 1 110 234 405 435
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly8.jpg 1 110 238 392 436
+C:\Users\mostafaizz\Desktop\faces\imageHeadOnly9.jpg 1 101 245 390 440
