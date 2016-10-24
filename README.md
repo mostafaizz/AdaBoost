@@ -51,6 +51,9 @@ To compile the Project you will need to make sure you downloaded the whole direc
 
 ![Alt text](/imgs/4.jpg?raw=true "Visual Studio")
 
+Also, make sure to make the AdaBoostGUI project as the startup project
+
+![Alt text](/imgs/5.jpg?raw=true "Visual Studio")
 
 To prepare positive samples, you will need face data base,
 either from this link: http://www.face-rec.org/databases/
