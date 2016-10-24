@@ -95,6 +95,7 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 			// break if the classifier has error less than half
 			if (itr->first >= 0.5)
 			{
+				std::cout << "Can not get enough classifiers" << std::endl;
 				break;
 			}
 			// check if the classifier is already used
@@ -118,6 +119,7 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 			{
 				alpha = 1000000;
 				T = weakClassifiers.size() + 1;
+				std::cout << "Only one classifier is suffecient" << std::endl;
 			}
 			else
 			{

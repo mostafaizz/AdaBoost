@@ -14,13 +14,17 @@ int HaarWeakClassifier::classify(DataPoint * d, double sizeFactor)
 {
 	cv::Point location = origLocation * sizeFactor;
 	cv::Size size(sizeFactor * origSize.width, sizeFactor * origSize.height);
+
 	// this should return an integral image
 	cv::Mat m = d->getMatData();
 	// check if the filter fits inside
 	if (m.rows < location.y + shape.size() * size.height)
-		return 0;
+		return -1;
 	if (m.cols < location.x + shape[0].size() * size.width)
-		return 0;
+		return -1;
+	if (size.height * size.width == 0)
+		return -1;
+
 	data = 0;
 	for (int r = 0; r < shape.size(); r++)
 	{
@@ -33,8 +37,8 @@ int HaarWeakClassifier::classify(DataPoint * d, double sizeFactor)
 
 			//double tmp = A - B - C + D;
 
-			double tmp = Util::getRectangleSum(m, cv::Rect(location.x + (c + 1) * size.width - 1,
-				location.y + (r + 1) * size.height - 1,
+			double tmp = Util::getRectangleSum(m, cv::Rect(location.x + c * size.width,
+				location.y + r * size.height,
 				size.width, size.height));
 
 			tmp *= shape[r][c];

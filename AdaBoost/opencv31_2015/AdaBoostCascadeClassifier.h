@@ -12,10 +12,12 @@ protected:
 	int step;
 	WeakHaarClassifierFactory * factory;
 	std::vector<AdaBoost*> adaBoostLevels;
-	DataPoint* getNormalizedData(cv::Mat & Iimg, cv::Mat & I2img, cv::Rect& roi);
+	DataPoint* getNormalizedData(cv::Mat Iimg, cv::Mat I2img, cv::Rect& roi);
 public:
 	AdaBoostCascadeClassifier(std::vector<int> numClassifiers,
-		std::vector<std::vector<std::vector<int>>>& shapes, cv::Size patchSize, int step);
+		std::vector<std::vector<std::vector<int>>>& shapes, std::vector<double> sizeFactors, 
+		cv::Size patchSize, int step);
+
 	std::vector<int> train(std::vector<cv::Mat>& images, std::vector<int>& labels);
 	std::vector<cv::Rect> test(cv::Mat& img, std::vector<double> sizeFactors);
 	~AdaBoostCascadeClassifier();

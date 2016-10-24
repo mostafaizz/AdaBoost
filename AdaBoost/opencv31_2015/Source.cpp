@@ -228,9 +228,103 @@ void edgeDetection(int argc, char*argv[])
 	testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage, data1, sz1, data2, sz2);
 }
 
-AdaBoostCascadeClassifier* trainCascadeClassifier(char* posFile, char* negFile, int patchWidth, int patchHeight, std::vector<int> cascadeSize)
+AdaBoostCascadeClassifier* trainCascadeClassifier(
+	char* posFile, char* negFile, 
+	int numPositive, int numNegative,
+	int patchWidth, int patchHeight, 
+	std::vector<double> sizeFactors,
+	std::vector<int> cascadeSize, int step)
 {
-	return 0;
+	std::vector<std::vector<std::vector<int> > > shapes;
+	
+	int arr[] = { 1, -1,1 };
+	std::vector<std::vector<int> > shape1;
+	shape1.push_back(std::vector<int>(arr + 1, arr + 3));
+	std::vector<std::vector<int> > shape2(2, std::vector<int>(1, 1));
+	shape2[0][0] = -1;
+	std::vector<std::vector<int> > shape3;
+	shape3.push_back(std::vector<int>(arr, arr + 3));
+	std::vector<std::vector<int> > shape4;
+	shape4.push_back(std::vector<int>(arr, arr + 2));
+	shape4.push_back(std::vector<int>(arr + 1, arr + 3));
+
+	shapes.push_back(shape1);
+	shapes.push_back(shape2);
+	shapes.push_back(shape3);
+	shapes.push_back(shape4);
+
+	AdaBoostCascadeClassifier *classifier = new AdaBoostCascadeClassifier(cascadeSize, shapes, sizeFactors, cv::Size(patchWidth, patchHeight), step);
+
+	std::vector<cv::Mat> trainImages;
+	std::vector<int> labels;
+
+	// first read the positive samples
+	std::ifstream posReader;
+	posReader.open(posFile);
+	std::string posFolderName = posFile;
+	posFolderName = posFolderName.substr(0,posFolderName.find_last_of("/") + 1);
+	while (!posReader.eof())
+	{
+		std::string imgName;
+		posReader >> imgName;
+		cv::Mat tmpImg = cv::imread(posFolderName + imgName, 0);
+		int n;
+		posReader >> n;
+		for (int i = 0; i < n; i++)
+		{
+			cv::Rect roi;
+			posReader >> roi.x >> roi.y >> roi.width >> roi.height;
+			cv::Mat trainImg;
+			trainImg = tmpImg(roi).clone();
+			trainImages.push_back(trainImg);
+			labels.push_back(1);
+			if (labels.size() == numPositive)
+			{
+				break;
+			}
+		}
+		if (labels.size() == numPositive)
+		{
+			break;
+		}
+	}
+	posReader.close();
+	// read the negative images
+	// first read the positive samples
+	std::ifstream negReader;
+	negReader.open(negFile);
+	std::string negFolderName = negFile;
+	negFolderName = negFolderName.substr(0, negFolderName.find_last_of("/") + 1);
+	std::vector<cv::Mat> neg;
+	while (!negReader.eof())
+	{
+		std::string line;
+		std::getline(negReader, line);
+		if (line.size() == 0)
+		{
+			break;
+		}
+		cv::Mat tmpImg = cv::imread(negFolderName + line, 0);
+		neg.push_back(tmpImg);
+	}
+	negReader.close();
+
+	for (int i = 0; i < numNegative; i++)
+	{
+		int imgID = rand() % neg.size();
+		int x = rand() % (neg[imgID].cols - patchWidth);
+		int y = rand() % (neg[imgID].rows - patchHeight);
+
+		cv::Mat negImg;
+		negImg = neg[imgID](cv::Rect(x, y, patchWidth, patchHeight)).clone();
+
+		trainImages.push_back(negImg);
+		labels.push_back(-1);
+	}
+
+	classifier->train(trainImages, labels);
+	
+	return classifier;
 }
 
 
@@ -238,6 +332,29 @@ int main(int argc, char **argv)
 {
 	//test2DPoints();
 	//edgeDetection(argc, argv);
-	
+	std::vector<int> cascadeSizes = { 1, 5};
+	std::vector<double> sizesFactors = {  0.4 };
+	AdaBoostCascadeClassifier* classifier = 
+		trainCascadeClassifier(
+		"../x64/Release/faces/ann.txt",
+		"../x64/Release/bg.txt",
+			20,
+			20,
+			24, 24, 
+			sizesFactors, 
+			cascadeSizes, 
+			5);
+	cv::Mat testImg = cv::imread("../x64/Release/faces/1.jpg", 1);
+	cv::resize(testImg, testImg, cv::Size(800, testImg.rows * (800.0 / testImg.cols)));
+	cv::Mat gray;
+	cv::cvtColor(testImg, gray, CV_BGR2GRAY);
+	std::vector<cv::Rect> res = classifier->test(gray, {0.5, 1, 2});
+	std::cout << "Detected Objects: " << res.size() << std::endl;
+	for (int i = 0; i < res.size(); i++)
+	{
+		cv::rectangle(testImg, res[i], cv::Scalar(255, 0, 0), 3);
+	}
+	cv::imshow("testImg", testImg);
+	cv::waitKey(0);
 	return 0;
 }
