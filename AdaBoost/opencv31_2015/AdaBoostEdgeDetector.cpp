@@ -10,7 +10,8 @@ cv::Mat AdaBoostEdgeDetector::cannyEdgeDetection(cv::Mat m)
 	return detected_edges;
 }
 
-AdaBoostEdgeDetector::AdaBoostEdgeDetector(int numClassifiers, std::vector<std::vector<std::vector<int>>>& shapes, cv::Size patchSize, int step)
+AdaBoostEdgeDetector::AdaBoostEdgeDetector(int numClassifiers, std::vector<std::vector<std::vector<int>>>& shapes,
+	cv::Size patchSize, int step)
 {
 	this->numClassifiers = numClassifiers;
 	this->step = step;
@@ -113,7 +114,6 @@ cv::Mat AdaBoostEdgeDetector::test(cv::Mat img, bool display)
 	// integral images
 	cv::Mat Iimg, I2img;
 	cv::integral(img, Iimg, I2img, CV_32FC1);
-	cv::Mat edges = AdaBoostEdgeDetector::cannyEdgeDetection(img);
 	// make patches 10x10 with step 5
 	std::vector<DataPoint*> testData;
 	std::vector<cv::Rect> wins;
@@ -124,7 +124,7 @@ cv::Mat AdaBoostEdgeDetector::test(cv::Mat img, bool display)
 		{
 			cv::Rect win = cv::Rect(c, r, patchSize.width, patchSize.height);
 			MatData * tmpData = new MatData(Iimg, win);
-			out.push_back(adaBoost->classify(tmpData));
+			out.push_back(adaBoost->classify(tmpData, 1.0));
 			wins.push_back(win);
 		}
 	}

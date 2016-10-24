@@ -8,9 +8,9 @@ HaarWeakClassifierAbs::HaarWeakClassifierAbs(cv::Size sz, cv::Point pt , std::ve
 	dummy = 1;
 }
 
-int HaarWeakClassifierAbs::classify(DataPoint * data)
+int HaarWeakClassifierAbs::classify(DataPoint * data,double sizeFactor)
 {
-	HaarWeakClassifier::classify(data);
+	HaarWeakClassifier::classify(data, sizeFactor);
 	this->data = std::abs(this->data);
 	//if (this->data)
 	//{
@@ -37,7 +37,7 @@ void HaarWeakClassifierAbs::operator=(const WeakClassifier & obj)
 	this->data = ptr->data;
 	this->edge = ptr->edge;
 	this->featureIndex = ptr->featureIndex;
-	this->location = ptr->location;
+	this->origLocation = ptr->origLocation;
 	this->dummy = ptr->dummy;
 }
 

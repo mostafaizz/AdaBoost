@@ -1,17 +1,19 @@
 #include "HaarWeakClassifier.h"
-
+#include "Util.h"
 
 
 HaarWeakClassifier::HaarWeakClassifier(cv::Size sz, cv::Point location, std::vector<std::vector<int> >shape,int direction) :WeakClassifier(0, 0, direction)
 {
-	this->size = sz;
-	this->location = location;
+	this->origSize = sz;
+	this->origLocation = location;
 	this->shape = shape;
 }
 
 // assuming integral float image
-int HaarWeakClassifier::classify(DataPoint * d)
+int HaarWeakClassifier::classify(DataPoint * d, double sizeFactor)
 {
+	cv::Point location = origLocation * sizeFactor;
+	cv::Size size(sizeFactor * origSize.width, sizeFactor * origSize.height);
 	// this should return an integral image
 	cv::Mat m = d->getMatData();
 	// check if the filter fits inside
@@ -24,12 +26,17 @@ int HaarWeakClassifier::classify(DataPoint * d)
 	{
 		for (int c = 0; c < shape[r].size(); c++)
 		{
-			double A = m.at<float>(location.y + (r + 1) * size.height - 1, location.x + (c + 1) * size.width - 1);
-			double B = m.at<float>(location.y + (r + 1) * size.height - 1, location.x + c * size.width);
-			double C = m.at<float>(location.y + r * size.height, location.x + (c + 1) * size.width - 1);
-			double D = m.at<float>(location.y + r * size.height, location.x + c * size.width);
+			//double A = m.at<float>(, );
+			//double B = m.at<float>(location.y + (r + 1) * size.height - 1, location.x + c * size.width);
+			//double C = m.at<float>(location.y + r * size.height, location.x + (c + 1) * size.width - 1);
+			//double D = m.at<float>(location.y + r * size.height, location.x + c * size.width);
 
-			double tmp = A - B - C + D;
+			//double tmp = A - B - C + D;
+
+			double tmp = Util::getRectangleSum(m, cv::Rect(location.x + (c + 1) * size.width - 1,
+				location.y + (r + 1) * size.height - 1,
+				size.width, size.height));
+
 			tmp *= shape[r][c];
 			data += tmp;
 		}
@@ -43,17 +50,17 @@ void HaarWeakClassifier::operator=(const WeakClassifier & obj)
 	this->data = ptr->data;
 	this->edge = ptr->edge;
 	this->featureIndex = ptr->featureIndex;
-	this->location = ptr->location;
+	this->origLocation = ptr->origLocation;
 }
 
 bool HaarWeakClassifier::operator==(WeakClassifier* obj)
 {
 	HaarWeakClassifier* tmp = (HaarWeakClassifier*)obj;
-	if (size != tmp->size)
+	if (origSize != tmp->origSize)
 	{
 		return false;
 	}
-	if (location != tmp->location)
+	if (origLocation != tmp->origLocation)
 	{
 		return false;
 	}
@@ -89,7 +96,7 @@ bool HaarWeakClassifier::operator==(WeakClassifier* obj)
 void HaarWeakClassifier::print()
 {
 	WeakClassifier::print();
-	std::cout << " size: " << size << " loc: " << location << " shape: ";
+	std::cout << " size: " << origSize << " loc: " << origLocation << " shape: ";
 	for (int i = 0; i < shape.size(); i++)
 	{
 		std::cout <<  std::endl << "\t";

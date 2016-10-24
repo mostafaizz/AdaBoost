@@ -19,7 +19,7 @@ public:
 	double getData() { return data; }
 	int updateEdgewithClassification(DataPoint* d);
 	WeakClassifier(double edge,int index,int direction);
-	virtual int classify(DataPoint* d);
+	virtual int classify(DataPoint* d, double sizeFactor);
 	virtual bool operator==(WeakClassifier *obj);
 	virtual void operator=(const WeakClassifier &obj);
 	virtual std::string getName();

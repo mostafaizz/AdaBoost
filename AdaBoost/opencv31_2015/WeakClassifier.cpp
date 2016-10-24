@@ -7,7 +7,7 @@
 // return teh classification result to know if there is a problem (when 0 is returned)
 int WeakClassifier::updateEdgewithClassification(DataPoint* d)
 {
-	int res = classify(d);
+	int res = classify(d, 1);
 	setEdge(getData());
 	return res;
 }
@@ -29,7 +29,7 @@ int WeakClassifier::classify()
 	return -1;
 }
 
-int WeakClassifier::classify(DataPoint* d)
+int WeakClassifier::classify(DataPoint* d, double sizeFactor)
 {
 	data = d->getVectorData()[featureIndex];
 	return classify();

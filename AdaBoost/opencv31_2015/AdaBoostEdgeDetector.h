@@ -6,12 +6,13 @@
 
 class AdaBoostEdgeDetector
 {
+protected:
 	int numClassifiers;
 	cv::Size patchSize;
 	int step;
 	WeakHaarClassifierFactory * factory;
 	AdaBoost* adaBoost;
-
+	
 public:
 	static cv::Mat cannyEdgeDetection(cv::Mat m);
 	

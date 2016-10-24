@@ -22,6 +22,6 @@ public:
 	// return the acccuray
 	double train(const std::vector<DataPoint* >& data,const std::vector<int>& labels, std::vector<int>& y);
 	// return class 1 or -1
-	int classify(DataPoint* subj);
+	int classify(DataPoint* subj, double sizeFactor);
 	~AdaBoost();
 };

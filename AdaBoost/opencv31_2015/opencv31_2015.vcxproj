@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClCompile Include="AdaBoost.cpp" />
     <ClCompile Include="AdaBoostEdgeDetector.cpp" />
+    <ClCompile Include="AdaBoostCascadeClassifier.cpp" />
     <ClCompile Include="DataPoint.cpp" />
     <ClCompile Include="HaarWeakClassifier.cpp" />
     <ClCompile Include="HaarWeakClassifierAbs.cpp" />
     <ClCompile Include="MatData.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Util.cpp" />
     <ClCompile Include="VectorData.cpp" />
     <ClCompile Include="WeakClassifier.cpp" />
     <ClCompile Include="WeakClassifierFactory.cpp" />
@@ -167,10 +169,12 @@
   <ItemGroup>
     <ClInclude Include="AdaBoost.h" />
     <ClInclude Include="AdaBoostEdgeDetector.h" />
+    <ClInclude Include="AdaBoostCascadeClassifier.h" />
     <ClInclude Include="DataPoint.h" />
     <ClInclude Include="HaarWeakClassifier.h" />
     <ClInclude Include="HaarWeakClassifierAbs.h" />
     <ClInclude Include="MatData.h" />
+    <ClInclude Include="Util.h" />
     <ClInclude Include="VectorData.h" />
     <ClInclude Include="WeakClassifier.h" />
     <ClInclude Include="WeakClassifierFactory.h" />
