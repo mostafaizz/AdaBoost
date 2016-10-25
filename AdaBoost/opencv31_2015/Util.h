@@ -7,6 +7,8 @@ class Util
 public:
 	Util();
 	static double getRectangleSum(cv::Mat& iImg, cv::Rect win);
+	static void displayIntegralImage(cv::Mat Iimg);
+
 	~Util();
 };
 

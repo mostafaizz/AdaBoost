@@ -42,6 +42,7 @@ int HaarWeakClassifier::classify(DataPoint * d, double sizeFactor)
 				size.width, size.height));
 
 			tmp *= shape[r][c];
+			//std::cout << tmp << std::endl;
 			data += tmp;
 		}
 	}

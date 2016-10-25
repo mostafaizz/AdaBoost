@@ -67,7 +67,7 @@ std::vector<cv::Mat> AdaBoostEdgeDetector::train(std::vector<cv::Mat> images, bo
 		}
 	}
 	std::vector<int> y;
-	double accuracy = adaBoost->train(trainData, labels, y);
+	double accuracy = adaBoost->train(trainData, labels, y, true);
 
 
 	std::vector<cv::Mat> colorImages;

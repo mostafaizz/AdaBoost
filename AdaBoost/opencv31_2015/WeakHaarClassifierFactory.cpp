@@ -32,7 +32,6 @@ std::vector<WeakClassifier*> WeakHaarClassifierFactory::getClassifiers(DataPoint
 						num++;
 					}
 				}
-				
 				for (int dir = -1; dir <= 1; dir += 2)
 				{
 					HaarWeakClassifierAbs * w = new HaarWeakClassifierAbs(*sz, *pt, *sh, dir);

@@ -52,21 +52,11 @@ void test2DPoints()
 	{
 		AdaBoost adaboost(i, factory);
 		std::vector<int> outLabels;
-		double accuracy = adaboost.train(data, label, outLabels);
+		double accuracy = adaboost.train(data, label, outLabels, false);
 		std::cout << i << ", " << accuracy << std::endl;
 		//system("PAUSE");
 	}
 	cv::imshow("img", img);
-	cv::waitKey();
-}
-
-void displayIntegralImage(cv::Mat Iimg)
-{
-	double min, max;
-	cv::minMaxLoc(Iimg, &min, &max);
-	Iimg -= min;
-	Iimg /= (max - min);
-	cv::imshow("image", Iimg);
 	cv::waitKey();
 }
 
@@ -289,6 +279,7 @@ AdaBoostCascadeClassifier* trainCascadeClassifier(
 		}
 	}
 	posReader.close();
+	std::cout << "Positive Samples: " << labels.size() << std::endl;
 	// read the negative images
 	// first read the positive samples
 	std::ifstream negReader;
@@ -322,7 +313,7 @@ AdaBoostCascadeClassifier* trainCascadeClassifier(
 		labels.push_back(-1);
 	}
 
-	classifier->train(trainImages, labels);
+	std::vector<int> y = classifier->train(trainImages, labels);
 	
 	return classifier;
 }
@@ -332,23 +323,25 @@ int main(int argc, char **argv)
 {
 	//test2DPoints();
 	//edgeDetection(argc, argv);
-	std::vector<int> cascadeSizes = { 1, 5};
-	std::vector<double> sizesFactors = {  0.4 };
+	std::vector<int> cascadeSizes = { 1, 3};
+	std::vector<double> sizesFactors = {1, 0.6,  0.4 };
 	AdaBoostCascadeClassifier* classifier = 
 		trainCascadeClassifier(
 		"../x64/Release/faces/ann.txt",
 		"../x64/Release/bg.txt",
-			20,
-			20,
-			24, 24, 
+			20, 100, 24, 24, 
 			sizesFactors, 
 			cascadeSizes, 
-			5);
+			3);
 	cv::Mat testImg = cv::imread("../x64/Release/faces/1.jpg", 1);
-	cv::resize(testImg, testImg, cv::Size(800, testImg.rows * (800.0 / testImg.cols)));
+	if (testImg.cols > 800)
+	{
+		cv::resize(testImg, testImg, cv::Size(800, testImg.rows * (800.0 / testImg.cols)));
+	}
 	cv::Mat gray;
 	cv::cvtColor(testImg, gray, CV_BGR2GRAY);
-	std::vector<cv::Rect> res = classifier->test(gray, {0.5, 1, 2});
+	
+	std::vector<cv::Rect> res = classifier->test(gray, {2}, true);
 	std::cout << "Detected Objects: " << res.size() << std::endl;
 	for (int i = 0; i < res.size(); i++)
 	{

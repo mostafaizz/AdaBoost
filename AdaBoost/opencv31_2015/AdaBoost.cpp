@@ -3,27 +3,35 @@
 #include <iostream>
 #include <algorithm>
 
-std::vector<WeakClassifier*> AdaBoost::createWeakClassifiers(const std::vector<DataPoint* >& data)
+std::vector<WeakClassifier*> AdaBoost::createWeakClassifiers(const std::vector<DataPoint* >& data, bool unique)
 {
 	std::vector<WeakClassifier*> res;
 	for (int i = 0; i < data.size(); i++)
 	{
 		std::vector<WeakClassifier*> tmp = weakClassifierFactory->getClassifiers(data[i]);
-		for (int j = 0; j < tmp.size(); j++)
+		if (unique)
 		{
-			int k = 0;
-			for (; k < res.size(); k++)
+			for (int j = 0; j < tmp.size(); j++)
 			{
-				if (tmp[j]->operator==(res[k]))
+				int k = 0;
+				for (; k < res.size(); k++)
 				{
-					break;
+					if (tmp[j]->operator==(res[k]))
+					{
+						break;
+					}
+				}
+				if (k >= res.size())
+				{
+					res.push_back(tmp[j]);
 				}
 			}
-			if (k >= res.size())
-			{
-				res.push_back(tmp[j]);
-			}
 		}
+		else
+		{
+			res.insert(res.end(), tmp.begin(), tmp.end());
+		}
+		
 	}
 	return res;
 }
@@ -36,7 +44,7 @@ AdaBoost::AdaBoost(int numClassifiers, WeakClassifierFactory* weakClassifierFact
 	this->weakClassifierFactory = weakClassifierFactory;
 }
 
-double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<int>& labels, std::vector<int>& yOut)
+double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<int>& labels, std::vector<int>& yOut,bool unique)
 {
 	std::vector<double> samplesWts(data.size(), 1.0 / labels.size());
 	
@@ -62,7 +70,7 @@ double AdaBoost::train(const std::vector<DataPoint* >& data,const std::vector<in
 		sss[(labels[i] + 1) / 2] += samplesWts[i];
 	}
 	// create T classifers
-	std::vector<WeakClassifier*> candidates = createWeakClassifiers(data);
+	std::vector<WeakClassifier*> candidates = createWeakClassifiers(data, unique);
 
 	for (int t = 0; t < T; t++)
 	{

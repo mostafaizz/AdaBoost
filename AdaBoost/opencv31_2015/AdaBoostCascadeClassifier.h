@@ -19,6 +19,6 @@ public:
 		cv::Size patchSize, int step);
 
 	std::vector<int> train(std::vector<cv::Mat>& images, std::vector<int>& labels);
-	std::vector<cv::Rect> test(cv::Mat& img, std::vector<double> sizeFactors);
+	std::vector<cv::Rect> test(cv::Mat& img, std::vector<double> sizeFactors, bool display);
 	~AdaBoostCascadeClassifier();
 };
