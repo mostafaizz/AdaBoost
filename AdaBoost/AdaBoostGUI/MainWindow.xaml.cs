@@ -50,6 +50,25 @@ namespace AdaBoostGUI
         [DllImport("opencv31_2015.dll")]
         public static extern IntPtr faceDetect(string fileName, string modelName, out int imgSize);
 
+        [DllImport("opencv31_2015.dll")]
+        public static extern IntPtr trainCascadeClassifier(string posFile, string negFile, int numPositive, int numNegative,
+                                                            int patchWidth, int patchHeight,
+                                                            [MarshalAs(UnmanagedType.LPArray)] double[] sizeFactors, int sizeFactorsLength,
+                                                            [MarshalAs(UnmanagedType.LPArray)] int[] cascadeSize, int cascadeSizesLength,
+                                                            int step);
+        
+
+        [DllImport("opencv31_2015.dll")]
+        public static extern IntPtr testCascadeClassifier(IntPtr classifier, string imageName, ref int retSize);
+
+        [DllImport("opencv31_2015.dll")]
+        public static extern void deleteCascadeClassifier(IntPtr classifier);
+
+        [DllImport("Kernel32.dll", SetLastError = true)]
+        public static extern int SetStdHandle(int device, IntPtr handle);
+
+        IntPtr cascadeClassifierPtr = IntPtr.Zero;
+
         // Handling integer inputs
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -383,6 +402,26 @@ namespace AdaBoostGUI
             dialog.SelectedPath = Directory.GetCurrentDirectory();
             dialog.ShowDialog();
             labelOutput.Text = dialog.SelectedPath;
+        }
+
+        private void buttonTrainMyCascade_Click(object sender, RoutedEventArgs e)
+        {
+            List<double> sizesFactors = new List<double>(new double[]{ 1, 0.6, 0.4 });
+            List<int> cascadeSizes = new List<int>(new int[] { 1, 2, 4, 8 });
+
+            cascadeClassifierPtr = trainCascadeClassifier("faces1/ann.txt",
+            "bg.txt",
+            20, 100, 24, 24,
+            sizesFactors.ToArray(), sizesFactors.Count(),
+            cascadeSizes.ToArray(), cascadeSizes.Count(),
+            3);
+        }
+
+        private void buttonTestMyCascade_Click(object sender, RoutedEventArgs e)
+        {
+            int size = 0;
+            IntPtr iamge = testCascadeClassifier(cascadeClassifierPtr, "faces1/9338519.16.jpg", ref size);
+            imageCascadeClassifier.Source = getImageFromIntPtr(iamge, size);
         }
     }
 }

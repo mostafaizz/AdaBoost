@@ -218,13 +218,17 @@ void edgeDetection(int argc, char*argv[])
 	testAdaBoostEdgeDetection(horizontal,vertical,t,trainImg,testImage, data1, sz1, data2, sz2);
 }
 
-AdaBoostCascadeClassifier* trainCascadeClassifier(
+extern "C" __declspec(dllexport)  AdaBoostCascadeClassifier* trainCascadeClassifier(
 	char* posFile, char* negFile, 
 	int numPositive, int numNegative,
 	int patchWidth, int patchHeight, 
-	std::vector<double> sizeFactors,
-	std::vector<int> cascadeSize, int step)
+	double* sizeFactorsarr, int sizeFactorsLength,
+	int* cascadeSizearr, int cascadeSizesLength, 
+	int step)
 {
+	std::vector<int> cascadeSize(cascadeSizearr, cascadeSizearr + cascadeSizesLength);
+	std::vector<double> sizeFactors(sizeFactorsarr, sizeFactorsarr + sizeFactorsLength);
+
 	std::vector<std::vector<std::vector<int> > > shapes;
 	
 	int arr[] = { 1, -1,1 };
@@ -318,36 +322,47 @@ AdaBoostCascadeClassifier* trainCascadeClassifier(
 	return classifier;
 }
 
-
-int main(int argc, char **argv)
+extern "C" __declspec(dllexport) unsigned char* testCascadeClassifier(AdaBoostCascadeClassifier* classifier, char *imageName, int & retSize)
 {
-	//test2DPoints();
-	//edgeDetection(argc, argv);
-	std::vector<int> cascadeSizes = { 1, 3};
-	std::vector<double> sizesFactors = {1, 0.6,  0.4 };
-	AdaBoostCascadeClassifier* classifier = 
-		trainCascadeClassifier(
-		"../x64/Release/faces/ann.txt",
-		"../x64/Release/bg.txt",
-			20, 100, 24, 24, 
-			sizesFactors, 
-			cascadeSizes, 
-			3);
-	cv::Mat testImg = cv::imread("../x64/Release/faces/1.jpg", 1);
+	cv::Mat testImg = cv::imread(imageName, 1);
 	if (testImg.cols > 800)
 	{
 		cv::resize(testImg, testImg, cv::Size(800, testImg.rows * (800.0 / testImg.cols)));
 	}
 	cv::Mat gray;
 	cv::cvtColor(testImg, gray, CV_BGR2GRAY);
-	
-	std::vector<cv::Rect> res = classifier->test(gray, {2}, true);
+
+	std::vector<cv::Rect> res = classifier->test(gray, { 2 }, false);
 	std::cout << "Detected Objects: " << res.size() << std::endl;
 	for (int i = 0; i < res.size(); i++)
 	{
 		cv::rectangle(testImg, res[i], cv::Scalar(255, 0, 0), 3);
 	}
-	cv::imshow("testImg", testImg);
-	cv::waitKey(0);
+	//cv::imshow("image", testImg);
+	//cv::waitKey();
+	return getImageData(testImg, retSize);
+}
+
+extern "C" __declspec(dllexport) void deleteCascadeClassifier(AdaBoostCascadeClassifier* classifier)
+{
+	delete classifier;
+}
+
+int main(int argc, char **argv)
+{
+	//test2DPoints();
+	//edgeDetection(argc, argv);
+	std::vector<int> cascadeSizes = { 1, 2, 4, 8};
+	std::vector<double> sizesFactors = {1, 0.6,  0.4 };
+	AdaBoostCascadeClassifier* classifier =
+		trainCascadeClassifier(
+			"../x64/Release/faces/ann.txt",
+			"../x64/Release/bg.txt",
+			20, 100, 24, 24,
+			&sizesFactors[0], sizesFactors.size(),
+			&cascadeSizes[0], cascadeSizes.size(),
+			3);
+	int size = 0;
+	unsigned char* retImg = testCascadeClassifier(classifier, "../x64/Release/faces/1.jpg", size);
 	return 0;
 }

@@ -85,6 +85,15 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="My Cascade Classifier">
+                <Grid>
+                    <Button x:Name="buttonTrainMyCascade" Content="Train" Width="75" Height="20" Margin="181,0,496,124" VerticalAlignment="Bottom" Click="buttonTrainMyCascade_Click"/>
+                    <Button x:Name="buttonTestMyCascade" Content="Test" Width="75" Height="20" Margin="484,0,193,124" VerticalAlignment="Bottom" Click="buttonTestMyCascade_Click"/>
+                    <Image x:Name="imageCascadeClassifier" HorizontalAlignment="Left" Height="309" Margin="98,33,0,0" VerticalAlignment="Top" Width="532"/>
+                </Grid>
+            </TabItem>
+
+
         </TabControl>
 
     </Grid>
