@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <sstream>
 #include <chrono>
 #include <thread>
 #include "AdaBoost.h"
@@ -16,6 +17,7 @@
 #include "WeakHaarClassifierFactory.h"
 #include "AdaBoostEdgeDetector.h"
 #include "AdaBoostCascadeClassifier.h"
+#include "IrisRecognizer.h"
 
 const double PI = 3.14159265;
 
@@ -348,10 +350,8 @@ extern "C" __declspec(dllexport) void deleteCascadeClassifier(AdaBoostCascadeCla
 	delete classifier;
 }
 
-int main(int argc, char **argv)
+int testCascadeClassifier(int argc, char **argv)
 {
-	//test2DPoints();
-	//edgeDetection(argc, argv);
 	std::vector<int> cascadeSizes = { 1, 2, 4, 8};
 	std::vector<double> sizesFactors = {1, 0.6,  0.4 };
 	AdaBoostCascadeClassifier* classifier =
@@ -364,5 +364,31 @@ int main(int argc, char **argv)
 			3);
 	int size = 0;
 	unsigned char* retImg = testCascadeClassifier(classifier, "../x64/Release/faces/1.jpg", size);
+	return 0;
+}
+
+void testIrisRecognizer()
+{
+	IrisRecognizer iRec;
+	for (int i = 1; i < 50; i++)
+	{
+		char buf[100];
+		std::sprintf(buf, "../IrisImages/%d.jpg", i);
+		iRec.IrisRecognizerRead(buf);
+		//iRec.showCurrentEyeImage();
+		cv::Mat pupilMask = iRec.extractPupil();
+	}
+	//cv::imshow("pupilMask", pupilMask);
+	//cv::waitKey();
+
+}
+
+
+int main(int argc, char **argv)
+{
+	//test2DPoints();
+	//edgeDetection(argc, argv);
+	//testCascadeClassifier(argc, argv);
+	testIrisRecognizer();
 	return 0;
 }
