@@ -72,9 +72,10 @@ namespace AdaBoostGUI
         // Handling integer inputs
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            object[] intTexts = new object[] {textBoxT, textBoxPatchWidth, textBoxPatchHeight, textBoxNumStages, textBoxNumPos, textBoxNumNeg };
+            //int[] test = new int[] { 1, 2, 3 };
+            List<object> intTexts =  new List<object>(new object[]{textBoxT, textBoxPatchWidth, textBoxPatchHeight, textBoxNumStages, textBoxNumPos, textBoxNumNeg });
             object[] doubleTexts = new object[] { textBoxMinRate, textBoxMaxFalse };
-            if (Array.Exists<object>(intTexts, element => element == sender))
+            if (intTexts.Contains(sender))
             {
                 // Prohibit non-int
                 int i;
@@ -85,7 +86,7 @@ namespace AdaBoostGUI
             {
                 // Prohibit non-double
                 double i;
-                if (!double.TryParse(e.Text, out i))
+                if (!double.TryParse(((TextBox)sender).Text, out i))
                     e.Handled = true;
             }
         }

@@ -369,21 +369,41 @@ int testCascadeClassifier(int argc, char **argv)
 
 void testIrisRecognizer()
 {
-	IrisRecognizer iRec;
-	for (int i = 1; i < 50; i++)
+	IrisRecognizer iRec(cv::Size(512, 64));
+	for (int i = 1; i <= 50; i++)
 	{
 		char buf[100];
 		std::sprintf(buf, "../IrisImages/%d.jpg", i);
 		iRec.IrisRecognizerRead(buf);
 		//iRec.showCurrentEyeImage();
-		cv::Mat pupilMask = iRec.extractPupil();
+		iRec.extractPupil();
+		cv::Mat strip = iRec.extractIris();
+		cv::Mat code =  iRec.calcFeatures();
+		cv::Mat orig = iRec.getOrigImage();
+		cv::imshow("Original Image", orig);
+		cv::imshow("Normalized IRIS", strip);
+		cv::imshow("Code", code);
+		cv::waitKey();
 	}
 	//cv::imshow("pupilMask", pupilMask);
 	//cv::waitKey();
 
 }
 
+extern "C" __declspec(dllexport)  IrisRecognizer* createIrisRecognizer(int w, int h)
+{
+	IrisRecognizer* iRec = new IrisRecognizer(cv::Size(512, 64));
 
+	return iRec;
+}
+
+extern "C" __declspec(dllexport) unsigned char* extractPupil(char * imgFileName, IrisRecognizer* iRec)
+{
+	iRec->IrisRecognizerRead(imgFileName);
+	iRec->extractPupil();
+
+	return 0;
+}
 int main(int argc, char **argv)
 {
 	//test2DPoints();
