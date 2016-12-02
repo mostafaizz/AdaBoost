@@ -392,23 +392,44 @@ void testIrisRecognizer()
 
 extern "C" __declspec(dllexport)  IrisRecognizer* createIrisRecognizer(int w, int h)
 {
-	IrisRecognizer* iRec = new IrisRecognizer(cv::Size(512, 64));
+	IrisRecognizer* iRec = new IrisRecognizer(cv::Size(w, h));
 
 	return iRec;
 }
 
-extern "C" __declspec(dllexport) unsigned char* extractPupil(char * imgFileName, IrisRecognizer* iRec)
+extern "C" __declspec(dllexport) void extractIris(char * imgFileName, IrisRecognizer* iRec,
+	unsigned char* &stripData, int& stripSize,
+	unsigned char* &origData, int& origSize)
 {
 	iRec->IrisRecognizerRead(imgFileName);
 	iRec->extractPupil();
-
-	return 0;
+	cv::Mat strip = iRec->extractIris();
+	stripData = getImageData(strip, stripSize);
+	cv::Mat orig = iRec->getOrigImage();
+	origData = getImageData(orig, origSize);
 }
+
+extern "C" __declspec(dllexport) void extractIrisFeatures(IrisRecognizer* iRec,
+	unsigned char* &codeData, int& codeSize)
+{
+	cv::Mat code = iRec->calcFeatures();
+	codeData = getImageData(code, codeSize);
+}
+
+extern "C" __declspec(dllexport) void deleteIrisRecognizer(IrisRecognizer* iRec)
+{
+	delete iRec;
+}
+
+
+
 int main(int argc, char **argv)
 {
 	//test2DPoints();
 	//edgeDetection(argc, argv);
 	//testCascadeClassifier(argc, argv);
-	testIrisRecognizer();
+	//testIrisRecognizer();
+	IrisRecognizer* iRec = createIrisRecognizer(512, 64);
+
 	return 0;
 }

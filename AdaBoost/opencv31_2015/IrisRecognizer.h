@@ -20,21 +20,25 @@ public:
 	{
 		this->stripSize = stripSize;
 		
-		//float lamda = 1.0 / 0.6;
-		//for (int cnt = 0; cnt < 8; cnt++, lamda /= std::sqrt(2.0))
-		float lamda = 1/0.1;
-		for (int cnt = 0; cnt < 8; cnt++, lamda = 1/(0.1 + cnt * 0.6 / 8))
+		//float freq = 0.6;
+		//for (int cnt = 0; cnt < 8; cnt++, freq *= std::sqrt(2.0))
+		for(float freq = 0.6; freq > 0.05;freq /= std::sqrt(2.0))
 		{
-			std::cout << "Lambda = " << lamda << std::endl;
-			std::cout << "Freq = " << 1.0 / lamda << std::endl;
-			for (float theta = 0; theta < 180; theta += 22.5)
+			for (double theta = 0; theta < CV_PI; theta += CV_PI / 8.0)
 			{
-				filtersBank.push_back(cv::getGaborKernel(stripSize, stripSize.width, theta, lamda, 1, CV_PI / 2.0));
+				//std::cout << theta << std::endl;
+				filtersBank.push_back(cv::getGaborKernel(stripSize, stripSize.width, theta, 1/freq, 
+					stripSize.height * 1.0 / stripSize.width));
 				//cv::imshow("Filter 1 ", filtersBank[filtersBank.size() - 1]);
+
+				//double min, max;
+				//cv::minMaxLoc(filtersBank[filtersBank.size() - 1], &min, &max);
+				//std::cout << "Min = " << min << "\tMax = " << max << std::endl;
 				//cv::Mat test;
 				//cv::filter2D(floatStrip, test, CV_32FC1, filtersBank[filtersBank.size() - 1]);
 				//cv::imshow("test", test);
-				filtersBank.push_back(cv::getGaborKernel(stripSize, stripSize.width, theta, lamda, 1, 0));
+				filtersBank.push_back(cv::getGaborKernel(stripSize, stripSize.width, theta, 1 / freq, 
+					stripSize.height * 1.0 / stripSize.width, 0));
 				//cv::imshow("Filter 2 ", filtersBank[filtersBank.size() - 1]);
 				//cv::waitKey();
 
@@ -316,38 +320,65 @@ public:
 		cv::Mat floatStrip;
 		cv::cvtColor(irisStrip, floatStrip, cv::COLOR_BGR2GRAY);
 		floatStrip.convertTo(floatStrip, CV_32F);
-		floatStrip = floatStrip / 256.0;
 		
+		cv::normalize(floatStrip, floatStrip,1,0, cv::NORM_MINMAX);
+		//floatStrip = (floatStrip * 2) - 1;
+		
+
 		cv::Mat real = cv::Mat::zeros(stripSize, CV_32F), imag = cv::Mat::zeros(stripSize, CV_32F);
 		for (int i = 0; i < filtersBank.size(); i += 2)
 		{
 			cv::Mat test1, test2;
 			cv::filter2D(floatStrip, test1, CV_32F, filtersBank[i]);
-			real += test1;
+			real = real + test1;
 			cv::filter2D(floatStrip, test2, CV_32F, filtersBank[i + 1]);
-			imag += test2;
+			imag = imag + test2;
+			/*
+			cv::normalize(test1, test1, 1, 0, cv::NORM_MINMAX);
+			cv::normalize(test2, test2, 1, 0, cv::NORM_MINMAX);
+			cv::imshow("test1", test1);
+			cv::imshow("test2", test2);
+			cv::Mat real1,imag1;
+			cv::normalize(real, real1, 1, 0, cv::NORM_MINMAX);
+			cv::normalize(imag, imag1, 1, 0, cv::NORM_MINMAX);
+			cv::imshow("real", real1);
+			cv::imshow("imag", imag1);
+			cv::imshow("floatStrip", floatStrip);
+			cv::waitKey();
+			*/
 		}
 
 		//double min, max;
 		//cv::minMaxLoc(imag, &min, &max);
 		//std::cout << "Min = " << min << "\tMax = " << max << std::endl;
-
+		cv::normalize(real, real, 1, 0, cv::NORM_MINMAX);
+		cv::normalize(imag, imag, 1, 0, cv::NORM_MINMAX);
 		std::vector<cv::Mat> parts(2, cv::Mat());
-		cv::threshold(real, parts[0], 0, 255, cv::THRESH_BINARY);
-		cv::threshold(imag, parts[1], 0, 255, cv::THRESH_BINARY);
-		
+		cv::threshold(real, parts[0], 0.5, 255, cv::THRESH_BINARY);
+		parts[0].convertTo(parts[0], CV_8UC1);
+		cv::threshold(imag, parts[1], 0.5, 255, cv::THRESH_BINARY);
+		parts[1].convertTo(parts[1], CV_8UC1);
+
 		std::cout << parts[0].channels() << std::endl;
 
-		cv::Mat code(stripSize.height, stripSize.width * 2, CV_8UC1);;
+		std::vector<cv::Mat> code;
+		for (int i = 0; i < 3; i++)
+		{
+			code.push_back(cv::Mat::zeros(stripSize.height, stripSize.width * 2, CV_8UC1));
+		}
 		for (int c = 0; c < stripSize.width; c++)
 		{
-			parts[0].col(c).copyTo(code(cv::Rect(c * 2, 0, 1, stripSize.height)));
-			parts[1].col(c).copyTo(code(cv::Rect(c * 2 + 1, 0, 1, stripSize.height)));
+			parts[0].col(c).copyTo(code[0].col(c * 2));
+			parts[1].col(c).copyTo(code[0].col(c * 2 + 1));
 		}
+		cv::Mat code1;
+		cv::merge(code, code1);
+		std::cout << code1.channels() << std::endl;
 		//cv::hconcat(parts, code);
 
-		//cv::imshow("code", code);
+		//cv::imshow("parts[0]", parts[0]);
+		//cv::imshow("parts[1]", parts[1]);
 		//cv::waitKey();
-		return code;
+		return code[0];
 	}
 };

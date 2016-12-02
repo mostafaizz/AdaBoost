@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdaBoostGUI"
         mc:Ignorable="d"
-        Title="Viola Jones" Height="585" Width="790">
+        Title="Biometrics ECE 523 (Fall 2016)" Height="585" Width="790">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="552" Width="780" Margin="2,2,0,0" VerticalAlignment="Top">
             <TabItem Header="AdaBoost Edge Detection">
@@ -85,15 +85,41 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="My Cascade Classifier">
+            <TabItem Header="My Cascade Classifier" Visibility="Collapsed">
                 <Grid>
                     <Button x:Name="buttonTrainMyCascade" Content="Train" Width="75" Height="20" Margin="181,0,496,124" VerticalAlignment="Bottom" Click="buttonTrainMyCascade_Click"/>
                     <Button x:Name="buttonTestMyCascade" Content="Test" Width="75" Height="20" Margin="484,0,193,124" VerticalAlignment="Bottom" Click="buttonTestMyCascade_Click"/>
                     <Image x:Name="imageCascadeClassifier" HorizontalAlignment="Left" Height="309" Margin="98,33,0,0" VerticalAlignment="Top" Width="532"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Iris Recognition">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Height="440" Width="720" 
+                                Margin="20,20,20,70" Orientation="Vertical">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="220" Width="700" 
+                                Margin="10" Orientation="Horizontal">
+                            <Image x:Name="origIrisImage" HorizontalAlignment="Right" Height="200" Margin="25, 10" VerticalAlignment="Top" Width="300"/>
+                            <Image x:Name="origIrisImageIrisExtracted" HorizontalAlignment="Right" Height="200" Margin="25, 10" VerticalAlignment="Top" Width="300"/>
 
-
+                        </StackPanel>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="74" Width="680" 
+                                Margin="10" >
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Center">Normalized Iris</Label>
+                            <Image x:Name="IrisNormalized" HorizontalAlignment="Right" Height="64" Margin="-1, 5, 20, 5" VerticalAlignment="Top" Width="512"/>
+                        </Grid>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="74" Width="680" 
+                                Margin="10">
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Center">Extracted Iris Code </Label>
+                            <Image x:Name="IrisCode" HorizontalAlignment="Right" Height="64" Margin="-1, 5,20, 5" VerticalAlignment="Top" Width="512"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="auto" Margin="10,-1,10,20" Orientation="Horizontal">
+                        <Button x:Name="OpenImage" Content="Select Image"  Height="20" Width="100" Margin="10,5" Click="OpenImage_Click" />
+                        <Button x:Name="FindIris" Content="Extract Iris" Height="20" Width="100" Margin="10,5" Click="FindIris_Click"/>
+                        <Button x:Name="ExtractIrisFeatures" Content="Extract Features" Height="20" Width="100" Margin="10,5" Click="ExtractIrisFeatures_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
         </TabControl>
 
     </Grid>

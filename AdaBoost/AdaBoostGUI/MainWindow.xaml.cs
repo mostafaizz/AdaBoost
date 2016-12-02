@@ -68,6 +68,21 @@ namespace AdaBoostGUI
         public static extern int SetStdHandle(int device, IntPtr handle);
 
         IntPtr cascadeClassifierPtr = IntPtr.Zero;
+        IntPtr iRec = IntPtr.Zero; // iris recognizer
+
+        [DllImport("opencv31_2015.dll", SetLastError = true)]
+        public static extern IntPtr createIrisRecognizer(int w, int h);
+
+        [DllImport("opencv31_2015.dll", SetLastError = true)]
+        public static extern void extractIris(string imgFileName, IntPtr iRec,
+            out IntPtr stripData, out int stripSize,
+            out IntPtr origData, out int origSize);
+
+        [DllImport("opencv31_2015.dll", SetLastError = true)]
+        public static extern void extractIrisFeatures(IntPtr iRec, out IntPtr codeData, out int codeSize);
+
+        [DllImport("opencv31_2015.dll", SetLastError = true)]
+        public static extern void deleteIrisRecognizer(IntPtr iRec);
 
         // Handling integer inputs
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -423,6 +438,44 @@ namespace AdaBoostGUI
             int size = 0;
             IntPtr iamge = testCascadeClassifier(cascadeClassifierPtr, "faces1/9338519.16.jpg", ref size);
             imageCascadeClassifier.Source = getImageFromIntPtr(iamge, size);
+        }
+
+        private void OpenImage_Click(object sender, RoutedEventArgs e)
+        {
+            string imageFileName = openFile("PNG Files (*.png)|*.png|JPEG Files (*.jpg)|*.jpg");
+            if (imageFileName != null)
+            {
+                origIrisImage.Source = getImageFromFile(imageFileName);
+                origIrisImage.ToolTip = imageFileName;
+                origIrisImageIrisExtracted.Source = null;
+                IrisNormalized.Source = null;
+                IrisCode.Source = null;
+            }
+        }
+
+        private void FindIris_Click(object sender, RoutedEventArgs e)
+        {
+            if(iRec == IntPtr.Zero)
+            {
+                iRec = createIrisRecognizer(512, 64);
+            }
+            IntPtr stripData = IntPtr.Zero, origData  = IntPtr.Zero;
+            int stripSize = 0, dataSize = 0;
+            extractIris((string)(origIrisImage.ToolTip), iRec, out stripData, out stripSize, out origData, out dataSize);
+            origIrisImageIrisExtracted.Source = getImageFromIntPtr(origData, dataSize);
+            IrisNormalized.Source = getImageFromIntPtr(stripData, stripSize);
+        }
+
+        private void ExtractIrisFeatures_Click(object sender, RoutedEventArgs e)
+        {
+            if (iRec == IntPtr.Zero)
+            {
+                FindIris_Click(sender, e);
+            }
+            IntPtr codeData = IntPtr.Zero;
+            int codeSize = 0;
+            extractIrisFeatures(iRec, out codeData, out codeSize);
+            IrisCode.Source = getImageFromIntPtr(codeData, codeSize);
         }
     }
 }
