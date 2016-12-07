@@ -154,8 +154,6 @@
     <ClCompile Include="AdaBoost.cpp" />
     <ClCompile Include="AdaBoostEdgeDetector.cpp" />
     <ClCompile Include="AdaBoostCascadeClassifier.cpp" />
-    <ClCompile Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\eigenfaces.cpp" />
-    <ClCompile Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\NewMain.cpp" />
     <ClCompile Include="DataPoint.cpp" />
     <ClCompile Include="HaarWeakClassifier.cpp" />
     <ClCompile Include="HaarWeakClassifierAbs.cpp" />
@@ -172,8 +170,6 @@
     <ClInclude Include="AdaBoost.h" />
     <ClInclude Include="AdaBoostEdgeDetector.h" />
     <ClInclude Include="AdaBoostCascadeClassifier.h" />
-    <ClInclude Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\detect.h" />
-    <ClInclude Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\FaceAlignment.h" />
     <ClInclude Include="DataPoint.h" />
     <ClInclude Include="HaarWeakClassifier.h" />
     <ClInclude Include="HaarWeakClassifierAbs.h" />

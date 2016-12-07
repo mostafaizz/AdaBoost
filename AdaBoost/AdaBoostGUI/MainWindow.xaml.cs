@@ -257,12 +257,15 @@ namespace AdaBoostGUI
             labelModel.ToolTip = modelFile;
         }
 
+        BitmapImage detectedFaces = null;
+
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
             //captureImage();
             int size;
             IntPtr faceImage = faceDetect(labelFaceImage.Content.ToString(), labelModel.Content.ToString(), out size);
-            imageCamera.Source = getImageFromIntPtr(faceImage, size);
+            detectedFaces = getImageFromIntPtr(faceImage, size);
+            imageCamera.Source = detectedFaces;
         }
 
         private void buttonPos_Click(object sender, RoutedEventArgs e)
@@ -476,6 +479,18 @@ namespace AdaBoostGUI
             int codeSize = 0;
             extractIrisFeatures(iRec, out codeData, out codeSize);
             IrisCode.Source = getImageFromIntPtr(codeData, codeSize);
+        }
+
+        private void buttonSaveFaces_Click(object sender, RoutedEventArgs e)
+        {
+            if (detectedFaces != null)
+            {
+                //detectedFaces
+                ImageWindow iw = new ImageWindow();
+                iw.image.Source = detectedFaces;
+                iw.WindowState = WindowState.Maximized;
+                iw.Show();
+            }
         }
     }
 }

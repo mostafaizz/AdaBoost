@@ -57,12 +57,6 @@
     <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\eigenfaces.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\NewMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WeakClassifier.h">
@@ -105,12 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IrisRecognizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\detect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\mostafaizz\Desktop\facerec\facial_points\facial_points\FaceAlignment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
