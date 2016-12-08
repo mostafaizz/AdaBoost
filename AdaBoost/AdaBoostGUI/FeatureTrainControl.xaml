@@ -17,23 +17,26 @@
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label x:Name="labelInputFileName" Content="Input File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
-        <Label x:Name="labelFeatModelName" Content="Feature Model File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
-        <Label x:Name="labelHaarModelName" Content="Haar Model File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
-        <Label x:Name="labelRegModelName" Content="Reg Model File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+        <Label x:Name="labelInputFileName" Content="Input File" Height="25" Width="auto" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <Label x:Name="labelFeatModelName" Content="Feature Model File" Height="25" Width="auto" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+        <Label x:Name="labelHaarModelName" Content="Haar Model File" Height="25" Width="auto" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+        <Label x:Name="labelRegModelName" Content="Reg Model File" Height="25" Width="auto" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
 
-        <TextBox x:Name="textInputFileName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
-        <TextBox x:Name="textFeatModelName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
-        <TextBox x:Name="textHaarModelName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
-        <TextBox x:Name="textRegModelName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
+        <TextBox x:Name="textInputFileName"  Text="" Height="25" Width="480" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
+        <TextBox x:Name="textFeatModelName"  Text="" Height="25" Width="480" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="textHaarModelName"  Text="" Height="25" Width="480" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+        <TextBox x:Name="textRegModelName"  Text="" Height="25" Width="480" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
 
 
-        <Button x:Name="buttonInputFileName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0"/>
-        <Button x:Name="buttonFeatModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
-        <Button x:Name="buttonHaarModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2"/>
-        <Button x:Name="buttonRegModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3"/>
-
+        <Button x:Name="buttonInputFileName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Click="buttonInputFileName_Click"/>
+        <Button x:Name="buttonFeatModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Click="buttonFeatModelName_Click"/>
+        <Button x:Name="buttonHaarModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Click="buttonHaarModelName_Click"/>
+        <Button x:Name="buttonRegModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" Click="buttonRegModelName_Click"/>
+        <Button x:Name="buttonTrain"  Content="Train" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="4" Click="buttonTrain_Click"/>
+        <ProgressBar x:Name="progressBarTrain" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="10" Grid.Row="4" VerticalAlignment="Center" Width="480"/>
+        <Label x:Name="labelTraining" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Height="25" Margin="10"/>
 
     </Grid>
 </UserControl>

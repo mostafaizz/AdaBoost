@@ -46,6 +46,20 @@
                 </TabItem.Content>
                 
                 </TabItem>
+            <TabItem Header="[8] Facial Features">
+                <TabControl x:Name="faceFeatTabControl" Height="auto" Width="auto" Margin="2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TabItem Header="Train">
+                        <TabItem.Content>
+                            <local:FeatureTrainControl></local:FeatureTrainControl>
+                        </TabItem.Content>
+                    </TabItem>
+                    <TabItem Header="Test">
+                        <TabItem.Content>
+                            <local:FeatureTrainControl></local:FeatureTrainControl>
+                        </TabItem.Content>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
             <TabItem Header="[9] Iris Recognition">
                 <TabItem.Content>
                     <local:IrisControl/>
