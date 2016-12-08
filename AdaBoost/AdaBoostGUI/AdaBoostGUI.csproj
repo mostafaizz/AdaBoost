@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdaBoost.xaml.cs">
+      <DependentUpon>AdaBoost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdaBoostControl.xaml.cs">
       <DependentUpon>AdaBoostControl.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,9 @@
     </Compile>
     <Compile Include="EigenControl.xaml.cs">
       <DependentUpon>EigenControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureTestControl.xaml.cs">
+      <DependentUpon>FeatureTestControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="FeatureTrainControl.xaml.cs">
       <DependentUpon>FeatureTrainControl.xaml</DependentUpon>
@@ -104,12 +110,19 @@
     <Compile Include="IrisControl.xaml.cs">
       <DependentUpon>IrisControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PointClassificationControl.xaml.cs">
+      <DependentUpon>PointClassificationControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViolaJonesTester.xaml.cs">
       <DependentUpon>ViolaJonesTester.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViolaJonesTrain.xaml.cs">
       <DependentUpon>ViolaJonesTrain.xaml</DependentUpon>
     </Compile>
+    <Page Include="AdaBoost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdaBoostControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EigenControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeatureTestControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,6 +172,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PointClassificationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

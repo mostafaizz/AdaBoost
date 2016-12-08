@@ -142,8 +142,5 @@ namespace AdaBoostGUI
             imageCascadeClassifier.Source = getImageFromIntPtr(iamge, size);
         }
 
-       
-
-        
     }
 }

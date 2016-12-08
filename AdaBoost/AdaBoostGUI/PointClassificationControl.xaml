@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="AdaBoostGUI.PointClassificationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdaBoostGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="570" d:DesignWidth="775">
+    <Grid>
+        <Label Content="Maximum Number of Weak Classifiers" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="27,26,-1,-1"/>
+        <TextBox x:Name="textBoxMaxNum" Height="23"  Width="70"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="252,26,-1,-1"/>
+        <Label Content="Minimum Accuracy" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="431,26,-1,-1"/>
+        <TextBox x:Name="textBoxMinAccuracy" Height="23" Width="70" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="577,26,-1,-1"/>
+
+
+        <Image x:Name="image" Width="450" Height="450" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="27,66,-1,-1"/>
+
+        <Label Content="Training Accuracy" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="560,119,-1,-1"/>
+        <TextBox x:Name="textBoxAccuracy" IsEnabled="False" Height="23" Width ="70" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="577,159,-1,-1"/>
+        <Label Content="Number of Classifiers" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="553,219,-1,-1"/>
+        <TextBox x:Name="textBoxClassifiers" IsEnabled="False" Height="23" Width ="70" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="577,259,-1,-1"/>
+        <Button x:Name="buttonRun"  Height="23" Width="70" Content="Run" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="577,378,-1,-1" Click="buttonRun_Click"/>
+    </Grid>
+</UserControl>

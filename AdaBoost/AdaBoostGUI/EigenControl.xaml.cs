@@ -101,6 +101,7 @@ namespace AdaBoostGUI
             Marshal.Copy(ptr, result, 0, size);
             string[] labels = label.Split(',');
             string output = "";
+            
             for (int i = 0; i < result.Length; i++)
             {
                 output += labels[i] + "\t \t \t" + result[i].ToString() + "\n";

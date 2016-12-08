@@ -55,7 +55,8 @@ namespace AdaBoostGUI
 
         private void buttonTrain_Click(object sender, RoutedEventArgs e)
         {
-            train();
+            Thread thr = new Thread(train);
+            thr.Start();
             /*BackgroundWorker bkgWorker = new BackgroundWorker();
             bkgWorker.WorkerSupportsCancellation = false;
             bkgWorker.DoWork += BkgWorker_DoWork; ;

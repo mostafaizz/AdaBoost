@@ -125,5 +125,7 @@ namespace AdaBoostGUI
             imageTrain.Source = MainWindow.getImageFromIntPtr(trainImg, trainImgSize);
             imageTest.Source = MainWindow.getImageFromIntPtr(testImg, testImgSize);
         }
+
+        
     }
 }

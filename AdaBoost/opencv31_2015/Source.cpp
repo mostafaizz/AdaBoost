@@ -21,7 +21,21 @@
 
 const double PI = 3.14159265;
 
-void test2DPoints()
+
+unsigned char *getImageData(const cv::Mat img,int& size)
+{
+	std::vector<unsigned char> buf;
+	cv::imencode(".png", img, buf);
+	unsigned char *data = new unsigned char[buf.size()];
+	memcpy(data, reinterpret_cast<unsigned char*>(buf.data()), buf.size());
+	size = buf.size();
+	return data;
+}
+
+
+extern "C"             //No name mangling
+__declspec(dllexport)  //Tells the compiler to export the function
+unsigned char* test2DPoints(int &retSize, int& numClassifiers, double& accuracy,int maximum = 30, double percenatge = 0.95)
 {
 	// generate the data
 	std::vector<DataPoint*> data;
@@ -29,7 +43,7 @@ void test2DPoints()
 	cv::Mat img = cv::Mat::zeros(1100, 1100, CV_32FC3);
 	for (double r = 0.1 * 1000; r <= 0.51 * 1000; r += 0.05 * 1000)
 	{
-		for (double theta = 0; theta <= 1.81 * PI; theta += (PI / 5),i++)
+		for (double theta = 0; theta <= 1.81 * PI; theta += (PI / 5), i++)
 		{
 			std::vector<double> d = std::vector<double>(2, 0);
 			d[0] = 0.5f + r * std::cos(theta);
@@ -41,35 +55,30 @@ void test2DPoints()
 
 	std::cout << data.size() << std::endl;
 	int shift = 510;
-	std::vector<int> label(30,1); 
+	std::vector<int> label(30, 1);
 	label.resize(data.size(), -1);
 	for (int i = 0; i < data.size(); i++)
 	{
-		cv::circle(img, cv::Point(data[i]->getVectorData()[0] + shift, data[i]->getVectorData()[1] + shift), 
-			2, cv::Scalar(((label[i] - 1) / -2) * 255, 0, ((label[i] + 1)/2) * 255), -1);
+		cv::circle(img, cv::Point(data[i]->getVectorData()[0] + shift, data[i]->getVectorData()[1] + shift),
+			2, cv::Scalar(((label[i] - 1) / -2) * 255, 0, ((label[i] + 1) / 2) * 255), -1);
 	}
 	//freopen("result.csv", "w", stdout);
 	WeakClassifierFactory * factory = new WeakVectorClassifierFactory();
-	for (int i = 1; i < 30; i+=2)
+	for (numClassifiers = 1; numClassifiers < maximum; numClassifiers += 2)
 	{
-		AdaBoost adaboost(i, factory);
+		AdaBoost adaboost(numClassifiers, factory);
 		std::vector<int> outLabels;
-		double accuracy = adaboost.train(data, label, outLabels, false);
-		std::cout << i << ", " << accuracy << std::endl;
+		accuracy = adaboost.train(data, label, outLabels, false);
+		if (accuracy >= percenatge)
+		{
+			break;
+		}
+		std::cout << numClassifiers << ", " << accuracy << std::endl;
 		//system("PAUSE");
 	}
-	cv::imshow("img", img);
-	cv::waitKey();
-}
-
-unsigned char *getImageData(const cv::Mat img,int& size)
-{
-	std::vector<unsigned char> buf;
-	cv::imencode(".png", img, buf);
-	unsigned char *data = new unsigned char[buf.size()];
-	memcpy(data, reinterpret_cast<unsigned char*>(buf.data()), buf.size());
-	size = buf.size();
-	return data;
+	//cv::imshow("img", img);
+	//cv::waitKey();
+	return getImageData(img, retSize);
 }
 
 extern "C"             //No name mangling

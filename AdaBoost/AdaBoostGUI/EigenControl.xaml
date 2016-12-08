@@ -29,7 +29,7 @@
                     <Button x:Name="buttonTrainEigen"  Content="Train" Height="25" Width="70" Margin="595.517,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonTrainEigen_Click"/>
                     <Button x:Name="buttonDrawEigen"  Content="Draw" Height="25" Width="70" Margin="595.517,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonDrawEigen_Click"/>
 
-                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="500" Margin="40,120,0,0" Grid.ColumnSpan="2">
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="500" Margin="40,120,0,0" Grid.ColumnSpan="3">
                         <Image x:Name="ImageEigenFaces" Width="auto" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
                     </Grid>
 

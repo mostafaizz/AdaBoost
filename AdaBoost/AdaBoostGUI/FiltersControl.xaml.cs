@@ -49,7 +49,76 @@ namespace AdaBoostGUI
 
         private void sobel3_Click(object sender, RoutedEventArgs e)
         {
+            int retSize = 0;
+            int[] l = new int[] { 0 };
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
 
+        private void sobel5_Click(object sender, RoutedEventArgs e)
+        {
+
+            int retSize = 0;
+            int[] l = new int[] { 1 };
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void gauss5_Click(object sender, RoutedEventArgs e)
+        {
+
+            int retSize = 0;
+            int[] l = new int[] { 4 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void gauss9_Click(object sender, RoutedEventArgs e)
+        {
+
+            int retSize = 0;
+            int[] l = new int[] { 5 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void med5_Click(object sender, RoutedEventArgs e)
+        {
+
+            int retSize = 0;
+            int[] l = new int[] { 2 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void med9_Click(object sender, RoutedEventArgs e)
+        {
+            int retSize = 0;
+            int[] l = new int[] { 3 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void gauss5sobel3_Click(object sender, RoutedEventArgs e)
+        {
+            int retSize = 0;
+            int[] l = new int[] { 4, 0 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void gauss9sobel3_Click(object sender, RoutedEventArgs e)
+        {
+            int retSize = 0;
+            int[] l = new int[] { 5, 0 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
         }
     }
 }
