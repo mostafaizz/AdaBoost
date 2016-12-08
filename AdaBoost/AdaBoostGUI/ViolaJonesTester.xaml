@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="AdaBoostGUI.ViolaJonesTester"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdaBoostGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="575" d:DesignWidth="780">
+    <Grid>
+        <Grid Background="#FFFFFFFF">
+            <Label x:Name="labelFaceImage" Content="" HorizontalAlignment="Left" Margin="191,35,0,0" VerticalAlignment="Top" Width="365"/>
+            <Button x:Name="buttonTest" Content="Detect Faces" HorizontalAlignment="Left" Margin="520,407,0,0" VerticalAlignment="Top" Width="75" Click="buttonTest_Click"/>
+            <Border Height="300" Width="445" Margin="111,66,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Image x:Name="imageCamera" HorizontalAlignment="Left" Height="Auto" Margin="111,66,0,0" VerticalAlignment="Top" Width="Auto"/>
+            </Border>
+            <Button x:Name="buttonSelectImage" Content="Select Image" HorizontalAlignment="Left" Margin="111,38,0,0" VerticalAlignment="Top" Width="75" Click="buttonSelectImage_Click"/>
+            <Button x:Name="buttonSelectModel" Content="Select Model" HorizontalAlignment="Left" Margin="111,371,0,0" VerticalAlignment="Top" Width="75" Click="buttonSelectModel_Click"/>
+            <Label x:Name="labelModel" Content="" HorizontalAlignment="Left" Margin="191,371,0,0" VerticalAlignment="Top" Width="404"/>
+            <Button x:Name="buttonSaveFaces" Content="Maximize Output" HorizontalAlignment="Left" Margin="612,407,0,0" VerticalAlignment="Top" Width="113" Click="buttonSaveFaces_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>

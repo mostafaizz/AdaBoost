@@ -52,7 +52,8 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ico.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -76,9 +77,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdaBoostControl.xaml.cs">
+      <DependentUpon>AdaBoostControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EigenControl.xaml.cs">
+      <DependentUpon>EigenControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureTrainControl.xaml.cs">
+      <DependentUpon>FeatureTrainControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageWindow.xaml.cs">
       <DependentUpon>ImageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IrisControl.xaml.cs">
+      <DependentUpon>IrisControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViolaJonesTester.xaml.cs">
+      <DependentUpon>ViolaJonesTester.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViolaJonesTrain.xaml.cs">
+      <DependentUpon>ViolaJonesTrain.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AdaBoostControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EigenControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeatureTrainControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IrisControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,6 +127,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViolaJonesTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViolaJonesTrain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,9 +177,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ico.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

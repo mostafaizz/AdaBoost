@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="AdaBoostGUI.EigenControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdaBoostGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="575" d:DesignWidth="780">
+    <Grid>
+        <TabControl x:Name="EignFacesTabControl" Height="auto" Width="auto" Margin="2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TabItem Header="Train">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="358*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="labelInputFileName" Content="Input File" Height="25" Width="100" Margin="20,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label x:Name="labelPCAModelName" Content="PCA Model File" Height="25" Width="100" Margin="20,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label x:Name="labelHaarModelName" Content="Haar Model File" Height="25" Width="100" Margin="20,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
+                    <TextBox x:Name="textInputFileName"  Text="" Height="25" Width="500" Margin="65.517,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="textPCAModelName"  Text="" Height="25" Width="500" Margin="65.517,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="textHaarModelName"  Text="" Height="25" Width="500" Margin="65.517,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+
+                    <Button x:Name="buttonInputFileName"  Content="Browse" Height="25" Width="70" Margin="595.517,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonInputFileName_Click"/>
+                    <Button x:Name="buttonPCAModelName"  Content="Browse" Height="25" Width="70" Margin="595.517,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonPCAModelName_Click"/>
+                    <Button x:Name="buttonHaarModelName"  Content="Browse" Height="25" Width="70" Margin="595.517,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonHaarModelName_Click"/>
+
+                    <Button x:Name="buttonTrainEigen"  Content="Train" Height="25" Width="70" Margin="595.517,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonTrainEigen_Click"/>
+                    <Button x:Name="buttonDrawEigen"  Content="Draw" Height="25" Width="70" Margin="595.517,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonDrawEigen_Click"/>
+
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="500" Margin="40,120,0,0" Grid.ColumnSpan="2">
+                        <Image x:Name="ImageEigenFaces" Width="auto" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Test">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="358*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="labelInputFileNameTest" Content="Input File" Height="25" Width="100" Margin="20,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label x:Name="labelPCAModelNameTest" Content="PCA Model File" Height="25" Width="100" Margin="20,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label x:Name="labelHaarModelNameTest" Content="Haar Model File" Height="25" Width="100" Margin="20,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
+                    <TextBox x:Name="textInputFileNameTest"  Text="" Height="25" Width="500" Margin="65.517,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="textPCAModelNameTest"  Text="" Height="25" Width="500" Margin="65.517,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="textHaarModelNameTest"  Text="" Height="25" Width="500" Margin="65.517,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+
+                    <Button x:Name="buttonInputFileNameTest"  Content="Browse" Height="25" Width="70" Margin="595.517,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonInputFileNameTest_Click"/>
+                    <Button x:Name="buttonPCAModelNameTest"  Content="Browse" Height="25" Width="70" Margin="595.517,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonPCAModelNameTest_Click"/>
+                    <Button x:Name="buttonHaarModelNameTest"  Content="Browse" Height="25" Width="70" Margin="595.517,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonHaarModelNameTest_Click"/>
+
+                    <Button x:Name="buttonTestEigen"  Content="Test" Height="25" Width="70" Margin="595.517,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonTestEigen_Click"/>
+
+                    <Label x:Name="LabelEigens"  Content="Eigen Number" Height="25" Width="70" Margin="595.517,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="TextEigens"  Text="0" Height="25" Width="70" Margin="595.517,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBlock x:Name="TextOut" IsEnabled="False" Text="" Height="25" Width="70" Margin="595.517,260,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="550" Margin="40,120,0,0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <Image x:Name="ImageFacesTest" Width="350" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                        <Image x:Name="ImageEigenFacesTest" Width="100" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</UserControl>

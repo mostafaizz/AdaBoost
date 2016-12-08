@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="AdaBoostGUI.ViolaJonesTrain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdaBoostGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="575" d:DesignWidth="780">
+    <Grid>
+        <Grid Background="#FFFFFFFF">
+            <Button x:Name="buttonPos" Content="Select Positive" HorizontalAlignment="Left" Margin="51,45,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonPos_Click"/>
+            <TextBox x:Name="labelPos" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,45,0,0" VerticalAlignment="Top" Width="478"/>
+            <Button x:Name="buttonNeg" Content="Select Negative" HorizontalAlignment="Left" Margin="51,76,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonNeg_Click"/>
+            <TextBox x:Name="labelNeg" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,76,0,0" VerticalAlignment="Top" Width="478"/>
+            <Button x:Name="buttonOutput" Content="Select Output Folder" HorizontalAlignment="Left" Margin="51,107,0,0" VerticalAlignment="Top" Width="126" Height="21" Click="buttonOutput_Click"/>
+            <TextBox x:Name="labelOutput" IsReadOnly="True" Text="" HorizontalAlignment="Left" Margin="192,107,0,0" VerticalAlignment="Top" Width="478"/>
+            <Label x:Name="label2" Content="Patch Width" HorizontalAlignment="Left" Margin="51,148,0,0" VerticalAlignment="Top" Width="126"/>
+            <TextBox x:Name="textBoxPatchWidth" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
+            <Label x:Name="label2_Copy" Content="Patch Height" HorizontalAlignment="Left" Margin="349,149,0,0" VerticalAlignment="Top" Width="133"/>
+            <TextBox x:Name="textBoxPatchHeight" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="497,151,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="64"/>
+            <Label x:Name="label2_Copy1" Content="Num Positive Samples" HorizontalAlignment="Left" Margin="51,189,0,0" VerticalAlignment="Top" Width="126"/>
+            <TextBox x:Name="textBoxNumPos" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
+            <Label x:Name="label2_Copy2" Content="Num Negative Samples" HorizontalAlignment="Left" Margin="349,189,0,0" VerticalAlignment="Top" Width="133"/>
+            <TextBox x:Name="textBoxNumNeg" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"  HorizontalAlignment="Left" Height="23" Margin="497,189,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="64"/>
+            <Label x:Name="label2_Copy3" Content="Min. Hit Rate" HorizontalAlignment="Left" Margin="51,232,0,0" VerticalAlignment="Top" Width="126"/>
+            <TextBox x:Name="textBoxMinRate" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,232,0,0" TextWrapping="Wrap" Text="0.999" VerticalAlignment="Top" Width="64"/>
+            <Label x:Name="label2_Copy4" Content="Max False Alarm" HorizontalAlignment="Left" Margin="351,232,0,0" VerticalAlignment="Top" Width="126"/>
+            <TextBox x:Name="textBoxMaxFalse" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="497,232,0,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top" Width="64"/>
+            <Button x:Name="buttonTrain" Content="Start Training" HorizontalAlignment="Left" Margin="382,275,0,0" VerticalAlignment="Top" Width="179" Click="buttonTrain_Click"/>
+            <Label x:Name="label2_Copy5" Content="Num of Stages" HorizontalAlignment="Left" Margin="51,272,0,0" VerticalAlignment="Top" Width="126"/>
+            <TextBox x:Name="textBoxNumStages" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" HorizontalAlignment="Left" Height="23" Margin="192,272,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="64"/>
+            <!--ScrollViewer Width="654" Margin="51,303,47,56"-->
+            <TextBox x:Name="textBlock" 
+                                   ScrollViewer.CanContentScroll="True" 
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="51,335,0,0" 
+                                   VerticalAlignment="Top" 
+                                   AcceptsReturn="True"
+                                   IsReadOnly="True"
+                                   Height="120" Width="654"/>
+            <!--/-->
+            <ProgressBar x:Name="pBar" Minimum="0" Maximum="100" HorizontalAlignment="Left" Height="25" Margin="51,460,0,0" VerticalAlignment="Top" Width="654"/>
+            <Label x:Name="labelTrainingStage" Content="" HorizontalAlignment="Left" Margin="51,304,0,0" VerticalAlignment="Top" Width="296"/>
+
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="AdaBoostGUI.FeatureTrainControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdaBoostGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="575" d:DesignWidth="780">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="15*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label x:Name="labelInputFileName" Content="Input File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <Label x:Name="labelFeatModelName" Content="Feature Model File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+        <Label x:Name="labelHaarModelName" Content="Haar Model File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+        <Label x:Name="labelRegModelName" Content="Reg Model File" Height="25" Width="100" Margin="2,10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+
+        <TextBox x:Name="textInputFileName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
+        <TextBox x:Name="textFeatModelName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="textHaarModelName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+        <TextBox x:Name="textRegModelName"  Text="" Height="25" Width="500" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
+
+
+        <Button x:Name="buttonInputFileName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0"/>
+        <Button x:Name="buttonFeatModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="buttonHaarModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2"/>
+        <Button x:Name="buttonRegModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3"/>
+
+
+    </Grid>
+</UserControl>

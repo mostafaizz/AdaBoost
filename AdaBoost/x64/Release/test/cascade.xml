@@ -16,7 +16,7 @@
     <maxCatCount>0</maxCatCount>
     <featSize>1</featSize>
     <mode>BASIC</mode></featureParams>
-  <stageNum>12</stageNum>
+  <stageNum>6</stageNum>
   <stages>
     <!-- stage 0 -->
     <_>
@@ -25,7 +25,7 @@
       <weakClassifiers>
         <_>
           <internalNodes>
-            0 -1 3 1.4716142416000366e-01</internalNodes>
+            0 -1 0 2.7633452555164695e-04</internalNodes>
           <leafValues>
             -1. 1.</leafValues></_></weakClassifiers></_>
     <!-- stage 1 -->
@@ -35,7 +35,7 @@
       <weakClassifiers>
         <_>
           <internalNodes>
-            0 -1 2 -1.6338778659701347e-02</internalNodes>
+            0 -1 0 2.8002948965877295e-04</internalNodes>
           <leafValues>
             1. -1.</leafValues></_></weakClassifiers></_>
     <!-- stage 2 -->
@@ -45,9 +45,9 @@
       <weakClassifiers>
         <_>
           <internalNodes>
-            0 -1 0 6.5719028934836388e-03</internalNodes>
+            0 -1 2 -2.7771708555519581e-03</internalNodes>
           <leafValues>
-            -1. 1.</leafValues></_></weakClassifiers></_>
+            1. -1.</leafValues></_></weakClassifiers></_>
     <!-- stage 3 -->
     <_>
       <maxWeakCount>1</maxWeakCount>
@@ -55,7 +55,7 @@
       <weakClassifiers>
         <_>
           <internalNodes>
-            0 -1 1 1.2668111920356750e-01</internalNodes>
+            0 -1 3 8.1614665687084198e-03</internalNodes>
           <leafValues>
             -1. 1.</leafValues></_></weakClassifiers></_>
     <!-- stage 4 -->
@@ -65,7 +65,7 @@
       <weakClassifiers>
         <_>
           <internalNodes>
-            0 -1 4 -2.5445309281349182e-01</internalNodes>
+            0 -1 1 1.2517496943473816e-03</internalNodes>
           <leafValues>
             1. -1.</leafValues></_></weakClassifiers></_>
     <!-- stage 5 -->
@@ -75,152 +75,38 @@
       <weakClassifiers>
         <_>
           <internalNodes>
-            0 -1 5 3.7146194372326136e-03</internalNodes>
+            0 -1 1 1.2102675391361117e-03</internalNodes>
           <leafValues>
-            -1. 1.</leafValues></_></weakClassifiers></_>
-    <!-- stage 6 -->
-    <_>
-      <maxWeakCount>1</maxWeakCount>
-      <stageThreshold>1.</stageThreshold>
-      <weakClassifiers>
-        <_>
-          <internalNodes>
-            0 -1 7 8.1993191270157695e-04</internalNodes>
-          <leafValues>
-            1. -1.</leafValues></_></weakClassifiers></_>
-    <!-- stage 7 -->
-    <_>
-      <maxWeakCount>1</maxWeakCount>
-      <stageThreshold>1.</stageThreshold>
-      <weakClassifiers>
-        <_>
-          <internalNodes>
-            0 -1 10 9.6803391352295876e-03</internalNodes>
-          <leafValues>
-            -1. 1.</leafValues></_></weakClassifiers></_>
-    <!-- stage 8 -->
-    <_>
-      <maxWeakCount>1</maxWeakCount>
-      <stageThreshold>1.</stageThreshold>
-      <weakClassifiers>
-        <_>
-          <internalNodes>
-            0 -1 11 1.0148636996746063e-02</internalNodes>
-          <leafValues>
-            -1. 1.</leafValues></_></weakClassifiers></_>
-    <!-- stage 9 -->
-    <_>
-      <maxWeakCount>1</maxWeakCount>
-      <stageThreshold>1.</stageThreshold>
-      <weakClassifiers>
-        <_>
-          <internalNodes>
-            0 -1 6 -1.4003244228661060e-02</internalNodes>
-          <leafValues>
-            1. -1.</leafValues></_></weakClassifiers></_>
-    <!-- stage 10 -->
-    <_>
-      <maxWeakCount>1</maxWeakCount>
-      <stageThreshold>1.</stageThreshold>
-      <weakClassifiers>
-        <_>
-          <internalNodes>
-            0 -1 8 5.9334631077945232e-03</internalNodes>
-          <leafValues>
-            1. -1.</leafValues></_></weakClassifiers></_>
-    <!-- stage 11 -->
-    <_>
-      <maxWeakCount>1</maxWeakCount>
-      <stageThreshold>1.</stageThreshold>
-      <weakClassifiers>
-        <_>
-          <internalNodes>
-            0 -1 9 -4.2621791362762451e-02</internalNodes>
-          <leafValues>
-            1. -1.</leafValues></_></weakClassifiers></_></stages>
+            -1. 1.</leafValues></_></weakClassifiers></_></stages>
   <features>
     <_>
       <rects>
         <_>
-          0 0 6 15 -1.</_>
+          0 0 3 1 -1.</_>
         <_>
-          2 0 2 15 3.</_></rects>
+          1 0 1 1 3.</_></rects>
       <tilted>0</tilted></_>
     <_>
       <rects>
         <_>
-          0 0 24 23 -1.</_>
+          0 0 2 2 -1.</_>
         <_>
-          8 0 8 23 3.</_></rects>
+          1 0 1 2 2.</_></rects>
       <tilted>0</tilted></_>
     <_>
       <rects>
         <_>
-          0 0 17 10 -1.</_>
+          0 0 2 8 -1.</_>
         <_>
-          0 5 17 5 2.</_></rects>
+          0 0 1 4 2.</_>
+        <_>
+          1 4 1 4 2.</_></rects>
       <tilted>0</tilted></_>
     <_>
       <rects>
         <_>
-          0 0 22 24 -1.</_>
+          0 0 6 4 -1.</_>
         <_>
-          0 8 22 8 3.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          0 10 22 14 -1.</_>
-        <_>
-          0 17 22 7 2.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          0 23 12 1 -1.</_>
-        <_>
-          6 23 6 1 2.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          2 7 12 6 -1.</_>
-        <_>
-          6 7 4 6 3.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          7 4 4 1 -1.</_>
-        <_>
-          9 4 2 1 2.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          7 15 12 5 -1.</_>
-        <_>
-          11 15 4 5 3.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          10 0 10 12 -1.</_>
-        <_>
-          10 6 10 6 2.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          12 0 12 6 -1.</_>
-        <_>
-          16 0 4 6 3.</_></rects>
-      <tilted>0</tilted></_>
-    <_>
-      <rects>
-        <_>
-          17 0 6 21 -1.</_>
-        <_>
-          19 0 2 21 3.</_></rects>
+          3 0 3 4 2.</_></rects>
       <tilted>0</tilted></_></features></cascade>
 </opencv_storage>
