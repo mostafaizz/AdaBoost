@@ -345,6 +345,182 @@ extern "C" __declspec(dllexport) unsigned char* testCascadeClassifier(AdaBoostCa
 	return getImageData(testImg, retSize);
 }
 
+enum
+{
+	SOBEL3,
+	SOBEL5,
+	MEDIAN5,
+	MEDIAN9,
+	GAUSS5,
+	GAUSS9
+};
+
+cv::Mat applySobel(cv::Mat &img, int size)
+{
+	/// Generate grad_x and grad_y
+	cv::Mat grad_x, grad_y, grad;
+	cv::Mat abs_grad_x, abs_grad_y;
+
+	/// Gradient X
+	//Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
+	Sobel(img, grad_x, CV_16S, 1, 0, size);
+	convertScaleAbs(grad_x, abs_grad_x);
+
+	/// Gradient Y
+	//Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
+	Sobel(img, grad_y, CV_16S, 0, 1, size);
+	convertScaleAbs(grad_y, abs_grad_y);
+
+	/// Total Gradient (approximate)
+	addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad);
+
+	return grad;
+}
+
+extern "C" __declspec(dllexport) unsigned char* applyOperator(char*imageName, int* ops, int opsSize, int &retSize)
+{
+	cv::Mat img = cv::imread(imageName,0);
+	cv::Mat test = img.clone();
+	for (int i = 0; i < opsSize; i++)
+	{
+		switch (ops[i])
+		{
+		case SOBEL3:
+			test = applySobel(test, 3);
+			break;
+		case SOBEL5:
+			test = applySobel(test, 5);
+			break;
+		case MEDIAN5:
+			cv::medianBlur(test, test, 5);
+			break;
+		case MEDIAN9:
+			cv::medianBlur(test, test, 9);
+			break;
+		case GAUSS5:
+			cv::GaussianBlur(test, test, cv::Size(5, 5), 0);
+			break;
+		case GAUSS9:
+			cv::GaussianBlur(test, test, cv::Size(9, 9), 0);
+			break;
+		default:
+			break;
+		}
+	}
+
+	return getImageData(test, retSize);
+}
+
+extern "C" __declspec(dllexport) unsigned char * getColorHist(char* imageName, int& retSize)
+{
+	cv::Mat src, dst;
+
+	/// Load image
+	src = cv::imread(imageName, 1);
+
+	if (!src.data)
+	{
+		retSize = 0;
+		return 0;
+	}
+
+	/// Separate the image in 3 places ( B, G and R )
+	std::vector<cv::Mat> bgr_planes;
+	split(src, bgr_planes);
+
+	/// Establish the number of bins
+	int histSize = 256;
+
+	/// Set the ranges ( for B,G,R) )
+	float range[] = { 0, 256 };
+	const float* histRange = { range };
+
+	bool uniform = true; bool accumulate = false;
+
+	cv::Mat b_hist, g_hist, r_hist;
+
+	/// Compute the histograms:
+	calcHist(&bgr_planes[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
+	calcHist(&bgr_planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
+	calcHist(&bgr_planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
+
+	// Draw the histograms for B, G and R
+	int hist_w = 512; int hist_h = 400;
+	int bin_w = cvRound((double)hist_w / histSize);
+
+	cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
+
+	/// Normalize the result to [ 0, histImage.rows ]
+	cv::normalize(b_hist, b_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+	cv::normalize(g_hist, g_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+	cv::normalize(r_hist, r_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+
+	/// Draw for each channel
+	for (int i = 1; i < histSize; i++)
+	{
+		cv::line(histImage, cv::Point(bin_w*(i - 1), hist_h - cvRound(b_hist.at<float>(i - 1))),
+			cv::Point(bin_w*(i), hist_h - cvRound(b_hist.at<float>(i))),
+			cv::Scalar(255, 0, 0), 2, 8, 0);
+		cv::line(histImage, cv::Point(bin_w*(i - 1), hist_h - cvRound(g_hist.at<float>(i - 1))),
+			cv::Point(bin_w*(i), hist_h - cvRound(g_hist.at<float>(i))),
+			cv::Scalar(0, 255, 0), 2, 8, 0);
+		cv::line(histImage, cv::Point(bin_w*(i - 1), hist_h - cvRound(r_hist.at<float>(i - 1))),
+			cv::Point(bin_w*(i), hist_h - cvRound(r_hist.at<float>(i))),
+			cv::Scalar(0, 0, 255), 2, 8, 0);
+	}
+
+	return getImageData(histImage, retSize);
+}
+
+extern "C" __declspec(dllexport) unsigned char * getGrayHist(char* imageName, int& retSize)
+{
+	cv::Mat src, dst;
+
+	/// Load image
+	src = cv::imread(imageName, 0);
+
+	if (!src.data)
+	{
+		retSize = 0;
+		return 0;
+	}
+
+	/// Establish the number of bins
+	int histSize = 256;
+
+	/// Set the ranges ( for B,G,R) )
+	float range[] = { 0, 256 };
+	const float* histRange = { range };
+
+	bool uniform = true; bool accumulate = false;
+
+	cv::Mat gray_hist;
+
+	/// Compute the histograms:
+	calcHist(&src, 1, 0, cv::Mat(), gray_hist, 1, &histSize, &histRange, uniform, accumulate);
+	
+	// Draw the histograms for B, G and R
+	int hist_w = 512; int hist_h = 400;
+	int bin_w = cvRound((double)hist_w / histSize);
+
+	cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
+
+	/// Normalize the result to [ 0, histImage.rows ]
+	cv::normalize(gray_hist, gray_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+	
+	/// Draw for each channel
+	for (int i = 1; i < histSize; i++)
+	{
+		cv::line(histImage, cv::Point(bin_w*(i - 1), hist_h - cvRound(gray_hist.at<float>(i - 1))),
+			cv::Point(bin_w*(i), hist_h - cvRound(gray_hist.at<float>(i))),
+			cv::Scalar(255, 255, 255), 2, 8, 0);
+		
+	}
+
+	return getImageData(histImage, retSize);
+}
+
+
 extern "C" __declspec(dllexport) void deleteCascadeClassifier(AdaBoostCascadeClassifier* classifier)
 {
 	delete classifier;

@@ -80,11 +80,23 @@
     <Compile Include="AdaBoostControl.xaml.cs">
       <DependentUpon>AdaBoostControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ColorHistControl.xaml.cs">
+      <DependentUpon>ColorHistControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EigenControl.xaml.cs">
       <DependentUpon>EigenControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="FeatureTrainControl.xaml.cs">
       <DependentUpon>FeatureTrainControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FiltersControl.xaml.cs">
+      <DependentUpon>FiltersControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GrayHistControl.xaml.cs">
+      <DependentUpon>GrayHistControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImageProcessControl.xaml.cs">
+      <DependentUpon>ImageProcessControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageWindow.xaml.cs">
       <DependentUpon>ImageWindow.xaml</DependentUpon>
@@ -102,11 +114,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ColorHistControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EigenControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FeatureTrainControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FiltersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GrayHistControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImageProcessControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

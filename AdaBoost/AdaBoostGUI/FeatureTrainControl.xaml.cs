@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +22,7 @@ namespace AdaBoostGUI
     /// <summary>
     /// Interaction logic for FeatureTrainControl.xaml
     /// </summary>
+    [SecurityPermission(SecurityAction.Assert, UnmanagedCode=true), PermissionSetAttribute(SecurityAction.Assert, Name ="FullTrust")]
     public partial class FeatureTrainControl : UserControl
     {
         public FeatureTrainControl()
@@ -52,15 +55,18 @@ namespace AdaBoostGUI
 
         private void buttonTrain_Click(object sender, RoutedEventArgs e)
         {
-            BackgroundWorker bkgWorker = new BackgroundWorker();
-            bkgWorker.WorkerSupportsCancellation = true;
+            train();
+            /*BackgroundWorker bkgWorker = new BackgroundWorker();
+            bkgWorker.WorkerSupportsCancellation = false;
             bkgWorker.DoWork += BkgWorker_DoWork; ;
             bkgWorker.ProgressChanged += BkgWorker_ProgressChanged; ;
             bkgWorker.RunWorkerCompleted += BkgWorker_RunWorkerCompleted; ;
             bkgWorker.WorkerReportsProgress = true;
             progressBarTrain.Maximum = 10;
+            progressBarTrain.Value = 0;
             labelTraining.Content = "Training";
             bkgWorker.RunWorkerAsync();
+            */
         }
 
         private void BkgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -71,16 +77,26 @@ namespace AdaBoostGUI
 
         private void BkgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            progressBarTrain.Value++;
-            if(progressBarTrain.Value == progressBarTrain.Maximum)
-            {
-                progressBarTrain.Value = 1;
-            }
+            progressBarTrain.Value = e.ProgressPercentage % progressBarTrain.Maximum;
+        }
+
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        private void train()
+        {
+            learnFeat(textInputFileName.Text, textFeatModelName.Text, textHaarModelName.Text, textRegModelName.Text);
         }
 
         private void BkgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            learnFeat(textInputFileName.Text, textFeatModelName.Text, textHaarModelName.Text, textRegModelName.Text);
+            Thread thr = new Thread(train);
+            thr.Start();
+            int i = 0;
+
+            while(thr.IsAlive)
+            {
+                (sender as BackgroundWorker).ReportProgress(i++);
+                //Thread.Sleep(50);
+            }
         }
     }
 }
