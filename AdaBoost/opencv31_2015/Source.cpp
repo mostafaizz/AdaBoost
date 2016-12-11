@@ -18,6 +18,7 @@
 #include "AdaBoostEdgeDetector.h"
 #include "AdaBoostCascadeClassifier.h"
 #include "IrisRecognizer.h"
+#include "FingerPrint.h"
 
 const double PI = 3.14159265;
 
@@ -614,7 +615,14 @@ int main(int argc, char **argv)
 	//edgeDetection(argc, argv);
 	//testCascadeClassifier(argc, argv);
 	//testIrisRecognizer();
-	IrisRecognizer* iRec = createIrisRecognizer(512, 64);
+	//IrisRecognizer* iRec = createIrisRecognizer(512, 64);
 
+	FingerPrintRecognizer fpR;
+	for (int i = 1; i < 10; i++)
+	{
+		std::ostringstream osr;
+		osr << "E:/MostafaIzz/AdaBoost/AdaBoost/AdaBoost/x64/Release/fp_Images/gallery" << i << ".bmp";
+		fpR.run(osr.str().c_str());
+	}
 	return 0;
 }
