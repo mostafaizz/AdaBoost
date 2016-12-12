@@ -100,13 +100,28 @@ namespace AdaBoostGUI
             float[] result = new float[size];
             Marshal.Copy(ptr, result, 0, size);
             string[] labels = label.Split(',');
-            string output = "";
             
+            Dictionary<string, float> res = new Dictionary<string, float>() ;
+
             for (int i = 0; i < result.Length; i++)
             {
-                output += labels[i] + "\t \t \t" + result[i].ToString() + "\n";
+                
+                if(res.ContainsKey(labels[i]))
+                {
+                    if(res[labels[i]] > result[i])
+                    {
+                        res[labels[i]] = result[i];
+                    }
+                }
+                else { res.Add(labels[i], result[i]); }
+
             }
-            TextOut.Text = output;
+            
+            TextOut.ItemsSource = null;
+            TextOut.ItemsSource = res;
+            TextOut.Columns[0].Header = "Name";
+            TextOut.Columns[1].Header = "Distance";
+
             getEigenface(textInputFileNameTest.Text, textPCAModelNameTest.Text, textHaarModelNameTest.Text, out ptr, out size, eig);
             ImageEigenFacesTest.Source = MainWindow.getImageFromIntPtr(ptr, (int)size);
         }

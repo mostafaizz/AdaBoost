@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -67,12 +68,26 @@ namespace AdaBoostGUI
             float[] result = new float[size];
             Marshal.Copy(ptr, result, 0, size);
             string[] labels = label.Split(',');
-            string output = "";
+            Dictionary<string, float> res = new Dictionary<string, float>();
+
             for (int i = 0; i < result.Length; i++)
             {
-                output += labels[i] + "\t \t \t" + result[i].ToString() + "\n";
+               
+                if (res.ContainsKey(labels[i]))
+                {
+                    if (res[labels[i]] > result[i])
+                    {
+                        res[labels[i]] = result[i];
+                    }
+                }
+                else { res.Add(labels[i], result[i]); }
             }
-            labelTesting.Content = output;
+            //labelTesting.Content = output;
+            labelTesting.ItemsSource = null;
+            labelTesting.ItemsSource = res;
+            labelTesting.Columns[0].Header = "Name";
+            labelTesting.Columns[1].Header = "Distance";
+            
         }
 
         private void imageTest_MouseDown(object sender, MouseButtonEventArgs e)

@@ -375,7 +375,7 @@ cv::Mat applySobel(cv::Mat &img, int size)
 	//Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
 	Sobel(img, grad_x, CV_16S, 1, 0, size);
 	convertScaleAbs(grad_x, abs_grad_x);
-
+	
 	/// Gradient Y
 	//Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
 	Sobel(img, grad_y, CV_16S, 0, 1, size);
@@ -608,6 +608,31 @@ extern "C" __declspec(dllexport) void deleteIrisRecognizer(IrisRecognizer* iRec)
 }
 
 
+extern "C" __declspec(dllexport) FingerPrintRecognizer* createFingerPrintMatcher()
+{
+	return new FingerPrintRecognizer();
+}
+
+extern "C" __declspec(dllexport) void deleteFingerPrintMatcher(FingerPrintRecognizer* ptr)
+{
+	delete ptr;
+}
+
+extern "C" __declspec(dllexport) void trainFingerPrintOneImage(FingerPrintRecognizer* ptr, char * name, char* fileName)
+{
+	ptr->trainOneFinger(name, fileName);
+}
+
+extern "C" __declspec(dllexport) unsigned char* computeFingerFeatures(FingerPrintRecognizer* ptr, char* fileName, int& retSize)
+{
+	return getImageData(ptr->computeFeatForTesting(fileName), retSize);
+}
+
+extern "C" __declspec(dllexport) double testFingerPrintOneImage(FingerPrintRecognizer* ptr, char * name)
+{
+	return ptr->testImage(name);
+}
+
 
 int main(int argc, char **argv)
 {
@@ -622,7 +647,18 @@ int main(int argc, char **argv)
 	{
 		std::ostringstream osr;
 		osr << "E:/MostafaIzz/AdaBoost/AdaBoost/AdaBoost/x64/Release/fp_Images/gallery" << i << ".bmp";
-		fpR.run(osr.str().c_str());
+		std::cout << osr.str() << std::endl;
+		fpR.trainOneFinger(std::to_string(i), osr.str());
+	}
+
+	std::ostringstream osr1;
+	osr1 << "E:/MostafaIzz/AdaBoost/AdaBoost/AdaBoost/x64/Release/fp_Images/test13.bmp";
+
+	for (int i = 1; i < 10; i++)
+	{
+		double score = fpR.testImage(osr1.str(), std::to_string(i));
+
+		std::cout << i << "\t" << score << std::endl;
 	}
 	return 0;
 }

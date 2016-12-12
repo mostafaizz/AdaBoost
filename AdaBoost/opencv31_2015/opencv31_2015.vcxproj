@@ -176,7 +176,6 @@
     <ClInclude Include="HaarWeakClassifierAbs.h" />
     <ClInclude Include="IrisRecognizer.h" />
     <ClInclude Include="MatData.h" />
-    <ClInclude Include="thining.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="VectorData.h" />
     <ClInclude Include="WeakClassifier.h" />
