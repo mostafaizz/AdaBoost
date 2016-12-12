@@ -35,7 +35,7 @@
         <Button x:Name="buttonHaarModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Click="buttonHaarModelName_Click"/>
         <Button x:Name="buttonRegModelName"  Content="Browse" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" Click="buttonRegModelName_Click"/>
         <Button x:Name="buttonTest"  Content="Test" Height="25" Width="70" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="4" Click="buttonTest_Click"/>
-        <Image x:Name="imageTest" Grid.Column="1" HorizontalAlignment="Center" Height="auto" Margin="10" Grid.Row="4" VerticalAlignment="Center" Width="auto"/>
+        <Image x:Name="imageTest" Grid.Column="1" HorizontalAlignment="Center" Height="auto" Margin="10" Grid.Row="4" VerticalAlignment="Center" Width="auto" MouseDown="imageTest_MouseDown"/>
         <Label x:Name="labelTesting" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Height="25" Margin="10"/>
 
     </Grid>

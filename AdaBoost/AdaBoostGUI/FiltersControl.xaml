@@ -26,8 +26,8 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Image x:Name="origImage" HorizontalAlignment="Left" Height="322" Margin="20" VerticalAlignment="Center" Width="328" Grid.Column="0"/>
-            <Image x:Name="outImage" HorizontalAlignment="Right" Height="322" Margin="20" VerticalAlignment="Center" Width="328" Grid.Column="1"/>
+            <Image x:Name="origImage" HorizontalAlignment="Left" Height="322" Margin="20" VerticalAlignment="Center" Width="328" Grid.Column="0" MouseDown="origImage_MouseDown"/>
+            <Image x:Name="outImage" HorizontalAlignment="Right" Height="322" Margin="20" VerticalAlignment="Center" Width="328" Grid.Column="1" MouseDown="origImage_MouseDown"/>
         </Grid>
         <Grid Grid.ColumnSpan="3" Grid.Row="2">
             <Grid.ColumnDefinitions>

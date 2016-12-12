@@ -11,19 +11,19 @@
                                 Margin="20,20,20,70" Orientation="Vertical">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="220" Width="700" 
                                 Margin="10" Orientation="Horizontal">
-                <Image x:Name="origIrisImage" HorizontalAlignment="Right" Height="200" Margin="25, 10" VerticalAlignment="Top" Width="300"/>
-                <Image x:Name="origIrisImageIrisExtracted" HorizontalAlignment="Right" Height="200" Margin="25, 10" VerticalAlignment="Top" Width="300"/>
+                <Image x:Name="origIrisImage" HorizontalAlignment="Right" Height="200" Margin="25, 10" VerticalAlignment="Top" Width="300" MouseDown="origIrisImage_MouseDown"/>
+                <Image x:Name="origIrisImageIrisExtracted" HorizontalAlignment="Right" Height="200" Margin="25, 10" VerticalAlignment="Top" Width="300" MouseDown="origIrisImage_MouseDown"/>
 
             </StackPanel>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="74" Width="680" 
                                 Margin="10" >
                 <Label HorizontalAlignment="Left" VerticalAlignment="Center">Normalized Iris</Label>
-                <Image x:Name="IrisNormalized" HorizontalAlignment="Right" Height="64" Margin="-1, 5, 20, 5" VerticalAlignment="Top" Width="512"/>
+                <Image x:Name="IrisNormalized" HorizontalAlignment="Right" Height="64" Margin="-1, 5, 20, 5" VerticalAlignment="Top" Width="512" MouseDown="origIrisImage_MouseDown"/>
             </Grid>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="74" Width="680" 
                                 Margin="10">
                 <Label HorizontalAlignment="Left" VerticalAlignment="Center">Extracted Iris Code</Label>
-                <Image x:Name="IrisCode" HorizontalAlignment="Right" Height="64" Margin="-1, 5,20, 5" VerticalAlignment="Top" Width="512"/>
+                <Image x:Name="IrisCode" HorizontalAlignment="Right" Height="64" Margin="-1, 5,20, 5" VerticalAlignment="Top" Width="512" MouseDown="origIrisImage_MouseDown"/>
             </Grid>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="auto" Margin="10,-1,10,20" Orientation="Horizontal">

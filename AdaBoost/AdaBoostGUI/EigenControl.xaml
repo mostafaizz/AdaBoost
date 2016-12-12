@@ -30,7 +30,7 @@
                     <Button x:Name="buttonDrawEigen"  Content="Draw" Height="25" Width="70" Margin="595.517,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Click="buttonDrawEigen_Click"/>
 
                     <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="500" Margin="40,120,0,0" Grid.ColumnSpan="3">
-                        <Image x:Name="ImageEigenFaces" Width="auto" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                        <Image x:Name="ImageEigenFaces" Width="auto" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="ImageEigenFaces_MouseDown"></Image>
                     </Grid>
 
                 </Grid>
@@ -60,8 +60,8 @@
                     <TextBlock x:Name="TextOut" IsEnabled="False" Text="" Height="25" Width="70" Margin="595.517,260,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
 
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="550" Margin="40,120,0,0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                        <Image x:Name="ImageFacesTest" Width="350" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
-                        <Image x:Name="ImageEigenFacesTest" Width="100" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                        <Image x:Name="ImageFacesTest" Width="350" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="ImageEigenFaces_MouseDown"></Image>
+                        <Image x:Name="ImageEigenFacesTest" Width="100" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="ImageEigenFaces_MouseDown"></Image>
                     </StackPanel>
 
                 </Grid>

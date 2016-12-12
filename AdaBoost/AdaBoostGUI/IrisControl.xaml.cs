@@ -79,5 +79,11 @@ namespace AdaBoostGUI
             extractIrisFeatures(iRec, out codeData, out codeSize);
             IrisCode.Source = MainWindow.getImageFromIntPtr(codeData, codeSize);
         }
+
+        private void origIrisImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViolaJonesTester.image_MouseDown(sender, e);
+
+        }
     }
 }

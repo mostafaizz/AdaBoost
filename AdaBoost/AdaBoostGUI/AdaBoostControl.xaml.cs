@@ -126,6 +126,9 @@ namespace AdaBoostGUI
             imageTest.Source = MainWindow.getImageFromIntPtr(testImg, testImgSize);
         }
 
-        
+        private void imageTest_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViolaJonesTester.image_MouseDown(sender, e);
+        }
     }
 }

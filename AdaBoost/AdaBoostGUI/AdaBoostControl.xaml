@@ -12,12 +12,12 @@
         <TextBox x:Name="textBoxT" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"  HorizontalAlignment="Left" Height="23" Margin="498,370,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="74"/>
         <TextBox x:Name="textBoxIn" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="155,304,0,0" TextWrapping="Wrap" Text="test.png" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="textBoxOut" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="538,305,0,0" TextWrapping="Wrap" Text="orig.png" VerticalAlignment="Top" Width="127"/>
-        <Image x:Name="imageTest" HorizontalAlignment="Left" Height="202" Margin="458,80,0,0" VerticalAlignment="Top" Width="232">
+        <Image x:Name="imageTest" HorizontalAlignment="Left" Height="202" Margin="458,80,0,0" VerticalAlignment="Top" Width="232" MouseDown="imageTest_MouseDown">
             <Image.Source>
                 <BitmapImage UriSource="test.png"/>
             </Image.Source>
         </Image>
-        <Image x:Name="imageTrain" HorizontalAlignment="Left" Height="202" Margin="76,80,0,0" VerticalAlignment="Top" Width="232">
+        <Image x:Name="imageTrain" HorizontalAlignment="Left" Height="202" Margin="76,80,0,0" VerticalAlignment="Top" Width="232" MouseDown="imageTest_MouseDown">
             <Image.Source>
                 <BitmapImage UriSource="test.png"/>
             </Image.Source>

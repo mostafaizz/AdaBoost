@@ -120,5 +120,11 @@ namespace AdaBoostGUI
             IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
             outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
         }
+
+        private void origImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViolaJonesTester.image_MouseDown(sender, e);
+
+        }
     }
 }

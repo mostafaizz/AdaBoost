@@ -13,7 +13,7 @@
         <TextBox x:Name="textBoxMinAccuracy" Height="23" Width="70" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="577,26,-1,-1"/>
 
 
-        <Image x:Name="image" Width="450" Height="450" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="27,66,-1,-1"/>
+        <Image x:Name="image" Width="450" Height="450" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="27,66,-1,-1" MouseDown="image_MouseDown"/>
 
         <Label Content="Training Accuracy" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="560,119,-1,-1"/>
         <TextBox x:Name="textBoxAccuracy" IsEnabled="False" Height="23" Width ="70" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="577,159,-1,-1"/>

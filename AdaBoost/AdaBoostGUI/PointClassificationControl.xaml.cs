@@ -46,5 +46,11 @@ namespace AdaBoostGUI
             }
 
         }
+
+        private void image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViolaJonesTester.image_MouseDown(sender, e);
+
+        }
     }
 }

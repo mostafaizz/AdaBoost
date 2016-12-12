@@ -59,16 +59,24 @@ namespace AdaBoostGUI
             imageCamera.Source = detectedFaces;
         }
 
-        private void buttonSaveFaces_Click(object sender, RoutedEventArgs e)
+        public static void image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (detectedFaces != null)
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                //detectedFaces
-                ImageWindow iw = new ImageWindow();
-                iw.image.Source = detectedFaces;
-                iw.WindowState = WindowState.Maximized;
-                iw.Show();
+                var imageSource = ((Image)sender).Source;
+                if (imageSource != null)
+                {
+                    ImageWindow iw = new ImageWindow();
+                    iw.image.Source = imageSource;
+                    iw.WindowState = WindowState.Maximized;
+                    iw.Show();
+                }
             }
+        }
+
+        private void imageCamera_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViolaJonesTester.image_MouseDown(sender, e);
         }
     }
 }

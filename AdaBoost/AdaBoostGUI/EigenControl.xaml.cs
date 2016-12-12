@@ -110,5 +110,11 @@ namespace AdaBoostGUI
             getEigenface(textInputFileNameTest.Text, textPCAModelNameTest.Text, textHaarModelNameTest.Text, out ptr, out size, eig);
             ImageEigenFacesTest.Source = MainWindow.getImageFromIntPtr(ptr, (int)size);
         }
+
+        private void ImageEigenFaces_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViolaJonesTester.image_MouseDown(sender, e);
+
+        }
     }
 }
