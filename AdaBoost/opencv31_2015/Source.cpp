@@ -653,10 +653,14 @@ int main(int argc, char **argv)
 
 	std::ostringstream osr1;
 	osr1 << "E:/MostafaIzz/AdaBoost/AdaBoost/AdaBoost/x64/Release/fp_Images/test13.bmp";
+	cv::Mat display = fpR.computeFeatForTesting(osr1.str());
 
+	cv::imshow("display", display); 
+	cv::waitKey();
 	for (int i = 1; i < 10; i++)
 	{
-		double score = fpR.testImage(osr1.str(), std::to_string(i));
+		
+		double score = fpR.testImage(std::to_string(i));
 
 		std::cout << i << "\t" << score << std::endl;
 	}

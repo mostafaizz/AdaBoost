@@ -98,6 +98,9 @@
     <Compile Include="FiltersControl.xaml.cs">
       <DependentUpon>FiltersControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FingerPrintControl.xaml.cs">
+      <DependentUpon>FingerPrintControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GrayHistControl.xaml.cs">
       <DependentUpon>GrayHistControl.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FiltersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FingerPrintControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

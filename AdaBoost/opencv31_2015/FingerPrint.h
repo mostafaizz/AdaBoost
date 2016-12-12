@@ -337,11 +337,10 @@ public:
 		return descriptors;
 	}
 
-	cv::Mat computeFeaturesORB(const char* fileName)
+	cv::Mat computeFeaturesORB(const char* fileName, cv::Mat& display, int displayFlag = false)
 	{
 		// read gray image
 		cv::Mat fOrig = cv::imread(fileName, 0);
-
 
 		cv::Mat fHist;
 		cv::equalizeHist(fOrig, fHist);
@@ -423,12 +422,30 @@ public:
 		int yborder = 40;
 		cv::Mat mask = cv::Mat::zeros(fThin.size(), CV_8UC1);
 		mask(cv::Rect(xborder, yborder, fThin.cols - xborder - xborder, fThin.rows - yborder - yborder)) = 255;
-		
 
 		// Calculate the ORB descriptor based on the keypoint
 		cv::Ptr<cv::Feature2D> orb_descriptor = cv::ORB::create();
 		cv::Mat descriptors;
 		orb_descriptor->detectAndCompute(fThin, mask, keypoints, descriptors);
+
+		if (displayFlag)
+		{
+			display = cv::Mat::zeros(fThin.rows, fThin.cols, CV_8UC3);
+			cv::Mat in[] = { fThin, fThin, fThin };
+			int from_to[] = { 0,0, 1,1, 2,2 };
+			cv::mixChannels(in, 3, &display, 1, from_to, 3);
+
+			for (int i = 0; i < keypoints.size(); i++)
+			{
+				cv::circle(display, keypoints[i].pt, 5, cv::Scalar(0, 255, 0), 1);
+				cv::circle(display, keypoints[i].pt, 1, cv::Scalar(0, 0, 255), 1);
+				float x = 5 * std::cos(keypoints[i].angle);
+				float y = 5 * std::sin(keypoints[i].angle);
+				cv::line(display, keypoints[i].pt, cv::Point(x,y), cv::Scalar(0, 0, 255));
+			}
+			
+		}
+	
 
 #if DISPLAY_
 		// Compare both
@@ -446,14 +463,17 @@ public:
 
 	cv::Mat trainOneFinger(std::string name,std::string fileName)
 	{
-		dictionary[name] = computeFeaturesORB(fileName.c_str());
+		cv::Mat oup;
+		dictionary[name] = computeFeaturesORB(fileName.c_str(), oup, 1);
 		return dictionary[name];
 	}
 
 	// must be called before calling testImage
 	cv::Mat computeFeatForTesting(std::string fileName)
 	{
-		testSubjectDescriptor = computeFeaturesORB(fileName.c_str());
+		cv::Mat oup;
+		testSubjectDescriptor = computeFeaturesORB(fileName.c_str(), oup, 1);
+		return oup;
 	}
 
 	// return the distance
