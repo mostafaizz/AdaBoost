@@ -126,5 +126,23 @@ namespace Biometrics
             ViolaJonesTester.image_MouseDown(sender, e);
 
         }
+
+        private void gauss5sobel5_Click(object sender, RoutedEventArgs e)
+        {
+            int retSize = 0;
+            int[] l = new int[] { 4, 1 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
+
+        private void gauss9sobel5_Click(object sender, RoutedEventArgs e)
+        {
+            int retSize = 0;
+            int[] l = new int[] { 5, 1 };
+
+            IntPtr res = applyOperator(textInputFileName.Text, l, l.Length, out retSize);
+            outImage.Source = MainWindow.getImageFromIntPtr(res, retSize);
+        }
     }
 }

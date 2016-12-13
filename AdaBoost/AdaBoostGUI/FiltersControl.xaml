@@ -31,10 +31,12 @@
         </Grid>
         <Grid Grid.ColumnSpan="3" Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -46,8 +48,10 @@
             <Button x:Name="gauss9"  Content=" Gaussian 9x9 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Click="gauss9_Click"/>
             <Button x:Name="med5"  Content=" Median 5x5 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Click="med5_Click"/>
             <Button x:Name="med9"  Content=" Median 9x9 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Click="med9_Click"/>
-            <Button x:Name="gauss5sobel3"  Content=" Gaussian 5x5 -> Sobel " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" Click="gauss5sobel3_Click"/>
-            <Button x:Name="gauss9sobel3"  Content=" Gaussian 9x9 -> Sobel " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" Click="gauss9sobel3_Click"/>
+            <Button x:Name="gauss5sobel3"  Content=" Gaussian 5x5 -> Sobel 3x3 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" Click="gauss5sobel3_Click"/>
+            <Button x:Name="gauss9sobel3"  Content=" Gaussian 9x9 -> Sobel 3x3 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" Click="gauss9sobel3_Click"/>
+            <Button x:Name="gauss5sobel5"  Content=" Gaussian 5x5 -> Sobel 5x5 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" Grid.Row="0" Click="gauss5sobel5_Click"/>
+            <Button x:Name="gauss9sobel5"  Content=" Gaussian 9x9 -> Sobel 5x5 " Height="25" Width="auto" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" Grid.Row="1" Click="gauss9sobel5_Click"/>
         </Grid>
     </Grid>
 </UserControl>
