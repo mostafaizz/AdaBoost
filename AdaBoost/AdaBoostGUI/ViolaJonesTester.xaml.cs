@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AdaBoostGUI
+namespace Biometrics
 {
     /// <summary>
     /// Interaction logic for ViolaJonesTester.xaml

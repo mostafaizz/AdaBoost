@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AdaBoostGUI
+namespace Biometrics
 {
     /// <summary>
     /// Interaction logic for ImageWindow.xaml
