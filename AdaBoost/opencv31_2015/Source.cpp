@@ -61,15 +61,17 @@ unsigned char* test2DPoints(int &retSize, int& numClassifiers, double& accuracy,
 	for (int i = 0; i < data.size(); i++)
 	{
 		cv::circle(img, cv::Point(data[i]->getVectorData()[0] + shift, data[i]->getVectorData()[1] + shift),
-			2, cv::Scalar(((label[i] - 1) / -2) * 255, 0, ((label[i] + 1) / 2) * 255), -1);
+			3, cv::Scalar(((label[i] - 1) / -2) * 255, 0, ((label[i] + 1) / 2) * 255), -1);
 	}
 	//freopen("result.csv", "w", stdout);
 	WeakClassifierFactory * factory = new WeakVectorClassifierFactory();
+	std::vector<int> outLabels;
 	for (numClassifiers = 1; numClassifiers < maximum; numClassifiers += 2)
 	{
 		AdaBoost adaboost(numClassifiers, factory);
-		std::vector<int> outLabels;
+		outLabels.clear();
 		accuracy = adaboost.train(data, label, outLabels, false);
+		
 		if (accuracy >= percenatge)
 		{
 			break;
@@ -79,6 +81,15 @@ unsigned char* test2DPoints(int &retSize, int& numClassifiers, double& accuracy,
 	}
 	//cv::imshow("img", img);
 	//cv::waitKey();
+	for (int i = 0; i < data.size(); i++)
+	{
+		if (outLabels[i] * label[i] < 0)
+		{
+			cv::circle(img,
+				cv::Point(data[i]->getVectorData()[0] + shift, data[i]->getVectorData()[1] + shift),
+				8, cv::Scalar(0, 0, 255), 2);
+		}
+	}
 	return getImageData(img, retSize);
 }
 
