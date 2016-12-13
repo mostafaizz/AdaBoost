@@ -55,8 +55,9 @@ namespace Biometrics
 
         private void buttonTrain_Click(object sender, RoutedEventArgs e)
         {
-            Thread thr = new Thread(train);
-            thr.Start();
+            train();
+            //Thread thr = new Thread(train);
+            //thr.Start();
             /*BackgroundWorker bkgWorker = new BackgroundWorker();
             bkgWorker.WorkerSupportsCancellation = false;
             bkgWorker.DoWork += BkgWorker_DoWork; ;
