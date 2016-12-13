@@ -67,6 +67,11 @@
                     <local:IrisControl/>
                 </TabItem.Content>
             </TabItem>
+            <TabItem Header="[10] FingerPrint Recognition">
+                <TabItem.Content>
+                    <local:FingerPrintControl/>
+                </TabItem.Content>
+            </TabItem>
         </TabControl>
 
     </Grid>

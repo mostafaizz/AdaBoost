@@ -625,7 +625,8 @@ extern "C" __declspec(dllexport) void trainFingerPrintOneImage(FingerPrintRecogn
 
 extern "C" __declspec(dllexport) unsigned char* computeFingerFeatures(FingerPrintRecognizer* ptr, char* fileName, int& retSize)
 {
-	return getImageData(ptr->computeFeatForTesting(fileName), retSize);
+	cv::Mat img = ptr->computeFeatForTesting(fileName);
+	return getImageData(img, retSize);
 }
 
 extern "C" __declspec(dllexport) double testFingerPrintOneImage(FingerPrintRecognizer* ptr, char * name)
@@ -646,13 +647,15 @@ int main(int argc, char **argv)
 	for (int i = 1; i < 10; i++)
 	{
 		std::ostringstream osr;
-		osr << "E:/MostafaIzz/AdaBoost/AdaBoost/AdaBoost/x64/Release/fp_Images/gallery" << i << ".bmp";
+		osr << "C:/Users/mostafaizz/Source/Repos/AdaBoost/AdaBoost/x64/Release/fp_Images/training/gallery" << i << ".bmp";
 		std::cout << osr.str() << std::endl;
 		fpR.trainOneFinger(std::to_string(i), osr.str());
 	}
 
 	std::ostringstream osr1;
-	osr1 << "E:/MostafaIzz/AdaBoost/AdaBoost/AdaBoost/x64/Release/fp_Images/test13.bmp";
+	osr1 << "C:/Users/mostafaizz/Source/Repos/AdaBoost/AdaBoost/x64/Release/fp_Images/testing/test13.bmp";
+	int retSize = 0;
+	computeFingerFeatures(&fpR, (char*) (osr1.str().c_str()), retSize);
 	cv::Mat display = fpR.computeFeatForTesting(osr1.str());
 
 	cv::imshow("display", display); 

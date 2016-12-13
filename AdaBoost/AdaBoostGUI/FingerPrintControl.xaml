@@ -11,12 +11,27 @@
             <Grid>
                 <Label x:Name="label" Content="Training" Width="auto" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
                 <Label x:Name="label1" Content="Select Training Folder" Width="auto" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,41,0,0"/>
-                <TextBox x:Name="trainingFolder"  Width="500" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="138,42,0,0"/>
+                <TextBox x:Name="trainingFolderTextBox"  Width="500" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="138,42,0,0"/>
+                <Button x:Name="buttonBrowseFolder" Content="Browse" HorizontalAlignment="Left" Margin="658,42,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="buttonBrowseFolder_Click"/>
+                <Button x:Name="buttonTrain" Content="Train" HorizontalAlignment="Left" Margin="661,121,0,0" VerticalAlignment="Top" Width="75" Height="25" Click="buttonTrain_Click"/>
+                <ProgressBar x:Name="progressBarTrain" HorizontalAlignment="Left" Height="25" Margin="23,121,0,0" VerticalAlignment="Top" Width="615"/>
+                <Label x:Name="label_TrainingProgress" Content="" Width="148" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,90,0,0"/>
 
             </Grid>
         </Border>
         <Border x:Name="test" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="372" Margin="10,193,0,0" VerticalAlignment="Top" Width="760">
+            <Grid>
+                <Label x:Name="label_Copy" Content="Testing" Width="auto" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="9,9,0,0"/>
+                <Button x:Name="buttonInputFileName"  Content="Browse" Height="24" Width="70" Margin="665,44,0,302" HorizontalAlignment="Left" VerticalAlignment="Center" Click="buttonInputFileName_Click"/>
+                <Label x:Name="label1_Copy" Content="Select Image" Width="auto" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,42,0,0"/>
+                <TextBox x:Name="testingImageTextBox"  Width="500" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="146,43,0,0"/>
+                <Image x:Name="testingImage" HorizontalAlignment="Left" Height="232" Margin="18,107,0,0" VerticalAlignment="Top" Width="213" MouseDown="testingImage_MouseDown"/>
+                <Image x:Name="featuresImage" HorizontalAlignment="Left" Height="232" Margin="263,107,0,0" VerticalAlignment="Top" Width="213" MouseDown="testingImage_MouseDown"/>
+                <DataGrid BorderThickness="0" x:Name="dataGrid" HorizontalAlignment="Left" Margin="536,107,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="buttonTest"  Content="Test" Height="24" Width="70" Margin="665,73,0,273" HorizontalAlignment="Left" VerticalAlignment="Center" Click="buttonTest_Click"/>
 
+
+            </Grid>
         </Border>
 
     </Grid>

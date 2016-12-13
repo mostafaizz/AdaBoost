@@ -439,8 +439,8 @@ public:
 			{
 				cv::circle(display, keypoints[i].pt, 5, cv::Scalar(0, 255, 0), 1);
 				cv::circle(display, keypoints[i].pt, 1, cv::Scalar(0, 0, 255), 1);
-				float x = 5 * std::cos(keypoints[i].angle);
-				float y = 5 * std::sin(keypoints[i].angle);
+				float x = 5 * std::cos(keypoints[i].angle) + keypoints[i].pt.x;
+				float y = 5 * std::sin(keypoints[i].angle) + keypoints[i].pt.y;
 				cv::line(display, keypoints[i].pt, cv::Point(x,y), cv::Scalar(0, 0, 255));
 			}
 			
