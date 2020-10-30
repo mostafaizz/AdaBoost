@@ -77,4 +77,4 @@ https://codeyarns.com/2014/09/01/how-to-train-opencv-cascade-classifier/
 
 
 For Question and Comments please contact Mostafa Izz:
-izz.mostafa@gmail.com
+mostafaizz1408@gmail.com
